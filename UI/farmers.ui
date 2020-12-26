@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>farmers</class>
+ <widget class="QWidget" name="farmers">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1366</width>
+    <height>705</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arabic Typesetting</family>
+    <pointsize>16</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>فلاحة</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::RightToLeft</enum>
+  </property>
+  <property name="locale">
+   <locale language="Arabic" country="Tunisia"/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <widget class="QTableWidget" name="data">
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="locale">
+      <locale language="Arabic" country="Tunisia"/>
+     </property>
+     <column>
+      <property name="text">
+       <string>رقم ب.ت.و</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>الاسم</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>اللقب</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>الهاتف</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>العمادة</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>عدد الرؤوس</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QPushButton" name="new_">
+      <property name="text">
+       <string>جديد</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="change">
+      <property name="text">
+       <string>تغير</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="remove">
+      <property name="text">
+       <string>مسح</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="print">
+      <property name="text">
+       <string>طباعة</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProsecutionOffices</class>
+ <widget class="QWidget" name="ProsecutionOffices">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>537</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arabic Typesetting</family>
+    <pointsize>16</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>النيابات</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::RightToLeft</enum>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="newProsecutionOffices">
+       <property name="text">
+        <string>نيابة جديدة</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="change">
+       <property name="text">
+        <string>تغير</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="remove">
+       <property name="text">
+        <string>حذف</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QTableWidget" name="data">
+     <property name="font">
+      <font>
+       <family>Arabic Typesetting</family>
+       <pointsize>16</pointsize>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="locale">
+      <locale language="Arabic" country="Tunisia"/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="midLineWidth">
+      <number>11</number>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>true</bool>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectItems</enum>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideMiddle</enum>
+     </property>
+     <property name="verticalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerPixel</enum>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::SolidLine</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <row>
+      <property name="text">
+       <string>1</string>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>1</pointsize>
+       </font>
+      </property>
+     </row>
+     <column>
+      <property name="text">
+       <string>العدد</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>اسم صاحب نيابة</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>لقب صاحب نيابة</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>عنوان</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>الهاتف</string>
+      </property>
+     </column>
+     <item row="0" column="0">
+      <property name="text">
+       <string>54</string>
+      </property>
+     </item>
+     <item row="0" column="1">
+      <property name="text">
+       <string>بلابلا</string>
+      </property>
+     </item>
+     <item row="0" column="2">
+      <property name="text">
+       <string>لبالبا</string>
+      </property>
+     </item>
+     <item row="0" column="3">
+      <property name="text">
+       <string>لبالابل</string>
+      </property>
+     </item>
+     <item row="0" column="4">
+      <property name="text">
+       <string>545454</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
