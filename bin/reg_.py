@@ -1,6 +1,7 @@
 from bin.reg import Ui_MainWindow
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from bin.psd import Crypt
 
 
 class registerWindow(QMainWindow, Ui_MainWindow):
