@@ -1,14 +1,23 @@
-from PyQt5.QtSql import *
+import pyodbc
+from pyodbc import Error
+import os
+DRV = '{Microsoft Access Driver (*.mdb, *.accdb)}'
+MDB = f'{os.getcwd()}\\data\\alphaData.accdb'
+PWD = 'An23011997'
+for drivers in pyodbc.drivers():
+    print(drivers)
+conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(DRV,MDB,PWD))
+cursor = conn.cursor()
+cursor.execute('select * from users')
+a = []
+for row in cursor.fetchall():
+    try:
+        if len(a==1):
+            break
+    except:
+        pass
+    a.append(row)
+print(len(a), a)
 
 
-class Database():
-    def __init__(self, hostname, user, dbase, pword=""):
-        self.db = QSqlDatabase.addDatabase("QMYSQL")
-        self.db.setHostName(hostname)
-        self.db.setDatabaseName(dbase)
-        self.db.setUserName(user)
-        self.db.setPassword(pword)
-        ok = self.db.open()
-        self.db.
 
-mydb = Database("localhost", "root", "billingsys")

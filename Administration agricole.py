@@ -6,7 +6,6 @@ from bin.controller import windowController
 def run():
     app = QApplication(sys.argv)
     controller = windowController()
-    controller.defaultPasswordShaker()
     sys.exit(app.exec_())
 
 
