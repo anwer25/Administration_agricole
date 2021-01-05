@@ -11,19 +11,18 @@ class Key:
 
 
 class Crypt(QThread):
-    passwordAndUserName = pyqtSignal(str)
+    passwordAndUserName = pyqtSignal(str, str)
 
-    def __init__(self, username, password):
+    def __init__(self, username: str, password: str):
         super(Crypt, self).__init__()
         self.username = username
         self.password = password
 
     def run(self) -> None:
-        self.encryptUserName()
-        self.encryptPassword()
+        self.encryptUserNameAndPassword()
 
-    def encryptPassword(self) -> None:
-        self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.password))
+    def encryptUserNameAndPassword(self) -> None:
+        self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.username),
+                                      Key.pwd_context.encrypt(self.password))
 
-    def encryptUserName(self) -> None:
-        self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.username))
+
