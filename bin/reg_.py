@@ -47,6 +47,8 @@ class registerWindow(QMainWindow, Ui_MainWindow):
             self.password_2.clear()
 
     def saver(self, username, password):
-        saverEngine = dataBaseSyncer(f'INSERT INTO users values({username},{password}, True)')
+        print(username)
+        print(password)
+        saverEngine = dataBaseSyncer(f"INSERT INTO users values('4','{username}','{password}', 'True')")
         saverEngine.start()
 

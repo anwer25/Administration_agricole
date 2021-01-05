@@ -24,7 +24,10 @@ class dataBaseSyncer(QThread):
         try:
             conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(___DRV, ___MDB, ___PWD))
             cursor = conn.cursor()
+            print(self.com)
             cursor.execute(self.com)
+
             self.result.emit(cursor.fetchall())
+            conn.commit()
         except Error as e:
             print(f'Error from line 23 sync file class dataBaseSyncer: {e}')
