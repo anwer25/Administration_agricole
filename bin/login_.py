@@ -3,6 +3,7 @@ from PyQt5.QtCore import pyqtSignal, QThread
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 
 
+
 class loginMain(QMainWindow, Ui_MainWindow):
     windowSwitcher = pyqtSignal()
 
@@ -17,4 +18,9 @@ class loginMain(QMainWindow, Ui_MainWindow):
         self.show()
 
     def Buttons(self):
-        pass
+        self.login.clicked.connect(self.checkLogin)
+
+    def checkLogin(self):
+        username = self.username.text()
+        passowrd = self.password.text()
+

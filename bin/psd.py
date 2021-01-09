@@ -25,4 +25,17 @@ class Crypt(QThread):
         self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.username),
                                       Key.pwd_context.encrypt(self.password))
 
+class Dcrypt(QThread):
+    def __init__(self, password):
+        super(Dcrypt, self).__init__()
+        self.password = password
 
+    def run(self) -> None:
+        self.usernameShaker()
+
+    def usernameShaker(self):
+        if Key.pwd_context.verify(self.userName):
+            self.passwordShaker()
+
+    def passwordShaker(self):
+        pass
