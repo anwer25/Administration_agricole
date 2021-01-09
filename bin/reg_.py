@@ -34,6 +34,7 @@ class registerWindow(QMainWindow, Ui_MainWindow):
 
     def Buttons(self):
         self.login.clicked.connect(self.createAccount)
+        self.exit.clicked.connect(self.close)
 
     def createAccount(self):
         if self.password.text() == self.password_2.text() and len(self.password.text()) > 4:
@@ -50,4 +51,6 @@ class registerWindow(QMainWindow, Ui_MainWindow):
         saverEngine.start()
         self.ok.exec_()
         self.windowSwitcher.emit()
+
+
 

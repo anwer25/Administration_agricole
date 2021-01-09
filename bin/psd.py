@@ -11,11 +11,10 @@ class Key:
 
 
 class Crypt(QThread):
-    passwordAndUserName = pyqtSignal(str, str)
+    passwordAndUserName = pyqtSignal(str)
 
-    def __init__(self, username: str, password: str):
+    def __init__(self, password: str):
         super(Crypt, self).__init__()
-        self.username = username
         self.password = password
 
     def run(self) -> None:
@@ -24,17 +23,20 @@ class Crypt(QThread):
     def encryptUserNameAndPassword(self) -> None:
         self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.password))
 
+
 class Dcrypt(QThread):
-    def __init__(self, password):
+    state = pyqtSignal(bool)
+
+    def __init__(self, password: str, dbPassword: str):
         super(Dcrypt, self).__init__()
         self.password = password
+        self.dbPassword = dbPassword[0]
 
     def run(self) -> None:
-        self.usernameShaker()
-
-    def usernameShaker(self):
-        if Key.pwd_context.verify(self.userName):
-            self.passwordShaker()
+        self.passwordShaker()
 
     def passwordShaker(self):
-        pass
+        if Key.pwd_context.verify(self.password, str(self.dbPassword)[2:-4]):
+            self.state.emit(True)
+        else:
+            self.state.emit(False)

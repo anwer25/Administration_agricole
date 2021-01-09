@@ -24,10 +24,11 @@ class dataBaseSyncer(QThread):
         try:
             conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(___DRV, ___MDB, ___PWD))
             cursor = conn.cursor()
-            cursor.execute(self.com)
             if "INSERT" in self.com:
+                cursor.execute(self.com)
                 conn.commit()
             else:
+                cursor.execute(self.com)
                 self.result.emit(cursor.fetchall())
 
         except Error as e:
