@@ -22,8 +22,7 @@ class Crypt(QThread):
         self.encryptUserNameAndPassword()
 
     def encryptUserNameAndPassword(self) -> None:
-        self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.username),
-                                      Key.pwd_context.encrypt(self.password))
+        self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.password))
 
 class Dcrypt(QThread):
     def __init__(self, password):
