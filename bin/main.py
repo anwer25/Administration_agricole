@@ -4,10 +4,12 @@ from PyQt5.QtGui import *
 from bin.mainWindow import Ui_mainwindow
 
 
-class mainW(Ui_mainwindow):
+class mainW(QMainWindow, Ui_mainwindow):
 
-    def __init__(self):
-        Ui_mainwindow.__init__(self)
+    def __init__(self, parent=None):
+
+        super(mainW, self).__init__(parent)
+        QMainWindow.__init__(self)
         self.setupUi(self)
         self.show()
 

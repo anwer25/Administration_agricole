@@ -36,7 +36,6 @@ class registerWindow(QMainWindow, Ui_MainWindow):
         self.login.clicked.connect(self.createAccount)
 
     def createAccount(self):
-        print(f'username:{self.username.text()}, password: {self.password.text()} password2: {self.password_2.text()}')
         if self.password.text() == self.password_2.text() and len(self.password.text()) > 4:
             CryptEngine = Crypt(self.username.text(), self.password.text())
             CryptEngine.start()
@@ -47,8 +46,8 @@ class registerWindow(QMainWindow, Ui_MainWindow):
             self.password_2.clear()
 
     def saver(self, username, password):
-        print(username)
-        print(password)
-        saverEngine = dataBaseSyncer(f"INSERT INTO users values('4','{username}','{password}', 'True')")
+        saverEngine = dataBaseSyncer(f"INSERT INTO users values('{username}','{password}', 'True')")
         saverEngine.start()
+        self.ok.exec_()
+        self.windowSwitcher.emit()
 
