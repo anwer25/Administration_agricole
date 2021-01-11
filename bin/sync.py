@@ -30,6 +30,7 @@ class dataBaseSyncer(QThread):
             else:
                 cursor.execute(self.com)
                 self.result.emit(cursor.fetchall())
+            conn.close()
 
         except Error as e:
             print(f'Error from line 23 sync file class dataBaseSyncer: {e}')
