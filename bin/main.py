@@ -3,8 +3,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from bin.mainWindow import Ui_mainwindow
 from bin.perwriter import readr
+from bin.MainFarmers import farmers
 import os
-
 
 
 class mainW(QMainWindow, Ui_mainwindow):
@@ -16,7 +16,8 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.setupUi(self)
         self.data = readr()
         self.data.start()
-        self.data.result.connect(self.UI)
+        self.data.result_.connect(self.UI)
+        self.username = None
         self.show()
 
     def UI(self, result: dict = None):
@@ -33,7 +34,7 @@ class mainW(QMainWindow, Ui_mainwindow):
             pass
         if not result['DeanShip']:
             self.DeanShips.isEnabled(False)
-
+        # self.username = result[]
 
     def Buttons(self):
         self.farmers.clicked.connect(self.openFarmers)
@@ -43,7 +44,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.histroy.clicked.connect(self.openHistory)
 
     def openFarmers(self):
-        pass
+        farmersWindow = farmers()
 
     def openDeanShips(self):
         pass
@@ -56,15 +57,17 @@ class mainW(QMainWindow, Ui_mainwindow):
 
     def openHistory(self):
         pass
-
+    """
     def closeEvent(self, a0: QCloseEvent) -> None:
-
-        os.remove('.\\bin\\data\\temp\\temp.dll')
+        try:
+            os.remove('.\\bin\\data\\temp\\temp.dll')
+        except FileNotFoundError as e:
+            print(e)
+    """
 
 if __name__ == '__main__':
-
     import sys
+
     app = QApplication(sys.argv)
     apps = mainW()
     sys.exit(app.exec_())
-

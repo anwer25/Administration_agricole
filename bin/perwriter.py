@@ -17,7 +17,7 @@ class writer(QThread):
         database.result.connect(self.writeDataToJson)
 
     def writeDataToJson(self, data):
-
+        print(data)
         temp = {
             'user': data[0][0],
             'ProsectionOffices': data[0][2],
@@ -37,7 +37,7 @@ class writer(QThread):
 
 
 class readr(QThread):
-    result = pyqtSignal(dict)
+    result_ = pyqtSignal(dict)
 
     def __init__(self):
         super(readr, self).__init__()
@@ -49,4 +49,4 @@ class readr(QThread):
         with open('.\\bin\\data\\temp\\temp.dll', 'r') as jsonFile:
             data = json.load(jsonFile)
             _ = data.copy()
-            self.result.emit(_)
+            self.result_.emit(_)
