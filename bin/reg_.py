@@ -17,8 +17,7 @@ class registerWindow(QMainWindow, Ui_MainWindow):
         self.Ui()
         self.Buttons()
 
-
-    def Ui(self):
+    def Ui(self) -> None:
         self.show()
         self.passwordProblem.setWindowTitle('خطأ في كلمة المرور')
         self.passwordProblem.setText('خطأ في إعادة كلمة المرور')
@@ -32,11 +31,11 @@ class registerWindow(QMainWindow, Ui_MainWindow):
         self.password.setEchoMode(QLineEdit.Password)
         self.password_2.setEchoMode(QLineEdit.Password)
 
-    def Buttons(self):
+    def Buttons(self) -> None:
         self.login.clicked.connect(self.createAccount)
         self.exit.clicked.connect(self.close)
 
-    def createAccount(self):
+    def createAccount(self) -> None:
         if self.password.text() == self.password_2.text() and len(self.password.text()) > 4:
             CryptEngine = Crypt(self.password.text())
             CryptEngine.start()
@@ -46,12 +45,9 @@ class registerWindow(QMainWindow, Ui_MainWindow):
             self.password.clear()
             self.password_2.clear()
 
-    def saver(self, password):
+    def saver(self, password) -> None:
         saverEngine = dataBaseSyncer(f"INSERT INTO users values('{self.username.text()}','{password}', 'True', 'True'"
-                                     f", 'True', 'True', 'True', 'True', 'True', 'True')")
+                                     f", 'True', 'True', 'True', 'True', 'True', 'True', 'True', 'True', 'True')")
         saverEngine.start()
         self.ok.exec_()
         self.windowSwitcher.emit()
-
-
-
