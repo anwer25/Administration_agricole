@@ -1,52 +1,27 @@
 from sync import dataBaseSyncer
-import json
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, QSettings
 
 
 class writer(QThread):
-    def __init__(self, name):
+    def __init__(self, data):
         super(writer, self).__init__()
-        self.name = name
+        self.settings = QSettings('AlphaSoft', 'admin')
+        self.data = data
+        self.start()
 
     def run(self) -> None:
-        self.readData()
+        self.writeData()
 
-    def readData(self):
-        database = dataBaseSyncer(f"SELECT * FROM users WHERE USER_='{self.name}'")
-        database.start()
-        database.result.connect(self.writeDataToJson)
-
-    def writeDataToJson(self, data):
-        print(data)
-        temp = {
-            'user': data[0][0],
-            'ProsectionOffices': data[0][2],
-            'farmers': data[0][3],
-            'newFarmers': data[0][4],
-            'history': data[0][5],
-            'distribution': data[0][6],
-            'ProsectutionOffices': data[0][7],
-            'changeProsectutionOffices': data[0][8],
-            'change': data[0][9],
-            'settings': data[0][10],
-            'DeanShip': data[0][11],
-            'addNewDeanShip': data[0][12]
-        }
-        with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
-            json.dump(temp, jsonFile, indent=4)
-
-
-class readr(QThread):
-    result_ = pyqtSignal(dict)
-
-    def __init__(self):
-        super(readr, self).__init__()
-
-    def run(self) -> None:
-        self.reader()
-
-    def reader(self):
-        with open('.\\bin\\data\\temp\\temp.dll', 'r') as jsonFile:
-            data = json.load(jsonFile)
-            _ = data.copy()
-            self.result_.emit(_)
+    def writeData(self):
+        self.settings.setValue('username', self.data[0][0])
+        self.settings.setValue('ProsectionOffices', self.data[0][2])
+        self.settings.setValue('farmers', self.data[0][3])
+        self.settings.setValue('newFarmers', self.data[0][4])
+        self.settings.setValue('history', self.data[0][5])
+        self.settings.setValue('distribution', self.data[0][6])
+        self.settings.setValue('ProsectutionOffices', self.data[0][7])
+        self.settings.setValue('changeProsectutionOffices', self.data[0][8])
+        self.settings.setValue('change', self.data[0][9])
+        self.settings.setValue('settings', self.data[0][10])
+        self.settings.setValue('DeanShip', self.data[0][11])
+        self.settings.setValue('addNewDeanShip', self.data[0][12])

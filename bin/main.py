@@ -2,7 +2,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from bin.mainWindow import Ui_mainwindow
-from bin.perwriter import readr
 from bin.MainFarmers import farmers
 import os
 
@@ -14,16 +13,15 @@ class mainW(QMainWindow, Ui_mainwindow):
         super(mainW, self).__init__(parent)
         QMainWindow.__init__(self)
         self.setupUi(self)
-        self.data = readr()
-        self.data.start()
-        self.data.result_.connect(self.UI)
+        self.UI()
         self.username = None
+        self.settings = QSettings('AlphaSoft', 'Admin')
         self.show()
 
-    def UI(self, result: dict = None):
-
+    def UI(self):
+        """
         if not result['farmers']:
-            self.farmers.isEnabled(False)
+            self.farmers.isEnabled()
         if not result['ProsectionOffices']:
             self.ProsecutionOffices.isEnabled(False)
         if not result['distribution']:
@@ -35,7 +33,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         if not result['DeanShip']:
             self.DeanShips.isEnabled(False)
         # self.username = result[]
-
+        """
     def Buttons(self):
         self.farmers.clicked.connect(self.openFarmers)
         self.DeanShips.clicked.connect(self.openDeanShips)
@@ -57,13 +55,12 @@ class mainW(QMainWindow, Ui_mainwindow):
 
     def openHistory(self):
         pass
-    """
+
     def closeEvent(self, a0: QCloseEvent) -> None:
         try:
             os.remove('.\\bin\\data\\temp\\temp.dll')
         except FileNotFoundError as e:
             print(e)
-    """
 
 if __name__ == '__main__':
     import sys

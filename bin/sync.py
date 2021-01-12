@@ -5,6 +5,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 
 class dataBaseSyncer(QThread):
     result = pyqtSignal(list)
+    result_ = pyqtSignal(list)
 
     def __init__(self, com: str):
         super(dataBaseSyncer, self).__init__()

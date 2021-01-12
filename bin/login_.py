@@ -35,6 +35,7 @@ class loginMain(QMainWindow, Ui_MainWindow):
         self.exit.clicked.connect(self.close)
 
     def checkLogin(self) -> None:
+        global username
         username = f'\'{self.username.text()}\''
 
         database = dataBaseSyncer(f"SELECT password FROM users WHERE USER_={username}")
@@ -52,9 +53,17 @@ class loginMain(QMainWindow, Ui_MainWindow):
             passwordVerify.state.connect(self.windowSwitcherEngine)
 
     def windowSwitcherEngine(self, r) -> None:
+        def ___read():
+
+            database = dataBaseSyncer(f"SELECT * FROM users WHERE USER_={username}")
+            database.start()
+            database.result.connect(___getResult)
+
+        def ___getResult(result):
+            Writer = writer(result)
+
         if r:
-            jsonWriter = writer(self.username.text())
-            jsonWriter.start()
+            ___read()
             self.windowSwitcher.emit()
         else:
             self.passwordProblem.exec_()
