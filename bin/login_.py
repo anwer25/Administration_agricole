@@ -53,17 +53,10 @@ class loginMain(QMainWindow, Ui_MainWindow):
             passwordVerify.state.connect(self.windowSwitcherEngine)
 
     def windowSwitcherEngine(self, r) -> None:
-        def ___read():
-
-            database = dataBaseSyncer(f"SELECT * FROM users WHERE USER_={username}")
-            database.start()
-            database.result.connect(___getResult)
-
-        def ___getResult(result):
-            Writer = writer(result)
 
         if r:
-            ___read()
+            jsonWriter = writer(username)
+            jsonWriter.start()
             self.windowSwitcher.emit()
         else:
             self.passwordProblem.exec_()

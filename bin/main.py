@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from bin.perwriter import readr
 from bin.mainWindow import Ui_mainwindow
 from bin.MainFarmers import farmers
 import os
@@ -13,27 +14,27 @@ class mainW(QMainWindow, Ui_mainwindow):
         super(mainW, self).__init__(parent)
         QMainWindow.__init__(self)
         self.setupUi(self)
-        self.UI()
+        self.data = readr()
+        self.data.start()
+        self.data.result.connect(self.UI)
         self.username = None
-        self.settings = QSettings('AlphaSoft', 'Admin')
         self.show()
 
-    def UI(self):
-        """
+    def UI(self, result: dict = None):
+
         if not result['farmers']:
-            self.farmers.isEnabled()
+            self.farmers.setEnabled(False)
         if not result['ProsectionOffices']:
-            self.ProsecutionOffices.isEnabled(False)
+            self.ProsecutionOffices.setEnabled(False)
         if not result['distribution']:
-            self.distribution.isEnabled(False)
+            self.distribution.setEnabled(False)
         if not result['history']:
-            self.histroy.isEnabled(False)
+            self.histroy.setEnabled(False)
         if not result['settings']:
             pass
         if not result['DeanShip']:
-            self.DeanShips.isEnabled(False)
-        # self.username = result[]
-        """
+            self.DeanShips.setEnabled(False)
+
     def Buttons(self):
         self.farmers.clicked.connect(self.openFarmers)
         self.DeanShips.clicked.connect(self.openDeanShips)
@@ -57,10 +58,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         pass
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        try:
-            os.remove('.\\bin\\data\\temp\\temp.dll')
-        except FileNotFoundError as e:
-            print(e)
+        os.remove('.\\bin\\data\\temp\\temp.dll')
 
 if __name__ == '__main__':
     import sys
