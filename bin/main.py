@@ -14,6 +14,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         super(mainW, self).__init__(parent)
         QMainWindow.__init__(self)
         self.setupUi(self)
+
         self.data = readr()
         self.data.start()
         self.data.result.connect(self.UI)

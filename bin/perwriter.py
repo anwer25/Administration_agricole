@@ -49,6 +49,7 @@ class writer(QThread):
         with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
             json.dump(temp, jsonFile, indent=4)
 
+
 class readr(QThread):
     result = pyqtSignal(dict)
 

@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
 from bin.sync import dataBaseSyncer
 from bin.psd import Dcrypt
 from perwriter import writer
+from os import path
 
 
 class loginMain(QMainWindow, Ui_MainWindow):
@@ -57,6 +58,8 @@ class loginMain(QMainWindow, Ui_MainWindow):
         if r:
             jsonWriter = writer(username)
             jsonWriter.start()
-            self.windowSwitcher.emit()
+            while not jsonWriter.isFinished():
+                if path.exists('.\\bin\\data\\temp\\temp.dll'):
+                    self.windowSwitcher.emit()
         else:
             self.passwordProblem.exec_()

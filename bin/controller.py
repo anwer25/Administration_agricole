@@ -3,6 +3,7 @@ from bin.sync import dataBaseSyncer
 from bin.login_ import loginMain
 from bin.reg_ import registerWindow
 from bin.main import mainW
+from bin.loading_ import MainWindow
 
 changer = pyqtSignal()
 
