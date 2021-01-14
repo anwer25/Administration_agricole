@@ -60,7 +60,10 @@ class readr(QThread):
         self.reader()
 
     def reader(self):
-        with open('.\\bin\\data\\temp\\temp.dll', 'r') as jsonFile:
-            data = json.load(jsonFile)
-            _ = data.copy()
-            self.result.emit(_)
+        try:
+            with open('.\\bin\\data\\temp\\temp.dll', 'r') as jsonFile:
+                data = json.load(jsonFile)
+                _ = data.copy()
+                self.result.emit(_)
+        except FileNotFoundError as e:
+            print('Error line 64 from perwriter class read')

@@ -42,9 +42,15 @@ class windowController:
             self.register.windowSwitcher.connect(self.showFromRegister)
 
     def showFromLogin(self):
-        self.mainWindow = mainW()
+        self.loading = MainWindow()
+        self.loading.switch_window.connect(self.showMainWindow)
         self.login.close()
 
     def showFromRegister(self):
-        self.mainWindow = mainW()
+        self.loading = MainWindow()
+        self.loading.switch_window.connect(self.showMainWindow)
         self.register.close()
+
+    def showMainWindow(self):
+        self.mainWindow = mainW()
+        self.loading.close()

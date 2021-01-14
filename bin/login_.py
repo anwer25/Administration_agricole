@@ -58,8 +58,6 @@ class loginMain(QMainWindow, Ui_MainWindow):
         if r:
             jsonWriter = writer(username)
             jsonWriter.start()
-            while not jsonWriter.isFinished():
-                if path.exists('.\\bin\\data\\temp\\temp.dll'):
-                    self.windowSwitcher.emit()
+            self.windowSwitcher.emit()
         else:
             self.passwordProblem.exec_()

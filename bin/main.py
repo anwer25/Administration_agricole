@@ -14,11 +14,11 @@ class mainW(QMainWindow, Ui_mainwindow):
         super(mainW, self).__init__(parent)
         QMainWindow.__init__(self)
         self.setupUi(self)
-
         self.data = readr()
         self.data.start()
         self.data.result.connect(self.UI)
         self.username = None
+        self.Buttons()
         self.show()
 
     def UI(self, result: dict = None):
@@ -43,7 +43,8 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.distribution.clicked.connect(self.openDistribution)
         self.histroy.clicked.connect(self.openHistory)
 
-    def openFarmers(self):
+    def openFarmers(self) -> None:
+
         farmersWindow = farmers()
 
     def openDeanShips(self):
@@ -59,11 +60,8 @@ class mainW(QMainWindow, Ui_mainwindow):
         pass
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        os.remove('.\\bin\\data\\temp\\temp.dll')
+        try:
+            os.remove('.\\bin\\data\\temp\\temp.dll')
 
-if __name__ == '__main__':
-    import sys
-
-    app = QApplication(sys.argv)
-    apps = mainW()
-    sys.exit(app.exec_())
+        except FileNotFoundError as e:
+            print('Error from line 66 main class mainWindow')
