@@ -45,7 +45,9 @@ class mainW(QMainWindow, Ui_mainwindow):
 
     def openFarmers(self) -> None:
 
-        farmersWindow = farmers()
+        self.farmersWindow = farmers()
+        self.hide()
+        self.farmersWindow.display.connect(self.show)
 
     def openDeanShips(self):
         pass

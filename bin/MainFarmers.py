@@ -5,6 +5,8 @@ from PyQt5.QtGui import *
 
 
 class farmers(QWidget, Ui_farmers):
+    display = pyqtSignal()
+
     def __init__(self):
         super(farmers, self).__init__()
         self.setupUi(self)
@@ -17,3 +19,6 @@ class farmers(QWidget, Ui_farmers):
 
     def Buttons(self):
         pass
+
+    def closeEvent(self, a0: QCloseEvent) -> None:
+        self.display.emit()
