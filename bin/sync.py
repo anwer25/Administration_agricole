@@ -5,6 +5,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 
 class dataBaseSyncer(QThread):
     result = pyqtSignal(list)
+    Deanshipresult = pyqtSignal(str)
 
     def __init__(self, com: str):
         super(dataBaseSyncer, self).__init__()
@@ -28,8 +29,12 @@ class dataBaseSyncer(QThread):
                 cursor.execute(self.com)
                 self.conn.commit()
             else:
-                cursor.execute(self.com)
-                self.result.emit(cursor.fetchall())
+                if "DEANSHIPS" in self.com:
+                    for Deanship in cursor.execute(self.com):
+                        self.Deanshipresult.emit(str(Deanship))
+                else:
+                    cursor.execute(self.com)
+                    self.result.emit(cursor.fetchall())
             self.conn.close()
 
         except Error as e:

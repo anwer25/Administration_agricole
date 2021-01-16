@@ -2,6 +2,7 @@ from bin.newFarmers import Ui_newFarmers
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent
+from bin.sync import dataBaseSyncer
 
 
 class newFMain(QWidget, Ui_newFarmers):
@@ -14,10 +15,37 @@ class newFMain(QWidget, Ui_newFarmers):
         self.Ui()
 
     def Ui(self):
+        self.readDeanShipsData()
         self.show()
 
     def Buttons(self):
+        self.openCamera.clicked.connect(self.openCameraEngine)
+        self.save.clicked.connect(self.saveData)
+        self.cancel.clicked.connect(self.close)
+
+    def openCameraEngine(self):
         pass
+
+    def readDeanShipsData(self):
+        self.dataBaseEngine = dataBaseSyncer(f'SELECT * FROM DEANSHIPS')
+        self.dataBaseEngine.start()
+        self.dataBaseEngine.Deanshipresult.connect(self.addDataToComboBox)
+
+    def addDataToComboBox(self, data):
+        self.Deanship.addItem(data[2:-4])
+
+    def saveData(self):
+        self.dataBaseEngine = dataBaseSyncer(
+            f"INSERT INTO FARMERS VALUES('{self.idNumber.text()}','{self.name.text()}',"
+            f"'{self.lastName.text()}', '{self.phoneNumber.text()}', "
+            f"'{self.Deanship.currentText()}', '{self.headsNumber.text()}')")
+        self.dataBaseEngine.start()
+        self.refresh.emit()
+        self.idNumber.clear()
+        self.name.clear()
+        self.lastName.clear()
+        self.phoneNumber.clear()
+        self.headsNumber.clear()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.refresh.emit()
