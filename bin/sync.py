@@ -5,7 +5,6 @@ from PyQt5.QtCore import QThread, pyqtSignal
 
 class dataBaseSyncer(QThread):
     result = pyqtSignal(list)
-    result_ = pyqtSignal(list)
 
     def __init__(self, com: str):
         super(dataBaseSyncer, self).__init__()
@@ -23,15 +22,15 @@ class dataBaseSyncer(QThread):
         ___MDB = '.\\bin\\data\\alphaData.accdb'
         ___PWD = 'An23011997'
         try:
-            conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(___DRV, ___MDB, ___PWD))
-            cursor = conn.cursor()
+            self.conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(___DRV, ___MDB, ___PWD))
+            cursor = self.conn.cursor()
             if "INSERT" in self.com:
                 cursor.execute(self.com)
-                conn.commit()
+                self.conn.commit()
             else:
                 cursor.execute(self.com)
                 self.result.emit(cursor.fetchall())
-            conn.close()
+            self.conn.close()
 
         except Error as e:
             print(f'Error from line 23 sync file class dataBaseSyncer: {e}')

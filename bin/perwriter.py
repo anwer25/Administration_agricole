@@ -66,4 +66,4 @@ class readr(QThread):
                 _ = data.copy()
                 self.result.emit(_)
         except FileNotFoundError as e:
-            print('Error line 64 from perwriter class read')
+            print(f'Error line 64 from perwriter class read {e}')
