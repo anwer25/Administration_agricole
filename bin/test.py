@@ -1,3 +1,4 @@
+
 import pyodbc
 from pyodbc import Error
 import os
@@ -18,6 +19,3 @@ for row in cursor.fetchall():
         pass
     a.append(row)
 print(len(a), a)
-
-
-

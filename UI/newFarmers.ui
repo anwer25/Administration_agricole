@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>405</width>
-    <height>504</height>
+    <width>442</width>
+    <height>316</height>
    </rect>
   </property>
   <property name="font">
@@ -29,30 +29,13 @@
    <locale language="Arabic" country="Tunisia"/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="6" column="2">
-    <widget class="QPushButton" name="openCamera">
+   <item row="2" column="4">
+    <widget class="QLineEdit" name="lastName">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
-     </property>
-     <property name="text">
-      <string>باستخدام الكاميرا</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="3">
-    <widget class="QLabel" name="label_2">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="inputMethodHints">
-      <set>Qt::ImhNone</set>
-     </property>
-     <property name="text">
-      <string>رقم بطاقة التعريف وطنية :</string>
      </property>
     </widget>
    </item>
@@ -60,6 +43,7 @@
     <widget class="QLineEdit" name="idNumber">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
      </property>
@@ -72,6 +56,7 @@
     <widget class="QLineEdit" name="name">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
      </property>
@@ -80,12 +65,16 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="4">
-    <widget class="QLineEdit" name="lastName">
+   <item row="5" column="4">
+    <widget class="QLineEdit" name="headsNumber">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly|Qt::ImhPreferNumbers</set>
      </property>
     </widget>
    </item>
@@ -93,6 +82,7 @@
     <widget class="QLineEdit" name="phoneNumber">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
      </property>
@@ -105,87 +95,30 @@
     <widget class="QComboBox" name="Deanship">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
      </property>
     </widget>
    </item>
-   <item row="4" column="2" colspan="2">
-    <widget class="QLabel" name="label_6">
+   <item row="7" column="3">
+    <widget class="QPushButton" name="cancel">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>العمادة :</string>
+      <string>إلغاء</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="2" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>اللقب :</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2" colspan="2">
-    <widget class="QLabel" name="label_3">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>الاسم :</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2" colspan="2">
-    <widget class="QLabel" name="label_8">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>الهاتف :</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="4">
-    <widget class="QLineEdit" name="headsNumber">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="inputMethodHints">
-      <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly|Qt::ImhPreferNumbers</set>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2" colspan="2">
-    <widget class="QLabel" name="label_7">
-     <property name="font">
-      <font>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>عدد الرؤوس :</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="3">
+   <item row="7" column="0" colspan="3">
     <widget class="QPushButton" name="save">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
      </property>
@@ -194,15 +127,84 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="3">
-    <widget class="QPushButton" name="cancel">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="font">
       <font>
+       <family>Arabic Typesetting</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhNone</set>
+     </property>
+     <property name="text">
+      <string>رقم بطاقة التعريف وطنية :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="font">
+      <font>
+       <family>Arabic Typesetting</family>
        <pointsize>16</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>إلغاء</string>
+      <string>الاسم :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="font">
+      <font>
+       <family>Arabic Typesetting</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>اللقب :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="font">
+      <font>
+       <family>Arabic Typesetting</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>الهاتف :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="font">
+      <font>
+       <family>Arabic Typesetting</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>العمادة :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="font">
+      <font>
+       <family>Arabic Typesetting</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>عدد الرؤوس :</string>
      </property>
     </widget>
    </item>

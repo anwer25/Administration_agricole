@@ -19,12 +19,8 @@ class newFMain(QWidget, Ui_newFarmers):
         self.show()
 
     def Buttons(self):
-        self.openCamera.clicked.connect(self.openCameraEngine)
         self.save.clicked.connect(self.saveData)
         self.cancel.clicked.connect(self.close)
-
-    def openCameraEngine(self):
-        pass
 
     def readDeanShipsData(self):
         self.dataBaseEngine = dataBaseSyncer(f'SELECT * FROM DEANSHIPS')
