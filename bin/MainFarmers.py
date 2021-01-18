@@ -15,14 +15,13 @@ class farmers(QWidget, Ui_farmers):
         super(farmers, self).__init__()
         self.setupUi(self)
         self.tableRefresh()
-        self.tableDataDisplay()
         self.Ui()
         self.Buttons()
 
     def Ui(self) -> None:
         self.show()
-        # self.data.setEditTriggers(QTableWidget.NoEditTriggers)
-        # self.data.setSelectionBehavior(QTableWidget.SelectRows)
+        self.data.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.data.setSelectionBehavior(QTableWidget.SelectRows)
 
     def Buttons(self) -> None:
         self.new_.clicked.connect(self.addNewFarmer)
@@ -36,23 +35,16 @@ class farmers(QWidget, Ui_farmers):
         self.data_.start()
         self.data_.result.connect(self.tableDataDisplay)
         """
-        self.read = TableWorker()
+        self.data.setRowCount(0)
+        self.read = TableWorker('SELECT * FROM FARMERS')
         self.read.start()
-        # self.read.data_.connect(self.tableDataDisplay)
-        self.read.datastr.connect(self.getdata)
-        self.read.col.connect(self.getCol)
-        self.read.row.connect(self.getRow)
+        self.read.data_.connect(self.tableDataDisplay)
+        self.read.data__.connect(self.insertrow)
 
-    def getCol(self, col):
-        return col
+    def insertrow(self, row: int):
+        self.data.insertRow(row)
 
-    def getRow(self, row):
-        return row
-
-    def getdata(self, data):
-        return data
-
-    def tableDataDisplay(self) -> None:
+    def tableDataDisplay(self, rowNumber: int, colNumber: int, data: str) -> None:
         """
         self.data.setRowCount(0)
         for rowNumber, rowData in enumerate(data):
@@ -61,11 +53,7 @@ class farmers(QWidget, Ui_farmers):
                 self.data.setItem(rowNumber, colNumber, QTableWidgetItem(str(data)))
         """
 
-        """
-        self.data.insertRow(data[0])
-        self.data.setItem(data[0], data[1], QTableWidgetItem(data[2]))
-        print(self.i)
-        """
+        self.data.setItem(rowNumber, colNumber, QTableWidgetItem(str(data)))
 
     def getSelectedItem(self) -> str:
         try:

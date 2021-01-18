@@ -9,7 +9,6 @@ class dataBaseS:
     def __init__(self, com: str):
         self.com = com
 
-
     def connecter(self) -> list:
         """
         :rtype: list
@@ -28,29 +27,21 @@ class dataBaseS:
 
 
 class TableWorker(QThread):
-    data_ = pyqtSignal(list)
-    datastr = pyqtSignal(str)
-    col = pyqtSignal(int)
-    row = pyqtSignal(int)
+    data_ = pyqtSignal(int, int, str)
+    data__ = pyqtSignal(int)
 
-    def __init__(self):
+    def __init__(self, command: str):
         super(TableWorker, self).__init__()
+        self.command = command
 
     def run(self) -> None:
         self.dataresult()
 
     def dataresult(self):
-        self.data = dataBaseS('SELECT * FROM FARMERS')
+        self.data = dataBaseS(self.command)
         data_ = self.data.connecter()
         self.data.conn.close()
         for rowNumber, rowData in enumerate(data_):
-            # self.rowNumberS.emit(rowNumber)
-            temp = []
+            self.data__.emit(rowNumber)
             for colNumber, data in enumerate(rowData):
-                temp.append(rowNumber)
-                temp.append(colNumber)
-                temp.append(str(data))
-                self.row.emit(rowNumber)
-                self.col.emit(colNumber)
-                self.datastr.emit(str(data))
-                self.data_.emit(temp)
+                self.data_.emit(rowNumber, colNumber, str(data))
