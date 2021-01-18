@@ -8,9 +8,9 @@ from bin.sync import dataBaseSyncer
 class changeMainWindow(QWidget, Ui_change):
     refrech = pyqtSignal()
 
-    def __init__(self, id: str = None):
+    def __init__(self, CIN: str = None):
         super(changeMainWindow, self).__init__()
-        self.id = id
+        self.CIN = CIN
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -21,6 +21,27 @@ class changeMainWindow(QWidget, Ui_change):
         :return: None
         """
         self.show()
+        self.readDeanShipsData()
+        print(self.CIN)
+        self.database = dataBaseSyncer(f'SELECT * FROM FARMERS WHERE ID={self.CIN}')
+        self.database.start()
+        self.database.result.connect(self.getData)
+
+    def getData(self, data: list):
+        self.idNumber.setText(data[0])
+        self.name.setText(data[1])
+        self.lastName.setText(data[2])
+        self.phoneNumber.setText(data[3])
+        self.Deanship.setCurrentText([data[4]])
+        self.headsNumber.setText(data[5])
+
+    def readDeanShipsData(self):
+        self.dataBaseEngine = dataBaseSyncer(f'SELECT * FROM DEANSHIPS')
+        self.dataBaseEngine.start()
+        self.dataBaseEngine.Deanshipresult.connect(self.addDataToComboBox)
+
+    def addDataToComboBox(self, data):
+        self.Deanship.addItem(data[2:-4])
 
     def Buttons(self) -> None:
         """
@@ -38,5 +59,4 @@ class changeMainWindow(QWidget, Ui_change):
         pass
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-
         self.refrech.emit()
