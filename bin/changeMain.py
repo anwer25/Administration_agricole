@@ -22,18 +22,17 @@ class changeMainWindow(QWidget, Ui_change):
         """
         self.show()
         self.readDeanShipsData()
-        print(self.CIN)
         self.database = dataBaseSyncer(f'SELECT * FROM FARMERS WHERE ID={self.CIN}')
         self.database.start()
         self.database.result.connect(self.getData)
 
     def getData(self, data: list):
-        self.idNumber.setText(data[0])
-        self.name.setText(data[1])
-        self.lastName.setText(data[2])
-        self.phoneNumber.setText(data[3])
-        self.Deanship.setCurrentText([data[4]])
-        self.headsNumber.setText(data[5])
+        self.idNumber.setText(str(data[0][0]))
+        self.name.setText(data[0][1])
+        self.lastName.setText(data[0][2])
+        self.phoneNumber.setText(str(data[0][3]))
+        self.Deanship.setCurrentText(data[0][4])
+        self.headsNumber.setText(str(data[0][5]))
 
     def readDeanShipsData(self):
         self.dataBaseEngine = dataBaseSyncer(f'SELECT * FROM DEANSHIPS')
@@ -56,7 +55,10 @@ class changeMainWindow(QWidget, Ui_change):
         :rtype: None
         :return: None
         """
-        pass
+        self.dataBaseEngine = dataBaseSyncer(f'UPDATE FARMERS SET PHONENUMBER = {self.phoneNumber.text()},'
+                                             f'DEANSHIP= {self.Deanship.currentText()},'
+                                             f'HEADNUMBERS= {self.headsNumber.text()}')
+        self.dataBaseEngine.start()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.refrech.emit()
