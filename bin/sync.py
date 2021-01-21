@@ -11,6 +11,7 @@ class dataBaseSyncer(QThread):
         super(dataBaseSyncer, self).__init__()
         self.com = com
 
+
     def run(self) -> None:
         self._connecter()
 
@@ -25,12 +26,13 @@ class dataBaseSyncer(QThread):
         try:
             self.conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(___DRV, ___MDB, ___PWD))
             cursor = self.conn.cursor()
-            if 'INSERT' in self.com or 'UPDATE':
+            if 'INSERT' in self.com or 'UPDATE' in self.com:
                 cursor.execute(self.com)
                 self.conn.commit()
             else:
                 if "DEANSHIPS" in self.com:
                     for Deanship in cursor.execute(self.com):
+
                         self.Deanshipresult.emit(str(Deanship))
                 else:
                     cursor.execute(self.com)

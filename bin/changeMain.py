@@ -57,8 +57,9 @@ class changeMainWindow(QWidget, Ui_change):
         """
         self.dataBaseEngine = dataBaseSyncer(f'UPDATE FARMERS SET PHONENUMBER = {self.phoneNumber.text()},'
                                              f'DEANSHIP= {self.Deanship.currentText()},'
-                                             f'HEADNUMBERS= {self.headsNumber.text()}')
+                                             f'HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}')
         self.dataBaseEngine.start()
+        self.refrech.emit()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.refrech.emit()

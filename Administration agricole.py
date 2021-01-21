@@ -4,9 +4,9 @@ from bin.controller import windowController
 
 
 def run():
-    app = QApplication(sys.argv)
+    apps = QApplication(sys.argv)
     controller = windowController()
-    sys.exit(app.exec_())
+    sys.exit(apps.exec_())
 
 
 if __name__ == '__main__':
