@@ -23,7 +23,7 @@ class newFMain(QWidget, Ui_newFarmers):
         self.cancel.clicked.connect(self.close)
 
     def readDeanShipsData(self):
-        self.dataBaseEngine = dataBaseSyncer(f'SELECT * FROM DEANSHIPS')
+        self.dataBaseEngine = dataBaseSyncer(f'SELECT NAME_ FROM DEANSHIPS')
         self.dataBaseEngine.start()
         self.dataBaseEngine.Deanshipresult.connect(self.addDataToComboBox)
 
