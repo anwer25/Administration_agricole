@@ -4,6 +4,7 @@ from PyQt5.QtGui import *
 from bin.perwriter import readr
 from bin.mainWindow import Ui_mainwindow
 from bin.MainFarmers import farmers
+from bin.deanshipsMainWindow import deanships
 import os
 
 
@@ -50,7 +51,9 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.farmersWindow.display.connect(self.show)
 
     def openDeanShips(self):
-        pass
+        self.deanships = deanships()
+        self.hide()
+        self.deanships.displayMainWindow.connect(self.show)
 
     def openProsecutionOffices(self):
         pass
