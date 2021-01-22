@@ -26,7 +26,7 @@ class dataBaseSyncer(QThread):
         try:
             self.conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(___DRV, ___MDB, ___PWD))
             cursor = self.conn.cursor()
-            if 'INSERT' in self.com or 'UPDATE' in self.com:
+            if 'INSERT' in self.com or 'UPDATE' in self.com or 'DELETE' in self.com:
                 cursor.execute(self.com)
                 self.conn.commit()
             else:

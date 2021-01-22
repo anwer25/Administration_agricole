@@ -15,6 +15,7 @@ class farmers(QWidget, Ui_farmers):
         super(farmers, self).__init__()
         self.setupUi(self)
         self.tableRefresh()
+        self.conformMessage = QMessageBox()
         self.Ui()
         self.Buttons()
 
@@ -22,6 +23,16 @@ class farmers(QWidget, Ui_farmers):
         self.show()
         self.data.setEditTriggers(QTableWidget.NoEditTriggers)
         self.data.setSelectionBehavior(QTableWidget.SelectRows)
+
+        self.conformMessage.setWindowTitle('تأكيد الحذف')
+        self.conformMessage.setText('هل تريد حذف')
+        self.conformMessage.setIcon(QMessageBox.Warning)
+        self.conformMessage.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        self.yesButtonArabicName = self.conformMessage.button(QMessageBox.Yes)
+        self.NoButtonArabicName = self.conformMessage.button(QMessageBox.No)
+        self.yesButtonArabicName.setText('حذف')
+        self.NoButtonArabicName.setText('إلغاء')
+        self.conformMessage.setDefaultButton(QMessageBox.No)
 
     def Buttons(self) -> None:
         self.new_.clicked.connect(self.addNewFarmer)
@@ -74,6 +85,13 @@ class farmers(QWidget, Ui_farmers):
 
     def deleteFarmer(self) -> None:
         id = self.getSelectedItem()
+        self.conformMessage.exec_()
+        if self.conformMessage.clickedButton() == self.yesButtonArabicName:
+            self.dataEngine = dataBaseSyncer(f'DELETE FROM FARMERS WHERE ID= {id}')
+            self.dataEngine.start()
+            self.tableRefresh()
+        else:
+            pass
 
     def printTicket(self) -> None:
         id = self.getSelectedItem()

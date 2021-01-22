@@ -55,9 +55,9 @@ class changeMainWindow(QWidget, Ui_change):
         :rtype: None
         :return: None
         """
-        self.dataBaseEngine = dataBaseSyncer(f'UPDATE FARMERS SET PHONENUMBER = {self.phoneNumber.text()},'
-                                             f'DEANSHIP= {self.Deanship.currentText()},'
-                                             f'HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}')
+        self.dataBaseEngine = dataBaseSyncer(f"UPDATE FARMERS SET PHONENUMBER = '{self.phoneNumber.text()}',"
+                                             f"DEANSHIP= '{self.Deanship.currentText()}',"
+                                             f"HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}")
         self.dataBaseEngine.start()
         self.refrech.emit()
 
