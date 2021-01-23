@@ -36,7 +36,7 @@ class Dcrypt(QThread):
         self.passwordShaker()
 
     def passwordShaker(self):
-        if Key.pwd_context.verify(self.password, str(self.dbPassword)[2:-4]):
+        if Key.pwd_context.verify(self.password, str(self.dbPassword)[2:-3]):
             self.state.emit(True)
         else:
             self.state.emit(False)

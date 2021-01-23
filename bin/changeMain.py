@@ -35,7 +35,7 @@ class changeMainWindow(QWidget, Ui_change):
         self.headsNumber.setText(str(data[0][5]))
 
     def readDeanShipsData(self):
-        self.dataBaseEngine = dataBaseSyncer(f'SELECT * FROM DEANSHIPS')
+        self.dataBaseEngine = dataBaseSyncer(f'SELECT NAME_ FROM DEANSHIPS')
         self.dataBaseEngine.start()
         self.dataBaseEngine.Deanshipresult.connect(self.addDataToComboBox)
 

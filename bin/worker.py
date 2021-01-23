@@ -1,6 +1,5 @@
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot
-from pyodbc import Error
-import pyodbc
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QSettings
+import mysql.connector
 
 
 class dataBaseS:
@@ -8,22 +7,30 @@ class dataBaseS:
 
     def __init__(self, com: str):
         self.com = com
+        self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
+        self.connection = None
+        self.cursor = None
 
-    def connecter(self) -> list:
+    def connector(self) -> list:
         """
         :rtype: list
         :return:dataBase Query result
         """
-        ___DRV = '{Microsoft Access Driver (*.mdb, *.accdb)}'
-        ___MDB = '.\\bin\\data\\alphaData.accdb'
-        ___PWD = 'An23011997'
+        config = {
+            'user': self.settings.value('DATABASE_USER_NAME', 'root', str),
+            # password must changed to ''
+            'password': self.settings.value('DATABASE_PASSWORD', 'admin', str),
+            'host': self.settings.value('DATABASE HOST', 'localhost', str),
+            'database': self.settings.value('DATABASE_NAME', 'administration-agricole', str),
+            'raise_on_warnings': True
+        }
         try:
-            self.conn = pyodbc.connect('DRIVER={};DBQ={};PWD={}'.format(___DRV, ___MDB, ___PWD))
-            self.cursor = self.conn.cursor()
+            self.connection = mysql.connector.connect(**config)
+            self.cursor = self.connection.cursor()
             self.cursor.execute(self.com)
             return self.cursor.fetchall()
-        except Error as e:
-            print(f'Error from line 23 sync file class dataBaseSyncer: {e}')
+        except mysql.connector.Error as err:
+            print(f'Error from line 23 sync file class dataBaseSyncer: {err}')
 
 
 class TableWorker(QThread):
@@ -33,14 +40,15 @@ class TableWorker(QThread):
     def __init__(self, command: str):
         super(TableWorker, self).__init__()
         self.command = command
+        self.data = None
 
     def run(self) -> None:
         self.dataresult()
 
     def dataresult(self):
         self.data = dataBaseS(self.command)
-        data_ = self.data.connecter()
-        self.data.conn.close()
+        data_ = self.data.connector()
+        self.data.connection.close()
         for rowNumber, rowData in enumerate(data_):
             self.data__.emit(rowNumber)
             for colNumber, data in enumerate(rowData):

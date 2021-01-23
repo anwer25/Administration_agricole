@@ -50,7 +50,7 @@ class registerWindow(QMainWindow, Ui_MainWindow):
         saverEngine = dataBaseSyncer(f"INSERT INTO users values('{self.username.text()}','{password}', True, True"
                                      f", True, True, True, True, True, True, True, True, True)")
         saverEngine.start()
-        jsonWriter = writer(self.username.text())
+        jsonWriter = writer(f"'{self.username.text()}'")
         jsonWriter.start()
         self.ok.exec_()
         self.windowSwitcher.emit()
