@@ -40,13 +40,9 @@ class writer(QThread):
             print(f'Error from line 29 sync file class dataBaseSyncer: perwriter file {err}')
 
     def writeDataToJson(self):
-        print('ok')
         self._connecter()
-        print('ok')
         self.cursor.execute(f"SELECT * FROM users WHERE USER_={self.name}")
-        print('ok')
         self.data = self.cursor.fetchall()
-        print(self.data)
         try:
             temp: Dict[Union[str, Any], Any] = {
                 'user': self.data[0][0],

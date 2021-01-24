@@ -5,6 +5,7 @@ from bin.perwriter import readr
 from bin.mainWindow import Ui_mainwindow
 from bin.MainFarmers import farmers
 from bin.deanshipsMainWindow import deanships
+from bin.prosecutionOfficesMain import ProsecutionMain
 import os
 
 
@@ -56,7 +57,9 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.deanships.displayMainWindow.connect(self.show)
 
     def openProsecutionOffices(self):
-        pass
+        self.prosecutionWindow = ProsecutionMain()
+        self.hide()
+        self.prosecutionWindow.display.connect(self.show)
 
     def openDistribution(self):
         pass

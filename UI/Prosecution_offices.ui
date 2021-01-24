@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>537</width>
-    <height>480</height>
+    <width>1366</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="font">
@@ -64,7 +64,7 @@
       <locale language="Arabic" country="Tunisia"/>
      </property>
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::WinPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Sunken</enum>
@@ -72,11 +72,14 @@
      <property name="midLineWidth">
       <number>11</number>
      </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
      <property name="tabKeyNavigation">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="showDropIndicator" stdset="0">
       <bool>false</bool>
@@ -91,7 +94,7 @@
       <enum>QAbstractItemView::SingleSelection</enum>
      </property>
      <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectItems</enum>
+      <enum>QAbstractItemView::SelectRows</enum>
      </property>
      <property name="textElideMode">
       <enum>Qt::ElideMiddle</enum>
@@ -102,12 +105,21 @@
      <property name="horizontalScrollMode">
       <enum>QAbstractItemView::ScrollPerPixel</enum>
      </property>
+     <property name="showGrid">
+      <bool>true</bool>
+     </property>
      <property name="gridStyle">
       <enum>Qt::SolidLine</enum>
      </property>
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>
+     <property name="cornerButtonEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>268</number>
+     </attribute>
      <row>
       <property name="text">
        <string>1</string>
@@ -145,27 +157,27 @@
      </column>
      <item row="0" column="0">
       <property name="text">
-       <string>54</string>
+       <string/>
       </property>
      </item>
      <item row="0" column="1">
       <property name="text">
-       <string>بلابلا</string>
+       <string/>
       </property>
      </item>
      <item row="0" column="2">
       <property name="text">
-       <string>لبالبا</string>
+       <string/>
       </property>
      </item>
      <item row="0" column="3">
       <property name="text">
-       <string>لبالابل</string>
+       <string/>
       </property>
      </item>
      <item row="0" column="4">
       <property name="text">
-       <string>545454</string>
+       <string/>
       </property>
      </item>
     </widget>
