@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 24, 2021 at 12:00 AM
+-- Generation Time: Jan 27, 2021 at 11:10 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -60,8 +60,20 @@ CREATE TABLE `farmers` (
 --
 
 INSERT INTO `farmers` (`ID`, `NAME_`, `LASTNAME`, `PHONENUMBER`, `DEANSHIP`, `HEADNUMBERS`) VALUES
-(5487, 'aaaa', 'zazaz', '225698', '', 54),
 (88965, 'zaeaze', 'azeaze', '5', '', 26);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prosecutionoffices`
+--
+
+CREATE TABLE `prosecutionoffices` (
+  `NAME_` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `LASTNAME` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `ADDRESS` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `PHONENUMBER` varchar(13) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
