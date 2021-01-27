@@ -25,7 +25,7 @@
   <property name="locale">
    <locale language="Arabic" country="Tunisia"/>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="save">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -38,7 +38,7 @@
     <string>حفظ</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="cancel">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -103,7 +103,7 @@
     <string>اسم صاحب نيابة:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="addres">
    <property name="geometry">
     <rect>
      <x>46</x>
@@ -113,7 +113,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="phone">
    <property name="geometry">
     <rect>
      <x>46</x>
@@ -126,7 +126,7 @@
     <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="lastName">
    <property name="geometry">
     <rect>
      <x>46</x>
@@ -136,7 +136,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="name">
    <property name="geometry">
     <rect>
      <x>46</x>
