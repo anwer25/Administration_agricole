@@ -7,6 +7,7 @@ from PyQt5.QtCore import QSettings
 class dataBaseSyncer(QThread):
     result = pyqtSignal(list)
     Deanshipresult = pyqtSignal(str)
+    refresher = pyqtSignal()
 
     def __init__(self, com: str):
         super(dataBaseSyncer, self).__init__()
@@ -36,6 +37,8 @@ class dataBaseSyncer(QThread):
             if 'INSERT' in self.com or 'UPDATE' in self.com or 'DELETE' in self.com:
                 cursor.execute(self.com)
                 self.connection.commit()
+                self.connection.close()
+                self.refresher.emit()
             else:
                 try:
                     if "DEANSHIPS" in self.com:

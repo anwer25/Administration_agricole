@@ -13,6 +13,7 @@ class newProsecution(QWidget, Ui_Form):
     def __init__(self):
         super(newProsecution, self).__init__()
         self.setupUi(self)
+        self.dataEngine = None
         self.UI()
         self.Buttons()
 
@@ -20,7 +21,14 @@ class newProsecution(QWidget, Ui_Form):
         self.show()
 
     def Buttons(self):
-        pass
+        self.save.clicked.connect(self.saveEngine)
+        self.cancel.clicked.connect(self.close)
+
+    def saveEngine(self):
+        self.dataEngine = dataBaseSyncer(f"INSERT INTO prosecutionoffices VALUES ('{self.name.text()}',"
+                                         f"'{self.lastName.text()}', '{self.addres.text()}', '{self.phone.text()}')")
+        self.dataEngine.start()
+        self.dataEngine.refresher.connect(self.refresh.emit)
 
 
 class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
@@ -48,8 +56,6 @@ class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
         :return:
         """
         self.newProsecutionOffices.clicked.connect(self.openNewProsecution)
-        self.change.clicked.connect(self.changeWindow)
-        self.remove.clicked.connect(self.removeButton)
 
     def tableRefresh(self):
         self.data.setRowCount(0)
@@ -90,6 +96,7 @@ class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
         :return:
         """
         self.newProsecutionWindow = newProsecution()
+        self.newProsecutionWindow.refresh.connect(self.tableRefresh)
 
     def changeWindow(self) -> None:
         """

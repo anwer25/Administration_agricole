@@ -118,7 +118,7 @@
       <bool>true</bool>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>268</number>
+      <number>333</number>
      </attribute>
      <row>
       <property name="text">
@@ -130,11 +130,6 @@
        </font>
       </property>
      </row>
-     <column>
-      <property name="text">
-       <string>العدد</string>
-      </property>
-     </column>
      <column>
       <property name="text">
        <string>اسم صاحب نيابة</string>
@@ -171,11 +166,6 @@
       </property>
      </item>
      <item row="0" column="3">
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item row="0" column="4">
       <property name="text">
        <string/>
       </property>
