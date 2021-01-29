@@ -1,10 +1,13 @@
 from bin.Prosecution_offices import Ui_ProsecutionOffices
 from bin.newProsectutionOffices import Ui_Form
+from bin.changeProsectutionOffices import Ui_changeProsectution
+
+from bin.worker import TableWorker
+from bin.sync import dataBaseSyncer
+
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent
-from bin.worker import TableWorker
-from bin.sync import dataBaseSyncer
 
 
 class newProsecution(QWidget, Ui_Form):
@@ -31,6 +34,57 @@ class newProsecution(QWidget, Ui_Form):
         self.dataEngine.refresher.connect(self.refresh.emit)
 
 
+class changeProsecutionOffice(QWidget, Ui_changeProsectution):
+    refresh = pyqtSignal()
+
+    def __init__(self, ID: str):
+        super(changeProsecutionOffice, self).__init__()
+        self.setupUi(self)
+        self.ID = ID
+        self.Ui()
+        self.Buttons()
+
+    def Ui(self) -> None:
+        """
+
+        :return:
+        """
+        dataEngine = dataBaseSyncer(f" SELECT * FROM prosecutionoffices where NAME_= '{self.ID}' ")
+        dataEngine.start()
+        dataEngine.result.connect(self.getData)
+        self.show()
+
+    def Buttons(self) -> None:
+        """
+
+        :return:
+        """
+        self.save.clicked.connect(self.saveEngine)
+        self.cancel.clicked.connect(self.close)
+
+    def getData(self, data: list) -> None:
+        """
+
+        :param data: data from dataBaseSyncer class
+        :return:
+        """
+        self.name.setText(data[0][0])
+        self.lastName.setText(data[0][1])
+        self.address.setText(data[0][2])
+        self.phoneNumber.setText(data[0][3])
+
+    def saveEngine(self):
+        """
+
+        :return:
+        """
+        dataEngine = dataBaseSyncer(f"UPDATE prosecutionoffices SET ADDRESS = '{self.address.text()}',"
+                                    f"PHONENUMBER= '{self.phoneNumber.text()}' WHERE NAME_ = '{self.ID}'")
+        dataEngine.start()
+        dataEngine.refresher.connect(self.refresh.emit)
+        self.close()
+
+
 class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
     display = pyqtSignal()
 
@@ -39,6 +93,7 @@ class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
         self.setupUi(self)
         self.read = None
         self.newProsecutionWindow = None
+        self.changeWindow_ = None
         self.Ui()
         self.Buttons()
         self.tableRefresh()
@@ -56,6 +111,9 @@ class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
         :return:
         """
         self.newProsecutionOffices.clicked.connect(self.openNewProsecution)
+        self.remove.clicked.connect(self.removeButton)
+        self.change.clicked.connect(self.changeWindow)
+        # self.refresh.clicked.connect()
 
     def tableRefresh(self):
         self.data.setRowCount(0)
@@ -83,7 +141,10 @@ class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
         self.data.setItem(rowNumber, colNumber, QTableWidgetItem(str(data)))
 
     def getSelectedItem(self) -> str:
+        """
 
+        :return: phoneNumber of item selected type str
+        """
         try:
             IDvalue: QTableWidgetItem = self.data.selectedItems()[0]
             return IDvalue.text()
@@ -103,14 +164,19 @@ class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
 
         :return:
         """
-        pass
+        ID = self.getSelectedItem()
+        self.changeWindow_ = changeProsecutionOffice(ID)
+        self.changeWindow_.refresh.connect(self.tableRefresh)
 
     def removeButton(self) -> None:
         """
 
         :return:
         """
-        pass
+        ID = self.getSelectedItem()
+        self.read = dataBaseSyncer(f"DELETE FROM prosecutionoffices WHERE NAME_='{ID}'")
+        self.read.start()
+        self.read.refresher.connect(self.tableRefresh)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.display.emit()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>changeProsectution</class>
+ <widget class="QWidget" name="changeProsectution">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -25,7 +25,7 @@
   <property name="locale">
    <locale language="Arabic" country="Tunisia"/>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="save">
    <property name="geometry">
     <rect>
      <x>300</x>
@@ -38,7 +38,7 @@
     <string>حفظ</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="cancel">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -103,7 +103,7 @@
     <string>اسم صاحب نيابة:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="address">
    <property name="geometry">
     <rect>
      <x>46</x>
@@ -113,7 +113,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="phoneNumber">
    <property name="geometry">
     <rect>
      <x>46</x>
@@ -126,7 +126,7 @@
     <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="lastName">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -139,7 +139,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="name">
    <property name="enabled">
     <bool>false</bool>
    </property>
