@@ -6,6 +6,7 @@ from bin.mainWindow import Ui_mainwindow
 from bin.MainFarmers import farmers
 from bin.deanshipsMainWindow import deanships
 from bin.prosecutionOfficesMain import ProsecutionMain
+from bin.mainDistribution import distributionWind
 import os
 
 
@@ -20,6 +21,11 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.data.start()
         self.data.result.connect(self.UI)
         self.username = None
+        self.distributionWindow = None
+        self.farmersWindow = None
+        self.deanships = None
+        self.prosecutionWindow = None
+
         self.Buttons()
         self.show()
 
@@ -62,7 +68,9 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.prosecutionWindow.display.connect(self.show)
 
     def openDistribution(self):
-        pass
+        self.distributionWindow = distributionWind()
+        self.hide()
+        self.distributionWindow.switcher.connect(self.show)
 
     def openHistory(self):
         pass
