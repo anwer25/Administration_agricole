@@ -59,7 +59,10 @@ class dataBaseSyncer(QThread):
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
                 # TODO: make message here
                 print("Database does not exist")
+            elif err.errno == errorcode.CR_CONN_HOST_ERROR:
+                # TODO: make message here
+                print(f'error line 63 sync : {err}')
             else:
-                print(f'Error from line 23 sync file class dataBaseSyncer: {err}')
+                print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
         else:
             self.connection.close()

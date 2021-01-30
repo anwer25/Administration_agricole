@@ -36,7 +36,7 @@ class newFMain(QWidget, Ui_newFarmers):
             f"'{self.lastName.text()}', '{self.phoneNumber.text()}', "
             f"'{self.Deanship.currentText()}', '{self.headsNumber.text()}')")
         self.dataBaseEngine.start()
-        self.refresh.emit()
+        self.dataBaseEngine.refresher.connect(self.refresh.emit)
         self.idNumber.clear()
         self.name.clear()
         self.lastName.clear()

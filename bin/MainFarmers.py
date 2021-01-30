@@ -89,7 +89,7 @@ class farmers(QWidget, Ui_farmers):
         if self.conformMessage.clickedButton() == self.yesButtonArabicName:
             self.dataEngine = dataBaseSyncer(f'DELETE FROM FARMERS WHERE ID= {id}')
             self.dataEngine.start()
-            self.tableRefresh()
+            self.dataEngine.refresher.connect(self.tableRefresh)
         else:
             pass
 

@@ -59,7 +59,7 @@ class changeMainWindow(QWidget, Ui_change):
                                              f"DEANSHIP= '{self.Deanship.currentText()}',"
                                              f"HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}")
         self.dataBaseEngine.start()
-        self.refrech.emit()
+        self.dataBaseEngine.refresher.connect(self.refrech.emit)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        self.refrech.emit()
+        pass
