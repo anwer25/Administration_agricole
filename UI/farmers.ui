@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1366</width>
-    <height>705</height>
+    <width>681</width>
+    <height>696</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -80,7 +80,10 @@
       <bool>false</bool>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>224</number>
+      <number>220</number>
+     </attribute>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>false</bool>
      </attribute>
      <column>
       <property name="text">

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>588</height>
+    <width>1366</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="font">
@@ -20,24 +20,17 @@
    <string>العمادات</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
-   <item row="0" column="0">
-    <layout class="QGridLayout" name="gridLayout_4"/>
-   </item>
    <item row="0" column="1">
     <layout class="QGridLayout" name="gridLayout_3"/>
+   </item>
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout_4"/>
    </item>
    <item row="0" column="2">
     <layout class="QGridLayout" name="gridLayout_2"/>
    </item>
    <item row="0" column="3">
     <layout class="QGridLayout" name="gridLayout"/>
-   </item>
-   <item row="0" column="4">
-    <widget class="QPushButton" name="removeDeanship">
-     <property name="text">
-      <string>إزالة عمادة</string>
-     </property>
-    </widget>
    </item>
    <item row="0" column="5">
     <widget class="QPushButton" name="addNewDeanship">
@@ -46,16 +39,35 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="4">
+    <widget class="QPushButton" name="removeDeanship">
+     <property name="text">
+      <string>إزالة عمادة</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0" colspan="6">
     <widget class="QTableWidget" name="dataTable">
+     <property name="font">
+      <font>
+       <family>Arabic Typesetting</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
      <property name="layoutDirection">
       <enum>Qt::RightToLeft</enum>
      </property>
      <property name="locale">
       <locale language="Arabic" country="Tunisia"/>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::WinPanel</enum>
+     </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::SelectedClicked</set>
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>true</bool>
      </property>
      <property name="showDropIndicator" stdset="0">
       <bool>false</bool>
@@ -63,14 +75,30 @@
      <property name="dragDropOverwriteMode">
       <bool>false</bool>
      </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::MultiSelection</enum>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
      </property>
-     <column>
-      <property name="text">
-       <string>عدد</string>
-      </property>
-     </column>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideMiddle</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>false</bool>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>441</number>
+     </attribute>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>false</bool>
+     </attribute>
      <column>
       <property name="text">
        <string>اسم العمادة</string>

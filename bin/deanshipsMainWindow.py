@@ -91,7 +91,7 @@ class deanships(QWidget, Ui_Deanships):
         ID = self.getSelectedItem()
         self.databaseEngine = dataBaseSyncer(f"DELETE FROM DEANSHIPS WHERE NAME_='{ID}'")
         self.databaseEngine.start()
-        self.displayData()
+        self.databaseEngine.refresher.connect(self.displayData)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

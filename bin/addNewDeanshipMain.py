@@ -38,9 +38,9 @@ class addNewDeanshipWindow(QWidget, Ui_addNewDeanShip):
         self.databaseEngine = dataBaseSyncer(f"INSERT INTO DEANSHIPS VALUES('{self.deanshipName.text()}',"
                                              f"{self.population.text()})")
         self.databaseEngine.start()
+        self.databaseEngine.refresher.connect(self.refresh.emit)
         self.deanshipName.clear()
         self.population.clear()
-        self.refresh.emit()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

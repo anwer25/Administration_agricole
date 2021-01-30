@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'farmers.ui'
+# Form implementation generated from reading ui file 'E:\python-project\Administration_agricole\UI\farmers.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.2
 #
@@ -28,6 +28,17 @@ class Ui_farmers(object):
         self.data = QtWidgets.QTableWidget(farmers)
         self.data.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.data.setLocale(QtCore.QLocale(QtCore.QLocale.Arabic, QtCore.QLocale.Tunisia))
+        self.data.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.data.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.data.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+        self.data.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.data.setTabKeyNavigation(False)
+        self.data.setProperty("showDropIndicator", False)
+        self.data.setDragDropOverwriteMode(False)
+        self.data.setAlternatingRowColors(True)
+        self.data.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.data.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.data.setCornerButtonEnabled(False)
         self.data.setObjectName("data")
         self.data.setColumnCount(6)
         self.data.setRowCount(0)
@@ -43,6 +54,8 @@ class Ui_farmers(object):
         self.data.setHorizontalHeaderItem(4, item)
         item = QtWidgets.QTableWidgetItem()
         self.data.setHorizontalHeaderItem(5, item)
+        self.data.horizontalHeader().setDefaultSectionSize(220)
+        self.data.horizontalHeader().setHighlightSections(False)
         self.gridLayout.addWidget(self.data, 2, 0, 1, 1)
         self.splitter = QtWidgets.QSplitter(farmers)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
@@ -63,6 +76,7 @@ class Ui_farmers(object):
     def retranslateUi(self, farmers):
         _translate = QtCore.QCoreApplication.translate
         farmers.setWindowTitle(_translate("farmers", "فلاحة"))
+        self.data.setSortingEnabled(True)
         item = self.data.horizontalHeaderItem(0)
         item.setText(_translate("farmers", "رقم ب.ت.و"))
         item = self.data.horizontalHeaderItem(1)

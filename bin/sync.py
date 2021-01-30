@@ -68,6 +68,8 @@ class dataBaseSyncer(QThread):
             elif err.errno == errorcode.ER_WARN_DATA_OUT_OF_RANGE:
                 # TODO: make message here
                 print(f'you entered long value sync file line 23 : {err.errno}')
+            elif err.errno == errorcode.ER_BAD_FIELD_ERROR:
+                print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
             else:
                 print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
         else:
