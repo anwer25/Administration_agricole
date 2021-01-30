@@ -62,6 +62,12 @@ class dataBaseSyncer(QThread):
             elif err.errno == errorcode.CR_CONN_HOST_ERROR:
                 # TODO: make message here
                 print(f'error line 63 sync : {err}')
+            elif err.errno == errorcode.ER_TRUNCATED_WRONG_VALUE_FOR_FIELD:
+                # TODO: make message here
+                print(f'you entered str value instead int value error line 23 SYNC: {err.errno}')
+            elif err.errno == errorcode.ER_WARN_DATA_OUT_OF_RANGE:
+                # TODO: make message here
+                print(f'you entered long value sync file line 23 : {err.errno}')
             else:
                 print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
         else:
