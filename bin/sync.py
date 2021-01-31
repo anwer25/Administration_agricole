@@ -41,9 +41,8 @@ class dataBaseSyncer(QThread):
                 self.refresher.emit()
             else:
                 try:
-                    if "DEANSHIPS" in self.com:
+                    if "DEANSHIPS" in self.com or 'prosecutionoffices' in self.com:
                         cursor.execute(self.com)
-
                         for Deanship in cursor.fetchall():
                             self.Deanshipresult.emit(str(Deanship))
                     else:
