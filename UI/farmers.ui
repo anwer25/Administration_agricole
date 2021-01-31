@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>696</height>
+    <width>1366</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -102,12 +102,12 @@
      </column>
      <column>
       <property name="text">
-       <string>الهاتف</string>
+       <string>العمادة</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>العمادة</string>
+       <string>الهاتف</string>
       </property>
      </column>
      <column>

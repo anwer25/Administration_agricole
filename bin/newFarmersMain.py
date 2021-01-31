@@ -33,8 +33,8 @@ class newFMain(QWidget, Ui_newFarmers):
     def saveData(self):
         self.dataBaseEngine = dataBaseSyncer(
             f"INSERT INTO FARMERS VALUES('{self.idNumber.text()}','{self.name.text()}',"
-            f"'{self.lastName.text()}', '{self.phoneNumber.text()}', "
-            f"'{self.Deanship.currentText()}', '{self.headsNumber.text()}')")
+            f"'{self.lastName.text()}', '{self.Deanship.currentText()}', "
+            f"'{self.phoneNumber.text()}', '{self.headsNumber.text()}')")
         self.dataBaseEngine.start()
         self.dataBaseEngine.refresher.connect(self.refresh.emit)
         self.idNumber.clear()

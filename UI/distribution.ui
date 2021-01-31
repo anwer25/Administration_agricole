@@ -195,7 +195,7 @@
          <number>6</number>
         </property>
         <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -207,7 +207,7 @@
          <bool>false</bool>
         </property>
         <property name="showDropIndicator" stdset="0">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="dragEnabled">
          <bool>true</bool>
@@ -216,10 +216,10 @@
          <bool>false</bool>
         </property>
         <property name="dragDropMode">
-         <enum>QAbstractItemView::DragDrop</enum>
+         <enum>QAbstractItemView::DragOnly</enum>
         </property>
         <property name="defaultDropAction">
-         <enum>Qt::CopyAction</enum>
+         <enum>Qt::TargetMoveAction</enum>
         </property>
         <property name="alternatingRowColors">
          <bool>true</bool>
@@ -240,17 +240,22 @@
          <bool>true</bool>
         </property>
         <property name="columnCount">
-         <number>3</number>
+         <number>4</number>
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>true</bool>
         </attribute>
         <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>219</number>
+         <number>165</number>
         </attribute>
         <attribute name="horizontalHeaderHighlightSections">
          <bool>false</bool>
         </attribute>
+        <row>
+         <property name="text">
+          <string>a</string>
+         </property>
+        </row>
         <column>
          <property name="text">
           <string>ب.ت.و</string>
@@ -263,9 +268,34 @@
         </column>
         <column>
          <property name="text">
+          <string>اللقب</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>العمادة</string>
          </property>
         </column>
+        <item row="0" column="0">
+         <property name="text">
+          <string>sqd</string>
+         </property>
+        </item>
+        <item row="0" column="1">
+         <property name="text">
+          <string>qsd</string>
+         </property>
+        </item>
+        <item row="0" column="2">
+         <property name="text">
+          <string>qsd</string>
+         </property>
+        </item>
+        <item row="0" column="3">
+         <property name="text">
+          <string>qsd</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -298,6 +328,28 @@
         </property>
        </layout>
       </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="print">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="locale">
+         <locale language="Arabic" country="Tunisia"/>
+        </property>
+        <property name="text">
+         <string>طباعة الوصلات</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+       </layout>
+      </item>
       <item row="3" column="0" colspan="4">
        <widget class="QTableWidget" name="printingList">
         <property name="font">
@@ -313,7 +365,7 @@
          <enum>QFrame::WinPanel</enum>
         </property>
         <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -325,7 +377,7 @@
          <bool>false</bool>
         </property>
         <property name="showDropIndicator" stdset="0">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="dragEnabled">
          <bool>true</bool>
@@ -358,7 +410,7 @@
          <bool>false</bool>
         </property>
         <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>162</number>
+         <number>130</number>
         </attribute>
         <attribute name="horizontalHeaderHighlightSections">
          <bool>false</bool>
@@ -378,6 +430,11 @@
         </column>
         <column>
          <property name="text">
+          <string>اللقب</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>العمادة</string>
          </property>
         </column>
@@ -388,15 +445,15 @@
         </column>
        </widget>
       </item>
-      <item row="0" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="bottomMargin">
-         <number>0</number>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="remove">
+        <property name="text">
+         <string>حذف</string>
         </property>
-       </layout>
+       </widget>
       </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="print">
+      <item row="1" column="1">
+       <widget class="QComboBox" name="prosecutionOffices">
         <property name="font">
          <font>
           <pointsize>16</pointsize>
@@ -404,9 +461,6 @@
         </property>
         <property name="locale">
          <locale language="Arabic" country="Tunisia"/>
-        </property>
-        <property name="text">
-         <string>طباعة الوصلات</string>
         </property>
        </widget>
       </item>
@@ -425,29 +479,10 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="prosecutionOffices">
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-        <property name="locale">
-         <locale language="Arabic" country="Tunisia"/>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="1">
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QPushButton" name="remove">
-        <property name="text">
-         <string>حذف</string>
         </property>
        </widget>
       </item>

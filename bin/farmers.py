@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\python-project\Administration_agricole\UI\farmers.ui'
+# Form implementation generated from reading ui file 'farmers.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.2
 #
@@ -84,9 +84,9 @@ class Ui_farmers(object):
         item = self.data.horizontalHeaderItem(2)
         item.setText(_translate("farmers", "اللقب"))
         item = self.data.horizontalHeaderItem(3)
-        item.setText(_translate("farmers", "الهاتف"))
-        item = self.data.horizontalHeaderItem(4)
         item.setText(_translate("farmers", "العمادة"))
+        item = self.data.horizontalHeaderItem(4)
+        item.setText(_translate("farmers", "الهاتف"))
         item = self.data.horizontalHeaderItem(5)
         item.setText(_translate("farmers", "عدد الرؤوس"))
         self.new_.setText(_translate("farmers", "جديد"))
