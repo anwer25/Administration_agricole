@@ -7,7 +7,6 @@ from bin.sync import dataBaseSyncer
 from bin.distribution import Ui_distribution
 
 
-# noinspection PyGlobalUndefined
 class distributionWind(QWidget, Ui_distribution):
     switcher = pyqtSignal()
 
@@ -42,6 +41,10 @@ class distributionWind(QWidget, Ui_distribution):
         self.searshButton.clicked.connect(lambda: self.searchEngine(self.searsh.text()))
 
     def tableData(self) -> None:
+        """
+
+        :return:
+        """
         self.farmersListTable.setRowCount(0)
         self.rea = TableWorker(f'SELECT * FROM farmers')
         self.rea.start()
@@ -84,15 +87,29 @@ class distributionWind(QWidget, Ui_distribution):
         """
         self.deanships.addItem(data[2:-4])
 
-    def readDataToProsecutionOfficesComboBox(self):
+    def readDataToProsecutionOfficesComboBox(self) -> None:
+        """
+
+        :return:
+        """
         dataEngine = dataBaseSyncer(f'SELECT NAME_ FROM prosecutionoffices')
         dataEngine.start()
         dataEngine.Deanshipresult.connect(self.insertDataToProsecutionOfficesComboBox)
 
     def insertDataToProsecutionOfficesComboBox(self, data: str):
+        """
+
+        :param data:  prosecutionOffices Name
+        :return:
+        """
         self.prosecutionOffices.addItem(data[2:-3])
 
-    def radioButtonState(self, obj: QRadioButton):
+    def radioButtonState(self, obj: QRadioButton) -> None:
+        """
+
+        :param obj: QRadioButton Object
+        :return: None
+        """
         if obj.text() == "ب.ت.و":
             if obj.isChecked():
                 self.label_2.setEnabled(True)
@@ -126,4 +143,9 @@ class distributionWind(QWidget, Ui_distribution):
         self.rea.data__.connect(self.insertRow)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
+        """
+
+        :param a0:
+        :return:
+        """
         self.switcher.emit()
