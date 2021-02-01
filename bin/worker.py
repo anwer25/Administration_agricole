@@ -49,7 +49,10 @@ class TableWorker(QThread):
         self.data = dataBaseS(self.command)
         data_ = self.data.connector()
         self.data.connection.close()
-        for rowNumber, rowData in enumerate(data_):
-            self.data__.emit(rowNumber)
-            for colNumber, data in enumerate(rowData):
-                self.data_.emit(rowNumber, colNumber, str(data))
+        try:
+            for rowNumber, rowData in enumerate(data_):
+                self.data__.emit(rowNumber)
+                for colNumber, data in enumerate(rowData):
+                    self.data_.emit(rowNumber, colNumber, str(data))
+        except TypeError as e:
+            print(f'worker error line 53 :{e}')

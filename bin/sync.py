@@ -68,7 +68,7 @@ class dataBaseSyncer(QThread):
                 # TODO: make message here
                 print(f'you entered long value sync file line 23 : {err.errno}')
             elif err.errno == errorcode.ER_BAD_FIELD_ERROR:
-                print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
+                print(f'Error from line 23 sync file class dataBaseSyncer bad field error: {err.errno}')
             else:
                 print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
         else:

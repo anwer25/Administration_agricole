@@ -39,6 +39,7 @@ class distributionWind(QWidget, Ui_distribution):
         self.displayByDeanships.toggled.connect(lambda: self.radioButtonState(self.displayByDeanships))
         self.displayByCIN.toggled.connect(lambda: self.radioButtonState(self.displayByCIN))
         self.searshButton.clicked.connect(lambda: self.searchEngine(self.searsh.text()))
+        self.deanships.activated.connect(lambda: self.searchEngine(self.deanships.currentText()))
 
     def tableData(self) -> None:
         """
@@ -134,8 +135,9 @@ class distributionWind(QWidget, Ui_distribution):
         :return: None
         """
         self.farmersListTable.setRowCount(0)
-        if str.isalpha():
-            self.rea = TableWorker(f'SELECT * FROM farmers WHERE DEANSHIP= {key}')
+
+        if key.isalpha():
+            self.rea = TableWorker(f"SELECT * FROM farmers WHERE DEANSHIP= '{key}'")
         else:
             self.rea = TableWorker(f'SELECT * FROM farmers WHERE ID= {key}')
         self.rea.start()
