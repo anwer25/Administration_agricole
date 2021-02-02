@@ -39,15 +39,21 @@
       <property name="rightMargin">
        <number>9</number>
       </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="displayByDeanships">
         <property name="font">
          <font>
           <pointsize>16</pointsize>
          </font>
         </property>
+        <property name="locale">
+         <locale language="Arabic" country="Tunisia"/>
+        </property>
         <property name="text">
-         <string>العرض حسب :</string>
+         <string>العمادة</string>
+        </property>
+        <property name="autoRepeat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -90,6 +96,18 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>العرض حسب :</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="3">
        <widget class="QLabel" name="label_2">
         <property name="enabled">
@@ -105,24 +123,6 @@
         </property>
         <property name="text">
          <string>اكتب ب.ت.و :</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QRadioButton" name="displayByDeanships">
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-        <property name="locale">
-         <locale language="Arabic" country="Tunisia"/>
-        </property>
-        <property name="text">
-         <string>العمادة</string>
-        </property>
-        <property name="autoRepeat">
-         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -144,21 +144,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="7">
-       <widget class="QPushButton" name="searshButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>بحث</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1">
        <widget class="QComboBox" name="deanships">
         <property name="enabled">
@@ -171,6 +156,21 @@
         </property>
         <property name="locale">
          <locale language="Arabic" country="Tunisia"/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="7">
+       <widget class="QPushButton" name="searshButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>بحث</string>
         </property>
        </widget>
       </item>
@@ -328,21 +328,6 @@
         </property>
        </layout>
       </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="print">
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-        <property name="locale">
-         <locale language="Arabic" country="Tunisia"/>
-        </property>
-        <property name="text">
-         <string>طباعة الوصلات</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="bottomMargin">
@@ -445,25 +430,6 @@
         </column>
        </widget>
       </item>
-      <item row="1" column="3">
-       <widget class="QPushButton" name="remove">
-        <property name="text">
-         <string>حذف</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="prosecutionOffices">
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-        <property name="locale">
-         <locale language="Arabic" country="Tunisia"/>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_4">
         <property name="font">
@@ -483,6 +449,28 @@
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="print">
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="locale">
+         <locale language="Arabic" country="Tunisia"/>
+        </property>
+        <property name="text">
+         <string>طباعة الوصلات</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="remove">
+        <property name="text">
+         <string>حذف</string>
         </property>
        </widget>
       </item>
