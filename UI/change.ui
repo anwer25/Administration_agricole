@@ -26,7 +26,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>تغير</string>
+   <string>D.P.A تغير</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
@@ -232,6 +236,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
  <connections/>
 </ui>

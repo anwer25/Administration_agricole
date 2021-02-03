@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>340</width>
-    <height>122</height>
+    <height>124</height>
    </rect>
   </property>
   <property name="font">
@@ -17,13 +17,23 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>إضافة عمادة جديدة</string>
+   <string>D.P.A إضافة عمادة جديدة </string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="2" column="2">
     <widget class="QPushButton" name="save">
      <property name="text">
       <string>حفظ</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>31</width>
+       <height>25</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -76,6 +86,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
  <connections/>
 </ui>

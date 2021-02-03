@@ -9,12 +9,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1371</width>
-    <height>752</height>
+    <width>1366</width>
+    <height>705</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>mainwindow</string>
+   <string>D.P.A</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -38,6 +42,9 @@
     </property>
     <item row="0" column="0">
      <widget class="QFrame" name="frame">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="minimumSize">
        <size>
         <width>1371</width>
@@ -64,6 +71,9 @@
       <property name="frameShadow">
        <enum>QFrame::Sunken</enum>
       </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
       <layout class="QGridLayout" name="gridLayout">
        <property name="leftMargin">
         <number>40</number>
@@ -80,6 +90,34 @@
        <property name="horizontalSpacing">
         <number>400</number>
        </property>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="farmers">
+         <property name="font">
+          <font>
+           <family>Arabic Typesetting</family>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(255, 255, 255)</string>
+         </property>
+         <property name="text">
+          <string>فلاحة</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>67</width>
+           <height>36</height>
+          </size>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="QPushButton" name="ProsecutionOffices">
          <property name="font">
@@ -104,18 +142,11 @@
          <property name="text">
           <string>عمادات</string>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="farmers">
-         <property name="font">
-          <font>
-           <family>Arabic Typesetting</family>
-           <pointsize>22</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>فلاحة</string>
+         <property name="iconSize">
+          <size>
+           <width>67</width>
+           <height>36</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -128,20 +159,7 @@
           </font>
          </property>
          <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="histroy">
-         <property name="font">
-          <font>
-           <family>Arabic Typesetting</family>
-           <pointsize>22</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>سجل</string>
+          <string>الإعدادات</string>
          </property>
         </widget>
        </item>
@@ -158,22 +176,35 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="histroy">
+         <property name="font">
+          <font>
+           <family>Arabic Typesetting</family>
+           <pointsize>22</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>سجل</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1371</width>
+     <width>1366</width>
      <height>21</height>
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="../qrc_source/source.qrc"/>
