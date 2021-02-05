@@ -11,6 +11,8 @@ class changeMainWindow(QWidget, Ui_change):
     def __init__(self, CIN: str = None):
         super(changeMainWindow, self).__init__()
         self.CIN = CIN
+        self.database = None
+        self.dataBaseEngine = None
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -35,11 +37,20 @@ class changeMainWindow(QWidget, Ui_change):
         self.headsNumber.setText(str(data[0][5]))
 
     def readDeanShipsData(self):
+        """
+        About : read Deanship data from data base 
+        :return: None
+        """
         self.dataBaseEngine = dataBaseSyncer(f'SELECT NAME_ FROM DEANSHIPS')
         self.dataBaseEngine.start()
         self.dataBaseEngine.Deanshipresult.connect(self.addDataToComboBox)
 
     def addDataToComboBox(self, data):
+        """
+
+        :param data: Deanship name from database
+        :return: None
+        """
         self.Deanship.addItem(data[2:-4])
 
     def Buttons(self) -> None:

@@ -1,6 +1,6 @@
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton
+from PyQt5.QtCore import pyqtSignal, QEvent
+from PyQt5.QtGui import QCloseEvent, QDropEvent
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton, QTableWidget
 
 from bin.worker import TableWorker
 from bin.sync import dataBaseSyncer
@@ -29,7 +29,8 @@ class distributionWind(QWidget, Ui_distribution):
         self.show()
         self.tableData()
         self.readDataToDeanshipsComboBox()
-        self.readDataToProsecutionOfficesComboBox()
+        # self.readDataToProsecutionOfficesComboBox()
+        self.printingList.itemChanged.connect(self.itemChanged)
 
     def Buttons(self) -> None:
         """
@@ -103,7 +104,7 @@ class distributionWind(QWidget, Ui_distribution):
         :param data:  prosecutionOffices Name
         :return:
         """
-        self.prosecutionOffices.addItem(data[2:-3])
+        # self.prosecutionOffices.addItem(data[2:-3])
 
     def radioButtonState(self, obj: QRadioButton) -> None:
         """
@@ -143,6 +144,15 @@ class distributionWind(QWidget, Ui_distribution):
         self.rea.start()
         self.rea.data_.connect(self.tableDataDisplay)
         self.rea.data__.connect(self.insertRow)
+
+    def itemChanged(self, result):
+        ___addCIN = {}
+        if self.farmersListTable.currentRow() != -1:
+            CIN = self.farmersListTable.model().index(self.farmersListTable.currentRow(), 0)
+            print(f'first{self.farmersListTable.model().data(CIN)}')
+            secondCIN = self.printingList.model().index(result.row(), 0)
+            resultSecondCIN = self.printingList.model().data(secondCIN)
+            print(f'secondCIN{resultSecondCIN}')
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

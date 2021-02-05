@@ -16,7 +16,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>التوزيع</string>
+   <string>D.P.A التوزيع</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
@@ -35,6 +39,9 @@
      <layout class="QGridLayout" name="gridLayout_2">
       <property name="leftMargin">
        <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>13</number>
       </property>
       <property name="rightMargin">
        <number>9</number>
@@ -198,7 +205,10 @@
          <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -219,7 +229,7 @@
          <enum>QAbstractItemView::DragOnly</enum>
         </property>
         <property name="defaultDropAction">
-         <enum>Qt::TargetMoveAction</enum>
+         <enum>Qt::CopyAction</enum>
         </property>
         <property name="alternatingRowColors">
          <bool>true</bool>
@@ -251,11 +261,6 @@
         <attribute name="horizontalHeaderHighlightSections">
          <bool>false</bool>
         </attribute>
-        <row>
-         <property name="text">
-          <string>a</string>
-         </property>
-        </row>
         <column>
          <property name="text">
           <string>ب.ت.و</string>
@@ -276,26 +281,6 @@
           <string>العمادة</string>
          </property>
         </column>
-        <item row="0" column="0">
-         <property name="text">
-          <string>sqd</string>
-         </property>
-        </item>
-        <item row="0" column="1">
-         <property name="text">
-          <string>qsd</string>
-         </property>
-        </item>
-        <item row="0" column="2">
-         <property name="text">
-          <string>qsd</string>
-         </property>
-        </item>
-        <item row="0" column="3">
-         <property name="text">
-          <string>qsd</string>
-         </property>
-        </item>
        </widget>
       </item>
      </layout>
@@ -318,7 +303,7 @@
       <property name="horizontalSpacing">
        <number>6</number>
       </property>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <layout class="QVBoxLayout" name="verticalLayout">
         <property name="spacing">
          <number>1</number>
@@ -335,7 +320,14 @@
         </property>
        </layout>
       </item>
-      <item row="3" column="0" colspan="4">
+      <item row="3" column="1">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="4">
        <widget class="QTableWidget" name="printingList">
         <property name="font">
          <font>
@@ -353,7 +345,10 @@
          <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -395,7 +390,7 @@
          <bool>false</bool>
         </property>
         <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>130</number>
+         <number>108</number>
         </attribute>
         <attribute name="horizontalHeaderHighlightSections">
          <bool>false</bool>
@@ -428,31 +423,14 @@
           <string>النيابة</string>
          </property>
         </column>
+        <column>
+         <property name="text">
+          <string>عدد اكيس</string>
+         </property>
+        </column>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="font">
-         <font>
-          <pointsize>16</pointsize>
-         </font>
-        </property>
-        <property name="locale">
-         <locale language="Arabic" country="Tunisia"/>
-        </property>
-        <property name="text">
-         <string>اختار النيابة :</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
        <widget class="QPushButton" name="print">
         <property name="font">
          <font>
@@ -467,7 +445,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
+      <item row="1" column="1">
        <widget class="QPushButton" name="remove">
         <property name="text">
          <string>حذف</string>
@@ -479,6 +457,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
  <connections/>
 </ui>
