@@ -9,6 +9,7 @@ from bin.distribution import Ui_distribution
 
 class distributionWind(QWidget, Ui_distribution):
     switcher = pyqtSignal()
+    events = pyqtSignal(bool)
 
     def __init__(self):
         super(distributionWind, self).__init__()
@@ -146,13 +147,29 @@ class distributionWind(QWidget, Ui_distribution):
         self.rea.data__.connect(self.insertRow)
 
     def itemChanged(self, result):
-        ___addCIN = {}
+
+
+
+        """
         if self.farmersListTable.currentRow() != -1:
             CIN = self.farmersListTable.model().index(self.farmersListTable.currentRow(), 0)
+            CINDATA = self.farmersListTable.model().data(CIN)
+            if CINDATA in self.___addCIN:
+                self.events.emit(False)
+            else:
+                self.events.emit(True)
+                self.___addCIN.add(CINDATA)
+                print(self.___addCIN)
+
+
+
             print(f'first{self.farmersListTable.model().data(CIN)}')
             secondCIN = self.printingList.model().index(result.row(), 0)
             resultSecondCIN = self.printingList.model().data(secondCIN)
             print(f'secondCIN{resultSecondCIN}')
+            """
+    def dropEvent(self, a0: QDropEvent) -> None:
+        a0.accept()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
