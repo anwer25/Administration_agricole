@@ -92,7 +92,8 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
 
         :return:
         """
-        pass
+        self.saveButton.clicked.connect(self.save)
+        self.cancelButton.clicked.connect(self.close)
 
     def readDataToProsecutionOfficesComboBox(self) -> None:
         """
@@ -110,3 +111,10 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
         :return:
         """
         self.deanship.addItem(data[2:-3])
+
+    def save(self):
+        prosecutionOfficesName = self.deanship.currentText()
+        numberOfBags = self.number.value()
+        self.dataSender.emit(prosecutionOfficesName, str(numberOfBags))
+        self.close()
+

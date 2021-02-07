@@ -133,7 +133,7 @@ class distributionWind(QWidget, Ui_distribution):
     def itemChanged(self, result):
 
         self.subDistributionWindow = subDistributionMenu()
-        self.subDistributionWindow.dataSender.connect(lambda i, s: print(i, s))
+        self.subDistributionWindow.dataSender.connect(lambda p, n: self.addValuesToRow(result, p, n))
 
         """
         if self.farmersListTable.currentRow() != -1:
@@ -153,6 +153,17 @@ class distributionWind(QWidget, Ui_distribution):
             resultSecondCIN = self.printingList.model().data(secondCIN)
             print(f'secondCIN{resultSecondCIN}')
             """
+    def addValuesToRow(self, index: QTableWidgetItem, prosecutionOfficesName: str, number: str) -> None:
+        """
+
+        :param index:
+        :param prosecutionOfficesName:
+        :param number:
+        :return:
+        """
+        self.printingList.setItem(index.row(), 4, QTableWidgetItem(prosecutionOfficesName))
+        self.printingList.setItem(index.row(), 5, QTableWidgetItem(number))
+        self.subDistributionWindow.close()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
