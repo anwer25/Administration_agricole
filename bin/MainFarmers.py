@@ -13,6 +13,7 @@ class farmers(QWidget, Ui_farmers):
 
     def __init__(self):
         super(farmers, self).__init__()
+        self.newFarmerWindow = None
         self.setupUi(self)
         self.tableRefresh()
         self.conformMessage = QMessageBox()

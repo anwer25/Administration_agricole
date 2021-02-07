@@ -1,10 +1,11 @@
 from PyQt5.QtCore import pyqtSignal, QEvent
-from PyQt5.QtGui import QCloseEvent, QDropEvent
+from PyQt5.QtGui import QCloseEvent, QDropEvent, QDragEnterEvent, QDragLeaveEvent
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton, QTableWidget
 
 from bin.worker import TableWorker
 from bin.sync import dataBaseSyncer
 from bin.distribution import Ui_distribution
+from bin.subDistributionM import subDistributionMenu
 
 
 class distributionWind(QWidget, Ui_distribution):
@@ -14,6 +15,7 @@ class distributionWind(QWidget, Ui_distribution):
     def __init__(self):
         super(distributionWind, self).__init__()
         self.rea = None
+        self.subDistributionWindow = None
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -30,7 +32,6 @@ class distributionWind(QWidget, Ui_distribution):
         self.show()
         self.tableData()
         self.readDataToDeanshipsComboBox()
-        # self.readDataToProsecutionOfficesComboBox()
         self.printingList.itemChanged.connect(self.itemChanged)
 
     def Buttons(self) -> None:
@@ -90,23 +91,6 @@ class distributionWind(QWidget, Ui_distribution):
         """
         self.deanships.addItem(data[2:-4])
 
-    def readDataToProsecutionOfficesComboBox(self) -> None:
-        """
-
-        :return:
-        """
-        dataEngine = dataBaseSyncer(f'SELECT NAME_ FROM prosecutionoffices')
-        dataEngine.start()
-        dataEngine.Deanshipresult.connect(self.insertDataToProsecutionOfficesComboBox)
-
-    def insertDataToProsecutionOfficesComboBox(self, data: str):
-        """
-
-        :param data:  prosecutionOffices Name
-        :return:
-        """
-        # self.prosecutionOffices.addItem(data[2:-3])
-
     def radioButtonState(self, obj: QRadioButton) -> None:
         """
 
@@ -148,7 +132,8 @@ class distributionWind(QWidget, Ui_distribution):
 
     def itemChanged(self, result):
 
-
+        self.subDistributionWindow = subDistributionMenu()
+        self.subDistributionWindow.dataSender.connect(lambda i, s: print(i, s))
 
         """
         if self.farmersListTable.currentRow() != -1:
@@ -168,8 +153,6 @@ class distributionWind(QWidget, Ui_distribution):
             resultSecondCIN = self.printingList.model().data(secondCIN)
             print(f'secondCIN{resultSecondCIN}')
             """
-    def dropEvent(self, a0: QDropEvent) -> None:
-        a0.accept()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

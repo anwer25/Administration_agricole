@@ -1,24 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>subDistribution</class>
+ <widget class="QDialog" name="subDistribution">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>277</width>
-    <height>93</height>
+    <height>122</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Arabic Typesetting</family>
+    <pointsize>16</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>D.P.A التوزيع</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QComboBox" name="comboBox"/>
+    <widget class="QComboBox" name="deanship">
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QSpinBox" name="spinBox"/>
+    <widget class="QSpinBox" name="number">
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>20</number>
+     </property>
+    </widget>
    </item>
    <item row="0" column="1">
     <widget class="QLabel" name="label_2">
@@ -35,7 +65,7 @@
     </widget>
    </item>
    <item row="2" column="0" colspan="2">
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="saveCancelButton">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -46,12 +76,14 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>saveCancelButton</sender>
    <signal>accepted()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>subDistribution</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -65,9 +97,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>saveCancelButton</sender>
    <signal>rejected()</signal>
-   <receiver>Dialog</receiver>
+   <receiver>subDistribution</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
