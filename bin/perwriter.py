@@ -4,6 +4,7 @@ import mysql.connector
 import json
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtCore import QSettings
+import os
 
 
 class writer(QThread):
@@ -76,9 +77,18 @@ class writer(QThread):
                 'DeanShip': self.data[0][11],
                 'addNewDeanShip': self.data[0][12]
             }
-        with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
-            json.dump(temp, jsonFile, indent=4)
-        self.connection.close()
+        try:
+            with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
+                json.dump(temp, jsonFile, indent=4)
+        except FileNotFoundError as e:
+            if os.path.exists('.\\bin\\data\\temp'):
+                print(e)
+            else:
+                os.mkdir('.\\bin\\data\\temp')
+                with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
+                    json.dump(temp, jsonFile, indent=4)
+        finally:
+            self.connection.close()
 
 
 class readr(QThread):

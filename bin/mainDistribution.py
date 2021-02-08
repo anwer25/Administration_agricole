@@ -1,11 +1,12 @@
 from PyQt5.QtCore import pyqtSignal, QEvent
-from PyQt5.QtGui import QCloseEvent, QDropEvent, QDragEnterEvent, QDragLeaveEvent
+from PyQt5.QtGui import QCloseEvent, QTextCursor
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton, QTableWidget
 
 from bin.worker import TableWorker
 from bin.sync import dataBaseSyncer
 from bin.distribution import Ui_distribution
 from bin.subDistributionM import subDistributionMenu
+from bin.printEngine import printingData
 
 
 class distributionWind(QWidget, Ui_distribution):
@@ -43,6 +44,7 @@ class distributionWind(QWidget, Ui_distribution):
         self.displayByCIN.toggled.connect(lambda: self.radioButtonState(self.displayByCIN))
         self.searshButton.clicked.connect(lambda: self.searchEngine(self.searsh.text()))
         self.deanships.activated.connect(lambda: self.searchEngine(self.deanships.currentText()))
+        self.print.clicked.connect(lambda: printingData(self.printingList).start())
 
     def tableData(self) -> None:
         """
@@ -137,7 +139,7 @@ class distributionWind(QWidget, Ui_distribution):
 
         """
         if self.farmersListTable.currentRow() != -1:
-            CIN = self.farmersListTable.model().index(self.farmersListTable.currentRow(), 0)
+            CIN = self.farmersListTable.model().index(self.farmersListTable.currentRow())
             CINDATA = self.farmersListTable.model().data(CIN)
             if CINDATA in self.___addCIN:
                 self.events.emit(False)
@@ -164,7 +166,12 @@ class distributionWind(QWidget, Ui_distribution):
         self.printingList.setItem(index.row(), 4, QTableWidgetItem(prosecutionOfficesName))
         self.printingList.setItem(index.row(), 5, QTableWidgetItem(number))
         self.subDistributionWindow.close()
-
+    """
+    def printingData(self):
+        rowCount = self.printingList.rowCount()
+        colCount = self.printingList.columnCount()
+        print(rowCount, colCount)
+    """
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
 
