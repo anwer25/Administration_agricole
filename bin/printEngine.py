@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QTableWidget
 from bin.sync import dataBaseSyncer
-from datetime import date
+from datetime import datetime
 
 
 class printingData(QThread):
@@ -45,14 +45,23 @@ class printingData(QThread):
             self.dataBaseEngine.result.connect(self.dateS)
 
     def dateS(self, datestr: str) -> None:
-        todayDate = date.today()
-        dateStr = todayDate.strftime("%d/%m/%Y")
-        print(datestr)
-        print(date(dateStr)-date(datestr).days)
-        # print(date(map(int, tuple(datestr)))-date(map(int, tuple('21',))))
-        self.dataBaseEngine = dataBaseSyncer(f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
-                                                 f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                                                 f"'{dateStr}')")
-        self.dataBaseEngine.start()
+        todayDate = datetime.today()
+        dateStr = todayDate.strftime("%d-%m-%Y")
+        if len(datestr) > 0:
+            dif = datetime.strptime(dateStr, "%d-%m-%Y")-datetime.strptime(str(datestr[0])[2:-3], "%d-%m-%Y")
+            if dif >= 30:
+                self.dataBaseEngine = dataBaseSyncer(
+                    f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
+                    f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
+                    f"'{dateStr}')")
+                self.dataBaseEngine.start()
+            else:
+                pass
+        else:
+            self.dataBaseEngine = dataBaseSyncer(
+                f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
+                f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
+                f"'{dateStr}')")
+            self.dataBaseEngine.start()
 
 
