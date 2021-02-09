@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QThread
 from PyQt5.QtWidgets import QTableWidget
 from bin.sync import dataBaseSyncer
+from datetime import date
 
 
 class printingData(QThread):
@@ -15,6 +16,12 @@ class printingData(QThread):
         super(printingData, self).__init__()
         self.tableWidget = tableWidget
         self.dataBaseEngine = None
+        self.___CIN = None
+        self.___NAME = None
+        self.___LASTNAME = None
+        self.___DEANSHIP = None
+        self.___ProsectutionOffices = None
+        self.___NUMBEROFBAGS = None
 
     def run(self) -> None:
         """
@@ -26,24 +33,26 @@ class printingData(QThread):
     def readingData(self) -> None:
 
         rowCount = self.tableWidget.rowCount()
-        colCount = self.tableWidget.columnCount()
-
         for row in range(rowCount):
-            print(self.tableWidget.item(row, 0).text())
-            ___CIN = self.tableWidget.item(row, 0).text()
-            ___NAME = self.tableWidget.item(row, 1).text()
-            ___LASTNAME = self.tableWidget.item(row, 2).text()
-            ___DEANSHIP = self.tableWidget.item(row, 3).text()
-            ___ProsectutionOffices = self.tableWidget.item(row, 4).text()
-            ___NUMBEROFBAGS = self.tableWidget.item(row, 5).text()
-            print(___CIN, ___NAME, ___LASTNAME, ___DEANSHIP, ___ProsectutionOffices, ___NUMBEROFBAGS)
-
-            self.dataBaseEngine = dataBaseSyncer(f"INSERT INTO histroy values(CIN='{___CIN}',"
-                                                 f"NAME_='{___NAME}',"
-                                                 f"LASTNAME='{___LASTNAME}',"
-                                                 f"DEANSHIP='{___DEANSHIP}',"
-                                                 f"ProsectutionOffices='{___ProsectutionOffices}',"
-                                                 f"NUMBEROFBAGS='{___NUMBEROFBAGS}')")
+            self.___CIN = self.tableWidget.item(row, 0).text()
+            self.___NAME = self.tableWidget.item(row, 1).text()
+            self.___LASTNAME = self.tableWidget.item(row, 2).text()
+            self.___DEANSHIP = self.tableWidget.item(row, 3).text()
+            self.___ProsectutionOffices = self.tableWidget.item(row, 4).text()
+            self.___NUMBEROFBAGS = self.tableWidget.item(row, 5).text()
+            self.dataBaseEngine = dataBaseSyncer(f'SELECT DATE FROM history where CIN={self.___CIN}')
             self.dataBaseEngine.start()
+            self.dataBaseEngine.result.connect(self.dateS)
+
+    def dateS(self, datestr: str) -> None:
+        todayDate = date.today()
+        dateStr = todayDate.strftime("%d/%m/%Y")
+        print(datestr)
+        print(date(dateStr)-date(datestr).days)
+        # print(date(map(int, tuple(datestr)))-date(map(int, tuple('21',))))
+        self.dataBaseEngine = dataBaseSyncer(f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
+                                                 f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
+                                                 f"'{dateStr}')")
+        self.dataBaseEngine.start()
 
 
