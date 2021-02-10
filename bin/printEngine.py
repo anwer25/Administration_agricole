@@ -40,7 +40,7 @@ class printingData(QThread):
             self.___DEANSHIP = self.tableWidget.item(row, 3).text()
             self.___ProsectutionOffices = self.tableWidget.item(row, 4).text()
             self.___NUMBEROFBAGS = self.tableWidget.item(row, 5).text()
-            self.dataBaseEngine = dataBaseSyncer(f'SELECT DATE FROM history where CIN={self.___CIN}')
+            self.dataBaseEngine = dataBaseSyncer(f'SELECT DATE_ FROM history where CIN={self.___CIN}')
             self.dataBaseEngine.start()
             self.dataBaseEngine.result.connect(self.dateS)
 
@@ -49,7 +49,7 @@ class printingData(QThread):
         dateStr = todayDate.strftime("%d-%m-%Y")
         if len(datestr) > 0:
             dif = datetime.strptime(dateStr, "%d-%m-%Y")-datetime.strptime(str(datestr[0])[2:-3], "%d-%m-%Y")
-            if dif >= 30:
+            if dif.days >= 30:
                 self.dataBaseEngine = dataBaseSyncer(
                     f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                     f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
