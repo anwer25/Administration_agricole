@@ -44,7 +44,7 @@ class distributionWind(QWidget, Ui_distribution):
         self.displayByCIN.toggled.connect(lambda: self.radioButtonState(self.displayByCIN))
         self.searshButton.clicked.connect(lambda: self.searchEngine(self.searsh.text()))
         self.deanships.activated.connect(lambda: self.searchEngine(self.deanships.currentText()))
-        self.print.clicked.connect(lambda: printingData(self.printingList).start())
+        self.print.clicked.connect(lambda: self.addDataToHistory(self.printingList))
 
     def tableData(self) -> None:
         """
@@ -172,6 +172,10 @@ class distributionWind(QWidget, Ui_distribution):
         colCount = self.printingList.columnCount()
         print(rowCount, colCount)
     """
+    def addDataToHistory(self, table: QTableWidget) -> None:
+        ___printEnine = printingData(table)
+        ___printEnine.start()
+
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
 

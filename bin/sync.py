@@ -71,6 +71,11 @@ class dataBaseSyncer(QThread):
                 print(f'Error from line 23 sync file class dataBaseSyncer bad field error: {err.errno}')
             elif err.errno == errorcode.ER_NO_SUCH_TABLE:
                 print(f'Error from line 23 sync file class dataBaseSyncer: NO SUCH TABLE: {err.errno}')
+            elif err.errno == errorcode.ER_WRONG_VALUE_COUNT_ON_ROW:
+                print(f'Error from line 23 sync file class dataBaseSyncer: values provided in the INSERT statement is '
+                      f'bigger or smaller than the number of columns the table has: {err.errno}')
+            elif err.errno == errorcode.ER_PARSE_ERROR:
+                print(f'Error from line 23 sync file class dataBaseSyncer: PARSE ERROR: {err.errno}')
             else:
                 print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
         else:

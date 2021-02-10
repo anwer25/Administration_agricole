@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QThread
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QTableWidget
 from bin.sync import dataBaseSyncer
 from datetime import datetime
@@ -11,7 +11,7 @@ class printingData(QThread):
         reading data from QTableWidget using for lop by col and rows
         after that add gathering data to database and printing it
     """
-
+    message = pyqtSignal
     def __init__(self, tableWidget: QTableWidget):
         super(printingData, self).__init__()
         self.tableWidget = tableWidget
@@ -53,15 +53,17 @@ class printingData(QThread):
                 self.dataBaseEngine = dataBaseSyncer(
                     f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                     f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                    f"'{dateStr}')")
+                    f"'{dateStr}'), NULL ")
                 self.dataBaseEngine.start()
             else:
                 pass
+
         else:
             self.dataBaseEngine = dataBaseSyncer(
-                f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
+                f"INSERT INTO history (CIN, NAME_, LASTNAME, DEANSHIP, ProsectutionOffices, NUMBEROFBAGS, DATE_, "
+                f"TIKETID) values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                 f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                f"'{dateStr}')")
+                f"'{dateStr}'), 0")
             self.dataBaseEngine.start()
 
 
