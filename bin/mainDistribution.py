@@ -17,6 +17,7 @@ class distributionWind(QWidget, Ui_distribution):
         super(distributionWind, self).__init__()
         self.rea = None
         self.subDistributionWindow = None
+        self.___printEnine = None
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -173,8 +174,10 @@ class distributionWind(QWidget, Ui_distribution):
         print(rowCount, colCount)
     """
     def addDataToHistory(self, table: QTableWidget) -> None:
-        ___printEnine = printingData(table)
-        ___printEnine.start()
+        self.___printEnine = printingData(table)
+        self.___printEnine.start()
+        self.___printEnine.resetTable.connect(lambda: self.printingList.setRowCount(0))
+
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

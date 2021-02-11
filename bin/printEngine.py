@@ -11,7 +11,8 @@ class printingData(QThread):
         reading data from QTableWidget using for lop by col and rows
         after that add gathering data to database and printing it
     """
-    message = pyqtSignal
+    message = pyqtSignal()
+    resetTable = pyqtSignal()
     def __init__(self, tableWidget: QTableWidget):
         super(printingData, self).__init__()
         self.tableWidget = tableWidget
@@ -43,29 +44,31 @@ class printingData(QThread):
             self.dataBaseEngine = dataBaseSyncer(f'SELECT DATE_ FROM history where CIN={self.___CIN}')
             self.dataBaseEngine.start()
             self.dataBaseEngine.result.connect(self.dateS)
+            print(self.___CIN)
 
     def dateS(self, datestr: list) -> None:
         todayDate = datetime.today()
         dateStr = todayDate.strftime("%d-%m-%Y")
-        print(datestr, len(datestr))
-        if len(datestr) > 0:
+        print(len(datestr), datestr)
+        if len(datestr):
+            print(datestr)
             dif = datetime.strptime(dateStr, "%d-%m-%Y")-datetime.strptime(str(datestr[0])[2:-3], "%d-%m-%Y")
             if dif.days >= 30:
-                print('pk')
+                print('pk', self.___CIN)
                 self.dataBaseEngine = dataBaseSyncer(
                     f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                     f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
                     f"'{dateStr}', null )")
                 self.dataBaseEngine.start()
             else:
-                pass
+                print('sss')
 
         else:
-            print("qq")
+            print("qq", self.___CIN)
             self.dataBaseEngine = dataBaseSyncer(
                 f"INSERT INTO history values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                 f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
                 f"'{dateStr}', null)")
             self.dataBaseEngine.start()
-
+        # self.resetTable.emit()
 
