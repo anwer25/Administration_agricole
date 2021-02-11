@@ -44,26 +44,28 @@ class printingData(QThread):
             self.dataBaseEngine.start()
             self.dataBaseEngine.result.connect(self.dateS)
 
-    def dateS(self, datestr: str) -> None:
+    def dateS(self, datestr: list) -> None:
         todayDate = datetime.today()
         dateStr = todayDate.strftime("%d-%m-%Y")
+        print(datestr, len(datestr))
         if len(datestr) > 0:
             dif = datetime.strptime(dateStr, "%d-%m-%Y")-datetime.strptime(str(datestr[0])[2:-3], "%d-%m-%Y")
             if dif.days >= 30:
+                print('pk')
                 self.dataBaseEngine = dataBaseSyncer(
                     f"INSERT INTO history values('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                     f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                    f"'{dateStr}'), NULL ")
+                    f"'{dateStr}', null )")
                 self.dataBaseEngine.start()
             else:
                 pass
 
         else:
+            print("qq")
             self.dataBaseEngine = dataBaseSyncer(
-                f"INSERT INTO history (CIN, NAME_, LASTNAME, DEANSHIP, ProsectutionOffices, NUMBEROFBAGS, DATE_, "
-                f"TIKETID) values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
+                f"INSERT INTO history values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                 f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                f"'{dateStr}'), 0")
+                f"'{dateStr}', null)")
             self.dataBaseEngine.start()
 
 

@@ -3,7 +3,7 @@ from PyQt5.QtCore import pyqtSignal, QThread
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
 from bin.sync import dataBaseSyncer
 from bin.psd import Dcrypt
-from perwriter import writer
+from bin.perwriter import writer
 from os import path
 
 

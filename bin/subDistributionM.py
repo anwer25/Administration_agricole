@@ -116,5 +116,4 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
         prosecutionOfficesName = self.deanship.currentText()
         numberOfBags = self.number.value()
         self.dataSender.emit(prosecutionOfficesName, str(numberOfBags))
-        self.close()
 

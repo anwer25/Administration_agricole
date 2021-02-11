@@ -76,6 +76,8 @@ class dataBaseSyncer(QThread):
                       f'bigger or smaller than the number of columns the table has: {err.errno}')
             elif err.errno == errorcode.ER_PARSE_ERROR:
                 print(f'Error from line 23 sync file class dataBaseSyncer: PARSE ERROR: {err.errno}')
+            elif err.errno == errorcode.ER_DUP_ENTRY:
+                print(f'Error from line 23 sync file class dataBaseSyncer: DUP ENTRY: {err.errno}')
             else:
                 print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
         else:
