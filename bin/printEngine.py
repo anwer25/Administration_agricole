@@ -49,7 +49,7 @@ class printingData(QThread):
     def dateS(self, datestr: list) -> None:
         todayDate = datetime.today()
         dateStr = todayDate.strftime("%d-%m-%Y")
-        print(len(datestr), datestr)
+        print(len(datestr), datestr ?)
         if len(datestr):
             print(datestr)
             dif = datetime.strptime(dateStr, "%d-%m-%Y")-datetime.strptime(str(datestr[0])[2:-3], "%d-%m-%Y")
