@@ -28,7 +28,10 @@ class dataBaseS:
             self.connection = mysql.connector.connect(**config)
             self.cursor = self.connection.cursor()
             self.cursor.execute(self.com)
-            return self.cursor.fetchall()
+            if 'INSERT' in self.com:
+                self.connection.commit()
+            else:
+                return self.cursor.fetchall()
         except mysql.connector.Error as err:
             print(f'Error from line 23 sync file class dataBaseSyncer: {err}')
 

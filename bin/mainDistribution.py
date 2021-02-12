@@ -156,6 +156,7 @@ class distributionWind(QWidget, Ui_distribution):
             resultSecondCIN = self.printingList.model().data(secondCIN)
             print(f'secondCIN{resultSecondCIN}')
             """
+
     def addValuesToRow(self, index: QTableWidgetItem, prosecutionOfficesName: str, number: str) -> None:
         """
 
@@ -167,17 +168,18 @@ class distributionWind(QWidget, Ui_distribution):
         self.printingList.setItem(index.row(), 4, QTableWidgetItem(prosecutionOfficesName))
         self.printingList.setItem(index.row(), 5, QTableWidgetItem(number))
         self.subDistributionWindow.close()
+
     """
     def printingData(self):
         rowCount = self.printingList.rowCount()
         colCount = self.printingList.columnCount()
         print(rowCount, colCount)
     """
+
     def addDataToHistory(self, table: QTableWidget) -> None:
         self.___printEnine = printingData(table)
         self.___printEnine.start()
         self.___printEnine.resetTable.connect(lambda: self.printingList.setRowCount(0))
-
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
