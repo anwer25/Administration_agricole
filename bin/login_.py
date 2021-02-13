@@ -1,10 +1,9 @@
 from bin.login import Ui_MainWindow
-from PyQt5.QtCore import pyqtSignal, QThread
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
 from bin.sync import dataBaseSyncer
 from bin.psd import Dcrypt
 from bin.perwriter import writer
-from os import path
 
 
 class loginMain(QMainWindow, Ui_MainWindow):
@@ -39,9 +38,9 @@ class loginMain(QMainWindow, Ui_MainWindow):
         global username
         username = f'\'{self.username.text()}\''
 
-        database = dataBaseSyncer(f"SELECT password FROM users WHERE USER_={username}")
-        database.start()
-        database.result.connect(self.result)
+        self.database = dataBaseSyncer(f"SELECT password FROM users WHERE USER_={username}")
+        self.database.start()
+        self.database.result.connect(self.result)
 
     def result(self, r) -> None:
 
@@ -50,8 +49,8 @@ class loginMain(QMainWindow, Ui_MainWindow):
         else:
             password = self.password.text()
             passwordVerify = Dcrypt(password, r)
-            passwordVerify.start()
-            passwordVerify.state.connect(self.windowSwitcherEngine)
+
+            self.windowSwitcherEngine(passwordVerify.passwordShaker())
 
     def windowSwitcherEngine(self, r) -> None:
 

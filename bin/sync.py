@@ -19,6 +19,7 @@ class dataBaseSyncer(QThread):
         self._connecter()
 
     def _connecter(self) -> None:
+
         """
         :rtype: None
         :return:dataBase Query result 
@@ -83,3 +84,5 @@ class dataBaseSyncer(QThread):
                 print(f'Error from line 23 sync file class dataBaseSyncer: {err.errno}')
         else:
             self.connection.close()
+        finally:
+            self.quit()

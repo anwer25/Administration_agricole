@@ -59,3 +59,5 @@ class TableWorker(QThread):
                     self.data_.emit(rowNumber, colNumber, str(data))
         except TypeError as e:
             print(f'worker error line 53 :{e}')
+        finally:
+            self.quit()

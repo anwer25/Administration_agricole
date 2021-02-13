@@ -39,8 +39,7 @@ class registerWindow(QMainWindow, Ui_MainWindow):
     def createAccount(self) -> None:
         if self.password.text() == self.password_2.text() and len(self.password.text()) > 4:
             CryptEngine = Crypt(self.password.text())
-            CryptEngine.start()
-            CryptEngine.passwordAndUserName.connect(self.saver)
+            self.saver(CryptEngine.encryptUserNameAndPassword())
         else:
             self.passwordProblem.exec_()
             self.password.clear()

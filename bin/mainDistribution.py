@@ -1,5 +1,5 @@
-from PyQt5.QtCore import pyqtSignal, QEvent
-from PyQt5.QtGui import QCloseEvent, QTextCursor
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton, QTableWidget
 
 from bin.worker import TableWorker
@@ -32,8 +32,8 @@ class distributionWind(QWidget, Ui_distribution):
         self.searsh.setEnabled(True)
         self.searshButton.setEnabled(True)
         self.show()
-        self.tableData()
-        self.readDataToDeanshipsComboBox()
+        # self.tableData()
+        # self.readDataToDeanshipsComboBox()
         self.printingList.itemChanged.connect(self.itemChanged)
 
     def Buttons(self) -> None:
@@ -178,8 +178,10 @@ class distributionWind(QWidget, Ui_distribution):
 
     def addDataToHistory(self, table: QTableWidget) -> None:
         self.___printEnine = printingData(table)
-        self.___printEnine.start()
         self.___printEnine.resetTable.connect(lambda: self.printingList.setRowCount(0))
+        self.___printEnine.start()
+        self.___printEnine.exec()
+
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

@@ -1,5 +1,5 @@
 from passlib.context import CryptContext
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSignal
 
 
 class Key:
@@ -10,33 +10,29 @@ class Key:
     )
 
 
-class Crypt(QThread):
+class Crypt(QObject):
     passwordAndUserName = pyqtSignal(str)
 
     def __init__(self, password: str):
-        super(Crypt, self).__init__()
         self.password = password
 
-    def run(self) -> None:
-        self.encryptUserNameAndPassword()
-
     def encryptUserNameAndPassword(self) -> None:
-        self.passwordAndUserName.emit(Key.pwd_context.encrypt(self.password))
+        return Key.pwd_context.encrypt(self.password)
 
 
-class Dcrypt(QThread):
-    state = pyqtSignal(bool)
+class Dcrypt(QObject):
 
     def __init__(self, password: str, dbPassword: str):
         super(Dcrypt, self).__init__()
         self.password = password
         self.dbPassword = dbPassword[0]
 
-    def run(self) -> None:
-        self.passwordShaker()
+    def passwordShaker(self) -> None:
+        """
 
-    def passwordShaker(self):
+        :return: bool
+        """
         if Key.pwd_context.verify(self.password, str(self.dbPassword)[2:-3]):
-            self.state.emit(True)
+            return True
         else:
-            self.state.emit(False)
+            return False

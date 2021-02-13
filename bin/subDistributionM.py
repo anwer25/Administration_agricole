@@ -100,9 +100,9 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
 
         :return:
         """
-        dataEngine = dataBaseSyncer(f'SELECT NAME_ FROM prosecutionoffices')
-        dataEngine.start()
-        dataEngine.Deanshipresult.connect(self.insertDataToProsecutionOfficesComboBox)
+        self.dataEngine = dataBaseSyncer(f'SELECT NAME_ FROM prosecutionoffices')
+        self.dataEngine.start()
+        self.dataEngine.Deanshipresult.connect(self.insertDataToProsecutionOfficesComboBox)
 
     def insertDataToProsecutionOfficesComboBox(self, data: str):
         """
