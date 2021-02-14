@@ -8,9 +8,16 @@ import uuid
 
 class templateEngine:
 
-    def __init__(self, clientName: str, phoneNumber: str, companyName: str, deviceType: str, deviceBrand: str,
-                 deviceModel: str, ID: str, date: str, prePaid: str, price: any, accessories: str, qrimage: str):
+    def __init__(self, number, cin, name, lastname, numberofbugs, prosecutionoffices, date):
         super(templateEngine, self).__init__()
+
+        self.date = date
+        self.prosecutionoffices = prosecutionoffices
+        self.numberofbugs = numberofbugs
+        self.lastname = lastname
+        self.name = name
+        self.cin = cin
+        self.number = number
         self.___settings = QSettings('alpha', 'Repair_box')
 
     def templateWriter(self) -> None:
