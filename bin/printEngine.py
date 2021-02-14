@@ -12,23 +12,9 @@ class templateEngine:
                  deviceModel: str, ID: str, date: str, prePaid: str, price: any, accessories: str, qrimage: str):
         super(templateEngine, self).__init__()
         self.___settings = QSettings('alpha', 'Repair_box')
-        self.clientName = clientName
-        self.phoneNumber = phoneNumber
-        self.companyName = companyName
-        self.deviceType = deviceType
-        self.deviceBrand = deviceBrand
-        self.deviceModel = deviceModel
-        self.id = ID
-        self.date = date
-        self.prePaid = prePaid
-        self.price = price
-        self.accessories = accessories
-        self.qrImage = qrimage
-
 
     def templateWriter(self) -> None:
         docx = self.___settings.value('DOC_TEMPLATE', 'templete/temp0.docx', type=str)
-
 
         doc = DocxTemplate(docx)
 
@@ -87,7 +73,6 @@ class printingData(QThread):
         todayDate = datetime.today()  # get today time
         dateStr = todayDate.strftime("%d-%m-%Y")  # convert todayDate to str
         printID = uuid.uuid4()
-        print(printID, type(printID))
         if len(datestr):  # check if datestr is not empty
             dif = datetime.strptime(dateStr, "%d-%m-%Y") - datetime.strptime(str(datestr[-1])[2:-3],
                                                                              "%d-%m-%Y")  # calculate deffrince bettwine time on data base and current time
@@ -96,7 +81,7 @@ class printingData(QThread):
                 self.dataBaseEngine = dataBaseS(
                     f"INSERT INTO history values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                     f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                    f"'{dateStr}', null)")
+                    f"'{dateStr}', null, '{str(printID)}')")
                 data = self.dataBaseEngine.connector()
                 self.dataBaseEngine.connection.close()
             else:
@@ -107,7 +92,7 @@ class printingData(QThread):
             self.dataBaseEngine = dataBaseS(
                 f"INSERT INTO history values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
                 f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                f"'{dateStr}', null)")
+                f"'{dateStr}', null, '{str(printID)}')")
             data = self.dataBaseEngine.connector()
             self.dataBaseEngine.connection.close()
         self.message.emit(self.messageList)

@@ -1,21 +1,47 @@
-from bin.main import *
 from bin.sync import dataBaseSyncer
 from bin.login_ import loginMain
 from bin.reg_ import registerWindow
 from bin.main import mainW
 from bin.loading_ import MainWindow
 
-changer = pyqtSignal()
-
 
 class windowController:
+    """
+    check if there ar users or not and if password and username is correct and from here main window run
+    on ___ init___ bin.sync.dataBaseSyncer (sub Qthread Class ) pass Query to it to check there are users and send result
+    to windowSwitcher method
+
+    windowSwitcher: get result from dataBase Syncer and pass it to usersShaker Method Base on return from it run
+    login Window or register Window (if true login Window will be run else register window)
+
+    userShaker: get users from data and append it list inside for loop i make condition to check if len ==1 (means
+    there are user i don't need put all of them inside list to stop iteration i put return ) True return True if
+    not return False and back it to condition in windowSwitcher to decide which window will be open
+
+    showFromLogin AND  showFromRegister: displaying loading window wine loading window is run get user name
+    privilege and put them to json file
+
+    showMainWindow: displaying mainWindow
+    imported files and class : {  bin.sync.dataBaseSyncer,
+                                  bin.login_.loginMain
+                                  bin.reg_.registerWindow
+                                  bin.main.mainW
+                                  bin.loading_.MainWindow }
+
+
+    """
+
     def __init__(self):
         self.data = dataBaseSyncer('SELECT * FROM users')
-        self.data.start()
         self.data.result.connect(self.windowSwitcher)
+        self.data.start()
+        self.login = None
+        self.register = None
+        self.loading = None
+        self.mainWindow = None
 
     @staticmethod
-    def usersShaker(data) -> bool:
+    def usersShaker(data: list) -> bool:
         """
         :rtype: bool
         :return: true if there are users else return False
@@ -28,12 +54,15 @@ class windowController:
             else:
                 return False
 
-    def windowSwitcher(self, data) -> None:
+    def windowSwitcher(self, data: list) -> None:
         """
+
+        :param data: user list from dataBase syncer
         :rtype: None
         :return: None
         switching between windows
         """
+        self.data.terminate()
         if self.usersShaker(data):
             self.login = loginMain()
             self.login.windowSwitcher.connect(self.showFromLogin)
@@ -41,16 +70,28 @@ class windowController:
             self.register = registerWindow()
             self.register.windowSwitcher.connect(self.showFromRegister)
 
-    def showFromLogin(self):
+    def showFromLogin(self) -> None:
+        """
+
+        :return: None
+        """
         self.loading = MainWindow()
         self.loading.switch_window.connect(self.showMainWindow)
         self.login.close()
 
-    def showFromRegister(self):
+    def showFromRegister(self) -> None:
+        """
+
+        :return: None
+        """
         self.loading = MainWindow()
         self.loading.switch_window.connect(self.showMainWindow)
         self.register.close()
 
-    def showMainWindow(self):
+    def showMainWindow(self) -> None:
+        """
+
+        :return: None
+        """
         self.mainWindow = mainW()
         self.loading.close()

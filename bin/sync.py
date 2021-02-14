@@ -8,6 +8,7 @@ class dataBaseSyncer(QThread):
     result = pyqtSignal(list)
     Deanshipresult = pyqtSignal(str)
     refresher = pyqtSignal()
+    finishedSignal = pyqtSignal()
 
     def __init__(self, com: str):
         super(dataBaseSyncer, self).__init__()
@@ -17,6 +18,7 @@ class dataBaseSyncer(QThread):
 
     def run(self) -> None:
         self._connecter()
+
 
     def _connecter(self) -> None:
 
@@ -85,4 +87,4 @@ class dataBaseSyncer(QThread):
         else:
             self.connection.close()
         finally:
-            self.quit()
+            pass

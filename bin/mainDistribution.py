@@ -32,8 +32,8 @@ class distributionWind(QWidget, Ui_distribution):
         self.searsh.setEnabled(True)
         self.searshButton.setEnabled(True)
         self.show()
-        # self.tableData()
-        # self.readDataToDeanshipsComboBox()
+        self.readDataToDeanshipsComboBox()
+        self.tableData()
         self.printingList.itemChanged.connect(self.itemChanged)
 
     def Buttons(self) -> None:
