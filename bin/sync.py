@@ -38,7 +38,6 @@ class dataBaseSyncer(QThread):
             self.connection = mysql.connector.connect(**config)
             cursor = self.connection.cursor()
             if 'INSERT' in self.com or 'UPDATE' in self.com or 'DELETE' in self.com:
-                print(self.com)
                 cursor.execute(self.com)
                 self.connection.commit()
                 self.connection.close()

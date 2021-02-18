@@ -1,35 +1,10 @@
-from PyQt5.QtCore import QThread, pyqtSignal, QSettings
+from PyQt5.QtCore import QThread, pyqtSignal, QSettings, QObject
 from PyQt5.QtWidgets import QTableWidget
 from bin.worker import dataBaseS
 from datetime import datetime
 from docxtpl import DocxTemplate
+from docx.opc import exceptions
 import uuid
-
-
-class templateEngine:
-
-    def __init__(self, number, cin, name, lastname, numberofbugs, prosecutionoffices, date):
-        super(templateEngine, self).__init__()
-
-        self.date = date
-        self.prosecutionoffices = prosecutionoffices
-        self.numberofbugs = numberofbugs
-        self.lastname = lastname
-        self.name = name
-        self.cin = cin
-        self.number = number
-        self.___settings = QSettings('alpha', 'Repair_box')
-
-    def templateWriter(self) -> None:
-        docx = self.___settings.value('DOC_TEMPLATE', 'templete/temp0.docx', type=str)
-
-        doc = DocxTemplate(docx)
-
-        context = {
-
-        }
-        doc.render(context)
-        # doc.save(f'{savePlace}{self.id}.docx')
 
 
 class printingData(QThread):
@@ -52,6 +27,7 @@ class printingData(QThread):
         self.___DEANSHIP = None
         self.___ProsectutionOffices = None
         self.___NUMBEROFBAGS = None
+        self.printList = []
         self.messageList = []
 
     def run(self) -> None:
@@ -62,7 +38,6 @@ class printingData(QThread):
         self.readingData()
 
     def readingData(self) -> None:
-
         rowCount = self.tableWidget.rowCount()
         for row in range(rowCount):
             self.___CIN = self.tableWidget.item(row, 0).text()
@@ -74,33 +49,82 @@ class printingData(QThread):
             self.dataBaseEngine = dataBaseS(f'SELECT DATE_ FROM history where CIN={self.___CIN}')
             data = self.dataBaseEngine.connector()
             self.dataBaseEngine.connection.close()
-            self.dateS(data)
+            UUID = self.dateS(data)
+            if UUID != '0':
+                self.printList.append(UUID)
+            else:
+                pass
+        template = templateEngine(self.printList)
 
-    def dateS(self, datestr: list) -> None:
+
+
+    @staticmethod
+    def com(cin: str, name: str, lastName: str, deanship: str, ProsectutionOffices: str,
+            NUMBEROFBAGS: str, date: str, printID: str):
+        dataBaseEngine = dataBaseS(
+            f"INSERT INTO history values ('{cin}','{name}','{lastName}',"
+            f"'{deanship}','{ProsectutionOffices}','{NUMBEROFBAGS}',"
+            f"'{date}', null, '{printID}')")
+        data = dataBaseEngine.connector()
+        dataBaseEngine.connection.close()
+
+    def dateS(self, datestr: list) -> str:
+
         todayDate = datetime.today()  # get today time
         dateStr = todayDate.strftime("%d-%m-%Y")  # convert todayDate to str
         printID = uuid.uuid4()
+
         if len(datestr):  # check if datestr is not empty
             dif = datetime.strptime(dateStr, "%d-%m-%Y") - datetime.strptime(str(datestr[-1])[2:-3],
                                                                              "%d-%m-%Y")  # calculate deffrince bettwine time on data base and current time
             if dif.days >= 30:  # check if dif is not less than 30Days
 
-                self.dataBaseEngine = dataBaseS(
-                    f"INSERT INTO history values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
-                    f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                    f"'{dateStr}', null, '{str(printID)}')")
-                data = self.dataBaseEngine.connector()
-                self.dataBaseEngine.connection.close()
+                self.com(self.___CIN, self.___NAME, self.___LASTNAME, self.___DEANSHIP,
+                         self.___ProsectutionOffices, self.___NUMBEROFBAGS, dateStr, str(printID))
+                return str(printID)
             else:
                 self.messageList.append(self.___CIN)
+                return str(0)
 
         else:
-
-            self.dataBaseEngine = dataBaseS(
-                f"INSERT INTO history values ('{self.___CIN}','{self.___NAME}','{self.___LASTNAME}',"
-                f"'{self.___DEANSHIP}','{self.___ProsectutionOffices}','{self.___NUMBEROFBAGS}',"
-                f"'{dateStr}', null, '{str(printID)}')")
-            data = self.dataBaseEngine.connector()
-            self.dataBaseEngine.connection.close()
+            self.com(self.___CIN, self.___NAME, self.___LASTNAME, self.___DEANSHIP,
+                     self.___ProsectutionOffices, self.___NUMBEROFBAGS, dateStr, str(printID))
+            return str(printID)
         self.message.emit(self.messageList)
         self.quit()
+
+
+class templateEngine(QObject):
+    TemplateNotFound = pyqtSignal()
+
+    def __init__(self, printID: list):
+        super(templateEngine, self).__init__()
+        self.printID = printID
+        self.dataBaseEngine = None
+        self.___settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
+        self.templateWriter()
+
+
+    def templateWriter(self) -> None:
+        """
+
+        :return:
+        """
+        docx = self.___settings.value('DOC_TEMPLATE', 'templete/template.docx', type=str)
+        try:
+            doc = DocxTemplate(docx)
+        except exceptions.PackageNotFoundError as e:
+            print(f' line 30 from printEngine{e}')
+            self.TemplateNotFound.emit()
+        else:
+            for contextNumber, UUID in enumerate(self.printID):
+                self.dataBaseEngine = dataBaseS(f"SELECT * FROM history where PRINTID='{UUID}'")
+                data = self.dataBaseEngine.connector()
+                self.dataBaseEngine.connection.close()
+                context = {
+
+                }
+                # doc.render(context)
+
+            # doc.save(f'{}{}.docx')
+

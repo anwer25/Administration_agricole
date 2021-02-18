@@ -177,11 +177,11 @@ class distributionWind(QWidget, Ui_distribution):
     """
 
     def addDataToHistory(self, table: QTableWidget) -> None:
-        self.___printEnine = printingData(table)
-        self.___printEnine.resetTable.connect(lambda: self.printingList.setRowCount(0))
-        self.___printEnine.start()
-        self.___printEnine.exec()
-
+        self.___printEngine = printingData(table)
+        self.___printEngine.resetTable.connect(lambda: self.printingList.setRowCount(0))
+        self.___printEngine.start()
+        # self.___printEngine.message.connect(lambda i: print(i))
+        self.___printEngine.exec()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
