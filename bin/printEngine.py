@@ -56,8 +56,6 @@ class printingData(QThread):
                 pass
         template = templateEngine(self.printList)
 
-
-
     @staticmethod
     def com(cin: str, name: str, lastName: str, deanship: str, ProsectutionOffices: str,
             NUMBEROFBAGS: str, date: str, printID: str):
@@ -90,7 +88,7 @@ class printingData(QThread):
             self.com(self.___CIN, self.___NAME, self.___LASTNAME, self.___DEANSHIP,
                      self.___ProsectutionOffices, self.___NUMBEROFBAGS, dateStr, str(printID))
             return str(printID)
-        self.message.emit(self.messageList)
+        # self.message.emit(self.messageList)
         self.quit()
 
 
@@ -104,27 +102,42 @@ class templateEngine(QObject):
         self.___settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.templateWriter()
 
-
     def templateWriter(self) -> None:
         """
 
         :return:
         """
-        docx = self.___settings.value('DOC_TEMPLATE', 'templete/template.docx', type=str)
+        docx = self.___settings.value('DOC_TEMPLATE', 'template\\test.docx', type=str)
         try:
             doc = DocxTemplate(docx)
         except exceptions.PackageNotFoundError as e:
             print(f' line 30 from printEngine{e}')
             self.TemplateNotFound.emit()
         else:
-            for contextNumber, UUID in enumerate(self.printID):
+            con = list()
+            i = 1
+            for UUID in self.printID:
+
                 self.dataBaseEngine = dataBaseS(f"SELECT * FROM history where PRINTID='{UUID}'")
                 data = self.dataBaseEngine.connector()
                 self.dataBaseEngine.connection.close()
-                context = {
-
-                }
-                # doc.render(context)
-
-            # doc.save(f'{}{}.docx')
-
+                con.append([
+                    data[0][7],
+                    data[0][6],
+                    f'{data[0][1]} {data[0][2]}',
+                    data[0][0],
+                    data[0][5],
+                    data[0][4],
+                ])
+                print(con)
+                # print('\n\n', con[i-1] , i-1)
+                # if len(self.printID)>
+                if i == 4:
+                    i = 0
+                    context = {
+                        'd': con
+                    }
+                    doc.render(context)
+                    doc.save(f'.\\bin\\data\\temp\\{data[0][8]}.docx')
+                    con = list()
+                i += 1

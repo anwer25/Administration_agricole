@@ -50,6 +50,5 @@ class registerWindow(QMainWindow, Ui_MainWindow):
                                      f", True, True, True, True, True, True, True, True, True)")
         saverEngine.start()
         jsonWriter = writer(f"'{self.username.text()}'")
-        jsonWriter.start()
         self.ok.exec_()
         self.windowSwitcher.emit()

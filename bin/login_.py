@@ -59,7 +59,6 @@ class loginMain(QMainWindow, Ui_MainWindow):
 
         if r:
             jsonWriter = writer(username)
-            jsonWriter.start()
             self.windowSwitcher.emit()
         else:
             self.passwordProblem.exec_()

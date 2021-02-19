@@ -1,13 +1,12 @@
 from typing import Dict, Any, Union
-
 import mysql.connector
 import json
 from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtCore import QSettings
+from PyQt5.QtCore import QSettings, QObject
 import os
 
 
-class writer(QThread):
+class writer(QObject):
     def __init__(self, name):
         super(writer, self).__init__()
         self.data = None
@@ -15,8 +14,6 @@ class writer(QThread):
         self.database = None
         self.connection = None
         self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
-
-    def run(self) -> None:
         self.writeDataToJson()
 
     def _connecter(self) -> None:
