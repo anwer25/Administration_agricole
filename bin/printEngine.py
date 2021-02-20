@@ -5,6 +5,8 @@ from datetime import datetime
 from docxtpl import DocxTemplate
 from docx.opc import exceptions
 import uuid
+from win32com import client
+import time
 
 
 class printingData(QThread):
@@ -89,7 +91,7 @@ class printingData(QThread):
                      self.___ProsectutionOffices, self.___NUMBEROFBAGS, dateStr, str(printID))
             return str(printID)
         # self.message.emit(self.messageList)
-        self.quit()
+        # self.quit()
 
 
 class templateEngine(QObject):
@@ -102,12 +104,26 @@ class templateEngine(QObject):
         self.___settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.templateWriter()
 
+    @staticmethod
+    def printingfile(file: str):
+        """
+
+        :param file:
+        :return:
+        """
+        word = client.Dispatch("Word.Application")
+        word.Documents.Open(file)
+        word.ActiveDocument.PrintOut()
+        time.sleep(2)
+        word.ActiveDocument.Close()
+        word.Quit()
+
     def templateWriter(self) -> None:
         """
 
         :return:
         """
-        docx = self.___settings.value('DOC_TEMPLATE', 'template\\test.docx', type=str)
+        docx = self.___settings.value('DOC_TEMPLATE', 'template\\template.docx', type=str)
         try:
             doc = DocxTemplate(docx)
         except exceptions.PackageNotFoundError as e:
@@ -116,6 +132,7 @@ class templateEngine(QObject):
         else:
             con = list()
             i = 1
+            ___COUNT = int(len(self.printID))
             for UUID in self.printID:
 
                 self.dataBaseEngine = dataBaseS(f"SELECT * FROM history where PRINTID='{UUID}'")
@@ -129,15 +146,23 @@ class templateEngine(QObject):
                     data[0][5],
                     data[0][4],
                 ])
-                print(con)
-                # print('\n\n', con[i-1] , i-1)
-                # if len(self.printID)>
-                if i == 4:
-                    i = 0
+
+                def ___save():
                     context = {
                         'd': con
                     }
+                    doc = DocxTemplate(docx)
                     doc.render(context)
-                    doc.save(f'.\\bin\\data\\temp\\{data[0][8]}.docx')
-                    con = list()
-                i += 1
+                    file = f'.\\bin\\data\\temp\\{data[0][8]}.docx'
+                    doc.save(file)
+                    con.clear()
+                    return file
+                if ___COUNT >= 4:
+                    if i == 4:
+                        ___COUNT -= i
+                        i = 0
+                        self.printingfile(___save())
+                    i += 1
+                else:
+                    # TODO: fix me : jinja2.exceptions.UndefinedError: list object has no element 1
+                    ___save()
