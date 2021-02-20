@@ -7,6 +7,8 @@ from docx.opc import exceptions
 import uuid
 from win32com import client
 import time
+import pythoncom
+import os
 
 
 class printingData(QThread):
@@ -111,12 +113,15 @@ class templateEngine(QObject):
         :param file:
         :return:
         """
+        pythoncom.CoInitialize()
         word = client.Dispatch("Word.Application")
+        pythoncom.CoInitialize()
         word.Documents.Open(file)
         word.ActiveDocument.PrintOut()
         time.sleep(2)
         word.ActiveDocument.Close()
         word.Quit()
+        os.remove(file)
 
     def templateWriter(self) -> None:
         """
@@ -153,7 +158,7 @@ class templateEngine(QObject):
                     }
                     doc = DocxTemplate(docx)
                     doc.render(context)
-                    file = f'.\\bin\\data\\temp\\{data[0][8]}.docx'
+                    file = f'{os.getcwd()}\\bin\\data\\temp\\{data[0][8]}.docx'
                     doc.save(file)
                     con.clear()
                     return file
@@ -165,4 +170,5 @@ class templateEngine(QObject):
                     i += 1
                 else:
                     # TODO: fix me : jinja2.exceptions.UndefinedError: list object has no element 1
-                    ___save()
+                    # ___save()
+                    pass
