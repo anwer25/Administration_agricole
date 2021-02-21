@@ -51,6 +51,7 @@ class TableWorker(QThread):
     def dataresult(self):
         self.data = dataBaseS(self.command)
         data_ = self.data.connector()
+        print(data_)
         self.data.connection.close()
         try:
             for rowNumber, rowData in enumerate(data_):
