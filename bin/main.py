@@ -7,6 +7,7 @@ from bin.MainFarmers import farmers
 from bin.deanshipsMainWindow import deanships
 from bin.prosecutionOfficesMain import ProsecutionMain
 from bin.mainDistribution import distributionWind
+from bin.Mainhistory import MainHistory
 import os
 
 
@@ -25,6 +26,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.farmersWindow = None
         self.deanships = None
         self.prosecutionWindow = None
+        self.historyWindow = None
 
         self.Buttons()
         self.show()
@@ -73,7 +75,9 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.distributionWindow.switcher.connect(self.show)
 
     def openHistory(self):
-        pass
+        self.historyWindow = MainHistory()
+        self.hide()
+        self.historyWindow.displayMainWindow.connect(self.show)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         try:
