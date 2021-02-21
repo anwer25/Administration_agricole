@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>searchMethod</class>
+ <widget class="QDialog" name="searchMethod">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>558</width>
+    <height>134</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>558</width>
+    <height>134</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>558</width>
+    <height>134</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>558</width>
+    <height>134</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arabic Typesetting</family>
+    <pointsize>19</pointsize>
+    <stylestrategy>PreferDefault</stylestrategy>
+   </font>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="windowTitle">
+   <string>D.P.A-ارشيف-طريقة-بحث</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::RightToLeft</enum>
+  </property>
+  <property name="locale">
+   <locale language="Arabic" country="Tunisia"/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="7">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>    الى</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QDateEdit" name="dateTO">
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="minimumDate">
+      <date>
+       <year>2000</year>
+       <month>9</month>
+       <day>14</day>
+      </date>
+     </property>
+     <property name="displayFormat">
+      <string>d/M/yyyy</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>:   من</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QRadioButton" name="dateSearchOnOff">
+     <property name="text">
+      <string>البحث باستخدام التاريخ</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QDateEdit" name="dateFrom">
+     <property name="minimumDate">
+      <date>
+       <year>2000</year>
+       <month>1</month>
+       <day>1</day>
+      </date>
+     </property>
+     <property name="displayFormat">
+      <string>d/M/yyyy</string>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+     <property name="timeSpec">
+      <enum>Qt::LocalTime</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QRadioButton" name="cinSearch">
+     <property name="text">
+      <string>البحث باستخدام ب.ت.و </string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="8">
+    <widget class="QLineEdit" name="CIN">
+     <property name="inputMethodHints">
+      <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+     </property>
+     <property name="maxLength">
+      <number>8</number>
+     </property>
+     <property name="cursorMoveStyle">
+      <enum>Qt::LogicalMoveStyle</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QDialogButtonBox" name="searchButton">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
+ <connections/>
+</ui>

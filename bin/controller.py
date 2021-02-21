@@ -22,7 +22,7 @@ class windowController:
     privilege and put them to json file
 
     showMainWindow: displaying mainWindow
-    imported files and class : {  bin.sync.dataBaseSyncer,
+    imported files and class : {  bin.sync.dataBaseSyncer
                                   bin.login_.loginMain
                                   bin.reg_.registerWindow
                                   bin.main.mainW
