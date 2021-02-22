@@ -21,7 +21,7 @@ class Ui_searchMethod(object):
         searchMethod.setBaseSize(QtCore.QSize(558, 134))
         font = QtGui.QFont()
         font.setFamily("Arabic Typesetting")
-        font.setPointSize(19)
+        font.setPointSize(17)
         font.setStyleStrategy(QtGui.QFont.PreferDefault)
         searchMethod.setFont(font)
         searchMethod.setMouseTracking(False)

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent
 from bin.worker import TableWorker
+from bin.mainSearchMethod import mainsearchMethod
 
 
 class MainHistory(QWidget, Ui_history):
@@ -11,6 +12,7 @@ class MainHistory(QWidget, Ui_history):
     def __init__(self, parent=None):
         super(MainHistory, self).__init__(parent)
         self.dataBase = None
+        self.searchMethodWindow = None
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -32,13 +34,13 @@ class MainHistory(QWidget, Ui_history):
         self.show()
         self.readData()
 
-    def readData(self) -> None:
+    def readData(self, Query: str = f"SELECT * FROM history") -> None:
         """
 
         :return:
         """
 
-        self.dataBase = TableWorker(f"SELECT * FROM history")
+        self.dataBase = TableWorker(Query)
         self.dataBase.start()
         self.dataBase.data__.connect(self.addRow)
         self.dataBase.data_.connect(self.addData)
@@ -80,7 +82,9 @@ class MainHistory(QWidget, Ui_history):
 
         :return:
         """
-        pass
+        self.searchMethodWindow = mainsearchMethod()
+        self.setDisabled(True)
+        self.searchMethodWindow.Disable.connect(lambda: self.setDisabled(False))
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
@@ -89,3 +93,8 @@ class MainHistory(QWidget, Ui_history):
         :return:
         """
         self.displayMainWindow.emit()
+        try:
+            self.searchMethodWindow.close()
+        except AttributeError:
+            pass
+
