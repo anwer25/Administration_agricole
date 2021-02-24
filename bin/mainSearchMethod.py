@@ -1,15 +1,17 @@
 from bin.searchMethod import Ui_searchMethod
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtGui import QShowEvent, QCloseEvent
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QPushButton, QRadioButton
+from PyQt5.QtGui import QCloseEvent
 
 
-class mainsearchMethod(QDialog, Ui_searchMethod):
+class mainSearchMethod(QDialog, Ui_searchMethod):
     result = pyqtSignal()
     Disable = pyqtSignal()
 
     def __init__(self, parent=None):
-        super(mainsearchMethod, self).__init__(parent)
+        super(mainSearchMethod, self).__init__(parent)
+        self.cancelButtons = None
+        self.OkButtons = None
         self.setupUi(self)
         self.Buttons()
         self.Ui()
@@ -19,6 +21,29 @@ class mainsearchMethod(QDialog, Ui_searchMethod):
 
         :return:
         """
+        self.CIN.setEnabled(False)
+        self.cancelButtons = self.searchButton.button(QDialogButtonBox.Cancel)
+        self.OkButtons = self.searchButton.button(QDialogButtonBox.Ok)
+        self.OkButtons.setText('بحث')
+        self.cancelButtons.setText('إلغاء')
+
+        def radioButtonSate(obj: QRadioButton):
+
+            if obj.text() == "البحث باستخدام ب.ت.و ":
+                self.CIN.setEnabled(True)
+                self.dateFrom.setEnabled(False)
+                self.dateTO.setEnabled(False)
+                self.label.setEnabled(False)
+                self.label_2.setEnabled(False)
+            else:
+                self.CIN.setEnabled(False)
+                self.dateFrom.setEnabled(True)
+                self.dateTO.setEnabled(True)
+                self.label.setEnabled(True)
+                self.label_2.setEnabled(True)
+
+        self.dateSearchOnOff.toggled.connect(lambda: radioButtonSate(self.dateSearchOnOff))
+        self.cinSearch.toggled.connect(lambda: radioButtonSate(self.cinSearch))
         self.show()
 
     def Buttons(self):
@@ -26,6 +51,20 @@ class mainsearchMethod(QDialog, Ui_searchMethod):
 
         :return:
         """
+        def searchButtonResult(ButtonName: QPushButton) -> None:
+            """
+
+            :param ButtonName:
+            :return:
+            """
+            if ButtonName.text() == 'إلغاء':
+                self.close()
+            else:
+                self.search()
+
+        self.searchButton.clicked.connect(lambda i: searchButtonResult(i))
+
+    def search(self):
         pass
 
     def closeEvent(self, a0: QCloseEvent) -> None:

@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent
 from bin.worker import TableWorker
-from bin.mainSearchMethod import mainsearchMethod
+from bin.mainSearchMethod import mainSearchMethod
 
 
 class MainHistory(QWidget, Ui_history):
@@ -82,7 +82,7 @@ class MainHistory(QWidget, Ui_history):
 
         :return:
         """
-        self.searchMethodWindow = mainsearchMethod()
+        self.searchMethodWindow = mainSearchMethod()
         self.setDisabled(True)
         self.searchMethodWindow.Disable.connect(lambda: self.setDisabled(False))
 

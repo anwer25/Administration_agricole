@@ -128,47 +128,46 @@ class templateEngine(QObject):
 
         :return:
         """
-        docx = self.___settings.value('DOC_TEMPLATE', 'template\\template.docx', type=str)
-        try:
-            doc = DocxTemplate(docx)
-        except exceptions.PackageNotFoundError as e:
-            print(f' line 30 from printEngine{e}')
-            self.TemplateNotFound.emit()
-        else:
-            con = list()
-            i = 1
-            ___COUNT = int(len(self.printID))
-            for UUID in self.printID:
+        con = list()
+        i = 1
+        ___COUNT = int(len(self.printID))
+        for UUID in self.printID:
+            self.dataBaseEngine = dataBaseS(f"SELECT * FROM history where PRINTID='{UUID}'")
+            data = self.dataBaseEngine.connector()
+            self.dataBaseEngine.connection.close()
+            con.append([
+                data[0][7],
+                data[0][6],
+                f'{data[0][1]} {data[0][2]}',
+                data[0][0],
+                data[0][5],
+                data[0][4],
+            ])
 
-                self.dataBaseEngine = dataBaseS(f"SELECT * FROM history where PRINTID='{UUID}'")
-                data = self.dataBaseEngine.connector()
-                self.dataBaseEngine.connection.close()
-                con.append([
-                    data[0][7],
-                    data[0][6],
-                    f'{data[0][1]} {data[0][2]}',
-                    data[0][0],
-                    data[0][5],
-                    data[0][4],
-                ])
+            def ___save(n: int = 4):
+                context = {
+                    'd': con
+                }
 
-                def ___save():
-                    context = {
-                        'd': con
-                    }
+                docx = 'template\\template.docx' if n == 4 else 'template\\template3.docx' if n == 3 \
+                    else 'template\\template2.docx' if n == 2 else 'template\\template1.docx'
+                try:
                     doc = DocxTemplate(docx)
+                except exceptions.PackageNotFoundError as e:
+                    print(f' line 154 from printEngine{e}')
+                    self.TemplateNotFound.emit()
+                else:
                     doc.render(context)
                     file = f'{os.getcwd()}\\bin\\data\\temp\\{data[0][8]}.docx'
                     doc.save(file)
                     con.clear()
                     return file
-                if ___COUNT >= 4:
-                    if i == 4:
-                        ___COUNT -= i
-                        i = 0
-                        self.printingfile(___save())
-                    i += 1
-                else:
-                    # TODO: fix me : jinja2.exceptions.UndefinedError: list object has no element 1
-                    # ___save()
-                    pass
+
+            if ___COUNT >= 4:
+                if i == 4:
+                    ___COUNT -= i
+                    i = 0
+                    self.printingfile(___save())
+            elif i == ___COUNT:
+                self.printingfile(___save(i))
+            i += 1
