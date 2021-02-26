@@ -62,6 +62,6 @@ class TableWorker(QThread):
                 for colNumber, data in enumerate(rowData):
                     self.data_.emit(rowNumber, colNumber, str(data))
         except TypeError as e:
-            print(f'worker error line 53 :{e}')
+            print(f'worker error line 60 :{e}')
         finally:
             self.quit()

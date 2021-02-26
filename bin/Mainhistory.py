@@ -2,7 +2,7 @@ from bin.history import Ui_history
 from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent
-from bin.worker import TableWorker
+from bin.worker import TableWorker, dataBaseS
 from bin.mainSearchMethod import mainSearchMethod
 
 
@@ -40,6 +40,7 @@ class MainHistory(QWidget, Ui_history):
         :return:
         """
 
+        self.data.setRowCount(0)
         self.dataBase = TableWorker(Query)
         self.dataBase.start()
         self.dataBase.data__.connect(self.addRow)
@@ -75,15 +76,24 @@ class MainHistory(QWidget, Ui_history):
 
         :return:
         """
-        pass
+        # TODO: Make conform Message here
+        self.readData(f"DELETE FROM history")
 
     def searchEngine(self) -> None:
         """
 
         :return:
         """
-        def result(key):
-            print(key)
+
+        def result(key: list):
+            self.searchMethodWindow.close()
+            if len(key) == 1:
+                Query = f"SELECT * FROM history WHERE CIN='{key[0]}'"
+            elif len(key) == 2:
+                # TODO: fix Query must date_ be reversed
+                Query = f"SELECT * FROM history WHERE DATE_=> '{key[0]}' AND DATE_ <= '{key[1]}'"
+            print(Query)
+            self.readData(Query)
 
         self.searchMethodWindow = mainSearchMethod()
         self.searchMethodWindow.result.connect(lambda key: result(key))
