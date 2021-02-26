@@ -1,11 +1,13 @@
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QSettings
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QSettings, QObject
 import mysql.connector
 
 
-class dataBaseS:
+class dataBaseS(QObject):
     data = pyqtSignal(list)
+    refresher = pyqtSignal()
 
-    def __init__(self, com: str):
+    def __init__(self, com: str, parent=None):
+        super(dataBaseS, self).__init__(parent)
         self.com = com
         self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.connection = None
@@ -28,8 +30,10 @@ class dataBaseS:
             self.connection = mysql.connector.connect(**config)
             self.cursor = self.connection.cursor()
             self.cursor.execute(self.com)
-            if 'INSERT' in self.com:
+            if 'INSERT' in self.com or 'UPDATE' in self.com or 'DELETE' in self.com:
                 self.connection.commit()
+                self.connection.close()
+                self.refresher.emit()
             else:
                 return self.cursor.fetchall()
         except mysql.connector.Error as err:

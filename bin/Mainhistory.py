@@ -82,7 +82,11 @@ class MainHistory(QWidget, Ui_history):
 
         :return:
         """
+        def result(key):
+            print(key)
+
         self.searchMethodWindow = mainSearchMethod()
+        self.searchMethodWindow.result.connect(lambda key: result(key))
         self.setDisabled(True)
         self.searchMethodWindow.Disable.connect(lambda: self.setDisabled(False))
 

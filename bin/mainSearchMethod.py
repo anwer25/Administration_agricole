@@ -5,7 +5,7 @@ from PyQt5.QtGui import QCloseEvent
 
 
 class mainSearchMethod(QDialog, Ui_searchMethod):
-    result = pyqtSignal()
+    result = pyqtSignal(list)
     Disable = pyqtSignal()
 
     def __init__(self, parent=None):
@@ -64,8 +64,17 @@ class mainSearchMethod(QDialog, Ui_searchMethod):
 
         self.searchButton.clicked.connect(lambda i: searchButtonResult(i))
 
-    def search(self):
-        pass
+    def search(self) -> None:
+        if self.CIN.isEnabled():
+            if self.CIN.text() == "":
+                # TODO MAKE MESSAGE HERE IF CIN HAS NO VALUE
+                pass
+            else:
+                self.result.emit([self.CIN.text()])
+        else:
+            self.result.emit([self.dateFrom.text(), self.dateTO.text()])
+
+
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.Disable.emit()

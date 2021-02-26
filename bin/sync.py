@@ -101,10 +101,10 @@ class dataBaseSyncer(QThread):
         except mysql.connector.Error as err:
             self.___error(err)
         else:
-            pass
+            self.connection.close()
 
         finally:
-            self.connection.close()
+            pass
 
     def ___error(self, error: mysql.connector.Error):
         """
