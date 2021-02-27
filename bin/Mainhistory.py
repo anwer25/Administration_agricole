@@ -2,6 +2,7 @@ from bin.history import Ui_history
 from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent
+from bin.printPreview import Preview
 from bin.worker import TableWorker, dataBaseS
 from bin.mainSearchMethod import mainSearchMethod
 
@@ -22,7 +23,7 @@ class MainHistory(QWidget, Ui_history):
 
         :return:
         """
-        self.print.clicked.connect(self.printEngine)
+        self.print.clicked.connect(self.handlePreview)
         self.remove.clicked.connect(self.removeButton)
         self.searsh.clicked.connect(self.searchEngine)
 
@@ -64,12 +65,13 @@ class MainHistory(QWidget, Ui_history):
         """
         self.data.setItem(rowNumber, colNumber, QTableWidgetItem(str(data)))
 
-    def printEngine(self) -> None:
+    def handlePreview(self) -> None:
         """
 
         :return:
         """
-        pass
+        dialog = Preview(self.data)
+        dialog.exec_()
 
     def removeButton(self) -> None:
         """
@@ -92,7 +94,6 @@ class MainHistory(QWidget, Ui_history):
             elif len(key) == 2:
                 # TODO: fix Query must date_ be reversed : fixed
                 Query = f"SELECT * FROM history WHERE DATE_ BETWEEN '{key[0]}' AND '{key[1]}'"
-            print(Query)
             self.readData(Query)
 
         self.searchMethodWindow = mainSearchMethod()

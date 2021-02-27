@@ -1,10 +1,11 @@
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QSettings, QObject
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
 import mysql.connector
 
 
 class dataBaseS(QObject):
     data = pyqtSignal(list)
-    refresher = pyqtSignal()
+    refresher = pyqtSignal(QTableWidgetItem)
 
     def __init__(self, com: str, parent=None):
         super(dataBaseS, self).__init__(parent)
