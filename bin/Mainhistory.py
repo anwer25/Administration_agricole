@@ -90,8 +90,8 @@ class MainHistory(QWidget, Ui_history):
             if len(key) == 1:
                 Query = f"SELECT * FROM history WHERE CIN='{key[0]}'"
             elif len(key) == 2:
-                # TODO: fix Query must date_ be reversed
-                Query = f"SELECT * FROM history WHERE DATE_=> '{key[0]}' AND DATE_ <= '{key[1]}'"
+                # TODO: fix Query must date_ be reversed : fixed
+                Query = f"SELECT * FROM history WHERE DATE_ BETWEEN '{key[0]}' AND '{key[1]}'"
             print(Query)
             self.readData(Query)
 

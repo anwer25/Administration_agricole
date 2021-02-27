@@ -75,9 +75,9 @@ class Ui_searchMethod(object):
         _translate = QtCore.QCoreApplication.translate
         searchMethod.setWindowTitle(_translate("searchMethod", "D.P.A-ارشيف-طريقة-بحث"))
         self.label_2.setText(_translate("searchMethod", "    الى"))
-        self.dateTO.setDisplayFormat(_translate("searchMethod", "d/M/yyyy"))
+        self.dateTO.setDisplayFormat(_translate("searchMethod", "yyyy/M/d"))
         self.label.setText(_translate("searchMethod", ":   من"))
         self.dateSearchOnOff.setText(_translate("searchMethod", "البحث باستخدام التاريخ"))
-        self.dateFrom.setDisplayFormat(_translate("searchMethod", "d/M/yyyy"))
+        self.dateFrom.setDisplayFormat(_translate("searchMethod", "yyyy/M/d"))
         self.cinSearch.setText(_translate("searchMethod", "البحث باستخدام ب.ت.و "))
 from qrc_source import source
