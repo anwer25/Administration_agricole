@@ -1,138 +1,79 @@
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore, QtGui, QtWidgets, QtPrintSupport
-import sys
+# Import required python libraries
+import os
+import time
+import datetime
+import glob
+import shutil
+# MySQL database details to which backup to be done. Make sure below user having enough privileges to take databases backup.
+# To take multiple databases backup, create any file like /backup/dbnames.txt and put databses names one on each line and assignd to DB_NAME variable.
+#Here is your public ip address
+DB_HOST = ' '
+#Here is the database user name
+DB_USER = ' '
+#Fill in the database password here
+DB_USER_PASSWORD = ' '
+#DB_NAME = '/backup/dbnames.txt'
+#Here is the database to be backed up
+DB_NAME = ' '
+#Here is the path to backup
+BACKUP_PATH = ' '
 
+# Getting current datetime to create seprate backup folder like "12012013-071334".
+DATETIME = time.strftime('%Y%m%d')
 
-found_words_all = int('100')
-l_words_all = ['a', 'b']
-data_all = {'hi': ['ab hi', 'bald'], 'hi2': ['d', 'c']}
+TODAYBACKUPPATH = BACKUP_PATH + DATETIME
 
-textMargins = 12
-borderMargins = 10
+# Checking if backup folder already exists or not. If not exists will create it.
 
+print ('del folder three days ago')
+folders = glob.glob('Here is the path to be backed up/*')
+#Delete the first three backup file directories
+today = datetime.datetime.now()
+for item in folders:
+    try:
+        foldername = os.path.split(item)[1]
+        day = datetime.datetime.strptime(foldername, "%Y%m%d")
+        diff = today - day
+        if diff.days >= 3:
+            shutil.rmtree(item)
+    except:
+        pass
 
-class main_result_all(QtWidgets.QWidget):
-    def __init__(self, parent=None, data=None):
-        super(main_result_all, self).__init__(parent)
+print ("creating backup folder")
+if not os.path.exists(TODAYBACKUPPATH):
+    os.makedirs(TODAYBACKUPPATH)
 
-        self.buttonPreview = QtWidgets.QPushButton('Druckvorschau', self)
-        self.buttonPreview.setGeometry(QtCore.QRect(555, 700, 250, 30))
-        self.buttonPreview.clicked.connect(self.handlePreview)
+# Code for checking if you want to take single database backup or assinged multiple backups in DB_NAME.
+print ("checking for databases names file.")
+if os.path.exists(DB_NAME):
+    file1 = open(DB_NAME)
+    multi = 1
+    print ("Databases file found...")
+    print ("Starting backup of all dbs listed in file " + DB_NAME)
+else:
+    print ("Databases file not found...")
+    print ("Starting backup of database " + DB_NAME)
+    multi = 0
 
-        self.table = QTableWidget(self)
-        self.table.setGeometry(QtCore.QRect(15, 10, 1015, 610))
-        self.table.setRowCount(found_words_all)
-        self.table.setColumnCount(6)
-        stylesheet = "::section{Background-color:rgb(137,137,140);border-radius:14px;font: bold}"
-        self.table.horizontalHeader().setStyleSheet(stylesheet)
-        self.table.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        self.table.setSortingEnabled(True)
+# Starting actual database backup process.
+if multi:
+    in_file = open(DB_NAME,"r")
+    flength = len(in_file.readlines())
+    in_file.close()
+    p = 1
+    dbfile = open(DB_NAME,"r")
 
-        horHeaders = []
-        for col, key in enumerate(sorted(data_all.keys())):
-            horHeaders.append(key)
-            for row, item in enumerate(data_all[key]):
-                clean_item = item
-                if type(item) == tuple:
-                    clean_item = item[0]
-                newitem = QTableWidgetItem(clean_item)
-                self.table.setItem(row, col, newitem)
+    while p <= flength:
+        db = dbfile.readline()   # reading database name from file
+        db = db[:-1]         # deletes extra line
+        dumpcmd = "mysqldump -u " + DB_USER + " -p" + DB_USER_PASSWORD + " " + db + " > " + TODAYBACKUPPATH + "/" + db + ".sql"
+        os.system(dumpcmd)
+        p = p + 1
+    dbfile.close()
+else:
+    db = DB_NAME
+    dumpcmd = "mysqldump -u " + DB_USER + " -p" + DB_USER_PASSWORD + " " + db + " > " + TODAYBACKUPPATH + "/" + db + ".sql"
+    os.system(dumpcmd)
 
-    def handlePreview(self, printer):
-        dialog = QtPrintSupport.QPrintPreviewDialog()
-        dialog.paintRequested.connect(self.printDocument)
-        dialog.exec_()
-        '''
-        fn, _ = QFileDialog.getSaveFileName(self, 'Speichern unter', None, 'Pdf Dateien (.pdf);;Alle Dateien()')
-        if fn != '':
-            if QFileInfo(fn).suffix() == "": fn += '.pdf'
-
-            printer = QPrinter(QPrinter.HighResolution)
-            printer.setPageSize(QPrinter.A4)
-            printer.setOutputFormat(QPrinter.PdfFormat)
-            printer.setOutputFileName(fn)
-            self.printDocument.document().print_(printer)
-        '''
-
-    def mmToPixels(self, printer, mm):
-        return mm * 0.039370147 * printer.resolution()
-
-    def paintPage(self, pageNumber, pageCount, painter, doc, textRect, footerHeight):
-        painter.save()
-        textPageRect = QtCore.QRectF(QtCore.QPointF(0, pageNumber * doc.pageSize().height()), doc.pageSize())
-        painter.setClipRect(textRect)
-        painter.translate(0, -textPageRect.top())
-        painter.translate(textRect.left(), textRect.top())
-        doc.drawContents(painter)
-        painter.restore()
-        footerRect = QtCore.QRectF(textRect)
-        footerRect.setTop(textRect.bottom())
-        footerRect.setHeight(footerHeight)
-
-        headerRect = QtCore.QRectF(textRect)
-        headerRect.setTop(textRect.top())
-        headerRect.setHeight(2 * footerHeight)
-
-        # draw footer
-        painter.save()
-        pen = painter.pen()
-        pen.setColor(QtCore.Qt.black)
-        painter.setPen(pen)
-        painter.drawText(footerRect, QtCore.Qt.AlignCenter, "Seite {} von {}".format(pageNumber + 1, pageCount))
-        painter.drawText(headerRect, QtCore.Qt.AlignLeft, "{}\n{}".format('Projektname:', 'Projektnummer:'))
-        #  painter.drawImage(40,40,"Bild-Programm.png")
-        #################################
-        #  painter.drawPicture(headerRect, QtCore.Qt.AlignRight, "beispiel_bild.png")
-        #  painter.drawLine(headerRect, QtCore.Qt.AlignCenter)
-
-        painter.restore()
-
-    def printDocument(self, printer):
-
-        painter = QtGui.QPainter(printer)
-        document = QtGui.QTextDocument()
-        cursor = QtGui.QTextCursor(document)
-        blockFormat = QtGui.QTextBlockFormat()  #
-        # cursor.insertImage("Bild-Programm.png")
-        # cursor.setPositon
-
-        cursor.insertBlock(blockFormat)
-        blockFormat.setPageBreakPolicy(QtGui.QTextFormat.PageBreak_AlwaysBefore)
-
-        table = cursor.insertTable(self.table.rowCount(), self.table.columnCount())
-
-        for row in range(table.rows()):
-            for col in range(table.columns()):
-                it = self.table.item(row, col)
-                if it is not None:
-                    cursor.insertText(it.text())
-                cursor.movePosition(QtGui.QTextCursor.NextCell)
-
-        document.print_(printer)
-
-        doc = document
-
-        doc.documentLayout().setPaintDevice(printer)
-        doc.setPageSize(QtCore.QSizeF(printer.pageRect().size()))
-        pageSize = printer.pageRect().size()
-        tm = self.mmToPixels(printer, textMargins)
-        footerHeight = painter.fontMetrics().height()
-        textRect = QtCore.QRectF(tm, tm, pageSize.width() - 2 * tm, pageSize.height() - 2 * tm - footerHeight)
-        doc.setPageSize(textRect.size())
-        pageCount = doc.pageCount()
-
-        for pageIndex in range(pageCount):
-            if pageIndex != 0:
-                printer.newPage()
-            self.paintPage(pageIndex, pageCount, painter, doc, textRect, footerHeight)
-
-
-def main():
-    app = QApplication(sys.argv)
-    ex = main_result_all()
-    ex.show()
-    sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
-    main()
+print ("Backup script completed")
+print ("Your backups has been created in '" + TODAYBACKUPPATH + "' directory")

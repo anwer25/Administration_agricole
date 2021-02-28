@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from bin.perwriter import readr
 from bin.mainWindow import Ui_mainwindow
@@ -8,6 +7,7 @@ from bin.deanshipsMainWindow import deanships
 from bin.prosecutionOfficesMain import ProsecutionMain
 from bin.mainDistribution import distributionWind
 from bin.Mainhistory import MainHistory
+from bin.mainSettings import mainSettings
 import os
 
 
@@ -27,6 +27,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.deanships = None
         self.prosecutionWindow = None
         self.historyWindow = None
+        self.settingsWindow = None
 
         self.Buttons()
         self.show()
@@ -52,6 +53,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.ProsecutionOffices.clicked.connect(self.openProsecutionOffices)
         self.distribution.clicked.connect(self.openDistribution)
         self.histroy.clicked.connect(self.openHistory)
+        self.settings.clicked.connect(self.openSettings)
 
     def openFarmers(self) -> None:
 
@@ -78,6 +80,11 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.historyWindow = MainHistory()
         self.hide()
         self.historyWindow.displayMainWindow.connect(self.show)
+
+    def openSettings(self):
+        self.settingsWindow = mainSettings()
+        self.hide()
+        self.settingsWindow.displayMainWindow.connect(self.show)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         try:

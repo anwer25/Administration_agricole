@@ -151,7 +151,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_7">
+        <widget class="QPushButton" name="settings">
          <property name="font">
           <font>
            <family>Arabic Typesetting</family>
@@ -185,7 +185,7 @@
           </font>
          </property>
          <property name="text">
-          <string>سجل</string>
+          <string>ارشيف</string>
          </property>
         </widget>
        </item>
