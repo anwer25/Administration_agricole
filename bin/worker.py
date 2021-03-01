@@ -1,11 +1,12 @@
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QSettings, QObject
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
 import mysql.connector
+from bin.mysqlError import mysqlError
 
 
 class dataBaseS(QObject):
     data = pyqtSignal(list)
-    refresher = pyqtSignal(QTableWidgetItem)
+    refresher = pyqtSignal()
 
     def __init__(self, com: str, parent=None):
         super(dataBaseS, self).__init__(parent)
@@ -38,7 +39,8 @@ class dataBaseS(QObject):
             else:
                 return self.cursor.fetchall()
         except mysql.connector.Error as err:
-            print(f'Error from line 23 sync file class dataBaseSyncer: {err}')
+            error = mysqlError(err)
+            error.errorType.connect(lambda i: print(f'{i} from worker line 32'))
 
 
 class TableWorker(QThread):
