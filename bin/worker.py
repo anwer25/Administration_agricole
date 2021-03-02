@@ -14,6 +14,7 @@ class dataBaseS(QObject):
         self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.connection = None
         self.cursor = None
+        print(self.com)
 
     def connector(self) -> list:
         """
@@ -39,6 +40,8 @@ class dataBaseS(QObject):
             else:
                 return self.cursor.fetchall()
         except mysql.connector.Error as err:
+            # TODO: FIX NO ERROR RETURNED FROM MYSQLERROR CLASS
+            print(err)
             error = mysqlError(err)
             error.errorType.connect(lambda i: print(f'{i} from worker line 32'))
 

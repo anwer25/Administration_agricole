@@ -38,11 +38,6 @@ class mainSettings(QWidget, Ui_settings):
         self.delete_2.clicked.connect(self.deleteUser)
         self.addNewUser.clicked.connect(self.addNewUserWindow)
 
-    def addNewUserWindow(self):
-        self.NewUserWindow: mainAddNewUser = mainAddNewUser()
-        self.setEnabled(False)
-        self.NewUserWindow.display.connect(lambda: self.setEnabled(True))
-
     def _testConnection(self) -> None:
         """
 
@@ -110,6 +105,12 @@ class mainSettings(QWidget, Ui_settings):
         except IndexError as e:
             # make message here
             print(f'error at line 96 mainSettings {e}')
+
+    def addNewUserWindow(self):
+        self.NewUserWindow: mainAddNewUser = mainAddNewUser()
+        self.setEnabled(False)
+        self.NewUserWindow.display.connect(lambda: self.setEnabled(True))
+        self.NewUserWindow.refresher.connect(self.tableRefresher)
 
     def deleteUser(self):
         selectedItem = self.getSelectedItem()
