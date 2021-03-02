@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>config</class>
+ <widget class="QMainWindow" name="config">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>338</width>
+    <height>194</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Arabic Typesetting</family>
+    <pointsize>16</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>D.P.A-إعدادات</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::RightToLeft</enum>
+  </property>
+  <property name="locale">
+   <locale language="Arabic" country="Tunisia"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="5">
+     <widget class="QLineEdit" name="dbHost"/>
+    </item>
+    <item row="1" column="5">
+     <widget class="QLineEdit" name="dbPassword">
+      <property name="maxLength">
+       <number>50</number>
+      </property>
+      <property name="echoMode">
+       <enum>QLineEdit::PasswordEchoOnEdit</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="5">
+     <widget class="QLineEdit" name="dbUserName">
+      <property name="maxLength">
+       <number>50</number>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>اسم االمستخدم:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="save">
+      <property name="text">
+       <string>حفظ</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="5">
+     <widget class="QPushButton" name="testConnection">
+      <property name="text">
+       <string>اختبار الاتصال</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>المضيف:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QPushButton" name="cancel">
+      <property name="text">
+       <string>إلغاء</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>كلمه السر:</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
+ <connections/>
+</ui>
