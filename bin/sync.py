@@ -91,7 +91,6 @@ class dataBaseSyncer(QThread):
                             self.Deanshipresult.emit(str(Deanship))
                     else:
                         # TODO: must removed from threading
-                        print(self.com)                             # for testing
                         cursor.execute(self.com)
                         self.result.emit(cursor.fetchall())
                 except TypeError as e:
@@ -99,7 +98,7 @@ class dataBaseSyncer(QThread):
 
         except mysql.connector.Error as err:
             error = mysqlError(err)
-            error.errorType.connect(lambda i: print(f'{i}: sync file'))
+            self.result.emit([error.__str__()])
         else:
             self.connection.close()
 
