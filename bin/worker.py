@@ -14,7 +14,6 @@ class dataBaseS(QObject):
         self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.connection = None
         self.cursor = None
-        print(self.com)
 
     def connector(self) -> list:
         """
@@ -36,7 +35,6 @@ class dataBaseS(QObject):
             if 'INSERT' in self.com or 'UPDATE' in self.com or 'DELETE' in self.com:
                 self.connection.commit()
                 self.connection.close()
-                self.refresher.emit()
             else:
                 return self.cursor.fetchall()
         except mysql.connector.Error as err:

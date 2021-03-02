@@ -6,6 +6,7 @@ from bin.mysqlError import mysqlError
 from bin.settings import Ui_settings
 from bin.worker import TableWorker, dataBaseS
 from bin.mainAddNewUser import mainAddNewUser
+from bin.mainChangeUserData import mainChangeUserData
 
 
 class mainSettings(QWidget, Ui_settings):
@@ -17,6 +18,7 @@ class mainSettings(QWidget, Ui_settings):
         self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.NewUserWindow = None
         self.fileLocation = None
+        self.userModifier = None
         self.tableRefresher()
         self.Ui()
         self.Buttons()
@@ -34,9 +36,10 @@ class mainSettings(QWidget, Ui_settings):
 
     def Buttons(self):
         self.testConnection.clicked.connect(self._testConnection)
-        self.dataBaseBackUpFileLoction.clicked.connect(self.openSaveFileLocation)
         self.delete_2.clicked.connect(self.deleteUser)
         self.addNewUser.clicked.connect(self.addNewUserWindow)
+        self.modifieUser.clicked.connect(self._Usermodifier)
+        self.saveData.clicked.connect(self._saveData)
 
     def _testConnection(self) -> None:
         """
@@ -58,10 +61,6 @@ class mainSettings(QWidget, Ui_settings):
         else:
             pass
 
-    def openSaveFileLocation(self):
-        self.fileLocation = QFileDialog.getSaveFileName(self, 'موقع حفظ الملف')
-        print(self.fileLocation)
-
     def tableRefresher(self):
         # TODO: fix thread big
         self.usersTable.setRowCount(0)
@@ -77,7 +76,7 @@ class mainSettings(QWidget, Ui_settings):
         result = 'نعم' if data == '1' else 'لا' if data == '0' else data
         self.usersTable.setItem(row, col, QTableWidgetItem(result))
 
-    def saveData(self):
+    def _saveData(self):
         try:
             config = {
                 'user': self.dbUserName.text(),
@@ -100,7 +99,7 @@ class mainSettings(QWidget, Ui_settings):
 
     def getSelectedItem(self) -> str:
         try:
-            IDvalue: QTableWidgetItem = self.usersTable.selectedItems()[1]
+            IDvalue: QTableWidgetItem = self.usersTable.selectedItems()[0]
             return IDvalue.text()
         except IndexError as e:
             # make message here
@@ -112,12 +111,18 @@ class mainSettings(QWidget, Ui_settings):
         self.NewUserWindow.display.connect(lambda: self.setEnabled(True))
         self.NewUserWindow.refresher.connect(self.tableRefresher)
 
+    def _Usermodifier(self):
+        self.userModifier: mainAddNewUser = mainChangeUserData(self.getSelectedItem())
+        self.setEnabled(False)
+        self.userModifier.display.connect(lambda: self.setEnabled(True))
+        self.userModifier.refresher.connect(self.tableRefresher)
+
     def deleteUser(self):
         selectedItem = self.getSelectedItem()
         # TODO: make conform message here
-        engine = dataBaseS(f"DELETE FROM users WHERE password='{selectedItem}'")
+        engine = dataBaseS(f"DELETE FROM users WHERE USER_='{selectedItem}'")
         engine.connector()
-        engine.refresher.connect(self.tableRefresher)
+        self.tableRefresher()
         # TODO: check if the are more than one user to delete if there are les than 2 this function doesn't work and
         #  display message
 

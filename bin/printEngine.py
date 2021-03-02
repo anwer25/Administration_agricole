@@ -144,12 +144,13 @@ class templateEngine(QObject):
                 data[0][4],
             ])
 
-            def ___save(n: int = 4):
+            def ___save(n: int = 6):
                 context = {
                     'd': con
                 }
 
-                docx = 'template\\template.docx' if n == 4 else 'template\\template3.docx' if n == 3 \
+                docx = 'template\\template6.docx' if n == 6 else 'template\\template5.docx' if n == 5 \
+                    else 'template\\template4.docx' if n == 4 else 'template\\template3.docx' if n == 3 \
                     else 'template\\template2.docx' if n == 2 else 'template\\template1.docx'
                 try:
                     doc = DocxTemplate(docx)
@@ -163,8 +164,8 @@ class templateEngine(QObject):
                     con.clear()
                     return file
 
-            if ___COUNT >= 4:
-                if i == 4:
+            if ___COUNT >= 6:
+                if i == 6:
                     ___COUNT -= i
                     i = 0
                     self.printingfile(___save())

@@ -1,22 +1,24 @@
 from PyQt5.QtWidgets import QDialog, QLineEdit
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent
-from bin.addNewUser import Ui_Dialog
+from bin.changeUserData import Ui_Dialog
 from bin.psd import Crypt
 from bin.worker import dataBaseS
 
 
-class mainAddNewUser(QDialog, Ui_Dialog):
+class mainChangeUserData(QDialog, Ui_Dialog):
     display = pyqtSignal()
     refresher = pyqtSignal()
 
-    def __init__(self, parent=None):
-        super(mainAddNewUser, self).__init__(parent)
+    def __init__(self, user, parent=None):
+        super(mainChangeUserData, self).__init__(parent)
         self.setupUi(self)
+        self.user = user
         self.Ui()
         self.Buttons()
 
     def Ui(self):
+        self.userName_2.setText(self.user)
         self.show()
 
     def Buttons(self):
@@ -26,8 +28,8 @@ class mainAddNewUser(QDialog, Ui_Dialog):
             else:
                 self.password_2.setEchoMode(QLineEdit.Password)
 
-        self.save.clicked.connect(self.__saveData)
-        self.cancel.clicked.connect(self.close)
+        self.pushButton.clicked.connect(self.__saveData)
+        self.pushButton_2.clicked.connect(self.close)
         self.displayPassword.clicked.connect(password)
 
     def __saveData(self):
@@ -38,8 +40,8 @@ class mainAddNewUser(QDialog, Ui_Dialog):
         history: int = 1 if self.history.isChecked() else 0
         encrypting: Crypt = Crypt(password)
         ___saver: dataBaseS = dataBaseS(
-            f"INSERT INTO users Values('{userName}', '{history}', '{distribution}', 0,"
-            f"'{encrypting.encryptUserNameAndPassword()}')")
+            f"UPDATE users SET USER_= '{userName}' ,history= '{history}', distribution= '{distribution}', settings= 0,"
+            f"password= '{encrypting.encryptUserNameAndPassword()}' where USER_='{self.user}'")
         ___saver.connector()
         self.refresher.emit()
 
