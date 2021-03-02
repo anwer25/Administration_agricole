@@ -39,7 +39,7 @@ class mainW(QMainWindow, Ui_mainwindow):
         if not result['history']:
             self.histroy.setEnabled(False)
         if not result['settings']:
-            pass
+            self.settings.setEnabled(False)
 
     def Buttons(self):
         self.farmers.clicked.connect(self.openFarmers)
