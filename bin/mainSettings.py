@@ -5,6 +5,7 @@ import mysql.connector
 from bin.mysqlError import mysqlError
 from bin.settings import Ui_settings
 from bin.worker import TableWorker, dataBaseS
+from bin.mainAddNewUser import mainAddNewUser
 
 
 class mainSettings(QWidget, Ui_settings):
@@ -14,6 +15,7 @@ class mainSettings(QWidget, Ui_settings):
         super(mainSettings, self).__init__(parent)
         self.setupUi(self)
         self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
+        self.NewUserWindow = None
         self.fileLocation = None
         self.tableRefresher()
         self.Ui()
@@ -34,6 +36,12 @@ class mainSettings(QWidget, Ui_settings):
         self.testConnection.clicked.connect(self._testConnection)
         self.dataBaseBackUpFileLoction.clicked.connect(self.openSaveFileLocation)
         self.delete_2.clicked.connect(self.deleteUser)
+        self.addNewUser.clicked.connect(self.addNewUserWindow)
+
+    def addNewUserWindow(self):
+        self.NewUserWindow: mainAddNewUser = mainAddNewUser()
+        self.setEnabled(False)
+        self.NewUserWindow.display.connect(lambda: self.setEnabled(True))
 
     def _testConnection(self) -> None:
         """
@@ -71,8 +79,8 @@ class mainSettings(QWidget, Ui_settings):
         self.usersTable.insertRow(row)
 
     def tableDataDisplay(self, row: int, col: int, data: str):
-
-        self.usersTable.setItem(row, col, QTableWidgetItem(str(data)))
+        result = 'نعم' if data == '1' else 'لا' if data == '0' else data
+        self.usersTable.setItem(row, col, QTableWidgetItem(result))
 
     def saveData(self):
         try:
@@ -113,4 +121,9 @@ class mainSettings(QWidget, Ui_settings):
         #  display message
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        self.displayMainWindow.emit()
+        try:
+            self.NewUserWindow.close()
+        except AttributeError:
+            pass
+        finally:
+            self.displayMainWindow.emit()

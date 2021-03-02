@@ -62,17 +62,9 @@ class writer(QObject):
             self.data = self.cursor.fetchall()
             temp = {
                 'user': self.data[0][0],
-                'ProsectionOffices': self.data[0][2],
-                'farmers': self.data[0][3],
-                'newFarmers': self.data[0][4],
-                'history': self.data[0][5],
-                'distribution': self.data[0][6],
-                'ProsectutionOffices': self.data[0][7],
-                'changeProsectutionOffices': self.data[0][8],
-                'change': self.data[0][9],
-                'settings': self.data[0][10],
-                'DeanShip': self.data[0][11],
-                'addNewDeanShip': self.data[0][12]
+                'history': self.data[0][1],
+                'distribution': self.data[0][2],
+                'settings': self.data[0][3],
             }
         try:
             with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:

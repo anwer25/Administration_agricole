@@ -113,7 +113,7 @@
              <bool>true</bool>
             </property>
             <attribute name="horizontalHeaderDefaultSectionSize">
-             <number>317</number>
+             <number>159</number>
             </attribute>
             <column>
              <property name="text">
@@ -122,7 +122,17 @@
             </column>
             <column>
              <property name="text">
-              <string>كلمه السر</string>
+              <string>التوزيع</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>ارشيف</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>إعدادات</string>
              </property>
             </column>
            </widget>

@@ -26,7 +26,9 @@ class Ui_searchMethod(object):
         searchMethod.setFont(font)
         searchMethod.setMouseTracking(False)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(
+            QtGui.QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
         searchMethod.setWindowIcon(icon)
         searchMethod.setLayoutDirection(QtCore.Qt.RightToLeft)
         searchMethod.setLocale(QtCore.QLocale(QtCore.QLocale.Arabic, QtCore.QLocale.Tunisia))
@@ -58,13 +60,13 @@ class Ui_searchMethod(object):
         self.cinSearch.setObjectName("cinSearch")
         self.gridLayout.addWidget(self.cinSearch, 1, 4, 1, 1)
         self.CIN = QtWidgets.QLineEdit(searchMethod)
-        self.CIN.setInputMethodHints(QtCore.Qt.ImhDigitsOnly|QtCore.Qt.ImhPreferNumbers)
+        self.CIN.setInputMethodHints(QtCore.Qt.ImhDigitsOnly | QtCore.Qt.ImhPreferNumbers)
         self.CIN.setMaxLength(8)
         self.CIN.setCursorMoveStyle(QtCore.Qt.LogicalMoveStyle)
         self.CIN.setObjectName("CIN")
         self.gridLayout.addWidget(self.CIN, 1, 8, 1, 1)
         self.searchButton = QtWidgets.QDialogButtonBox(searchMethod)
-        self.searchButton.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
+        self.searchButton.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel | QtWidgets.QDialogButtonBox.Ok)
         self.searchButton.setObjectName("searchButton")
         self.gridLayout.addWidget(self.searchButton, 2, 4, 1, 1)
 
@@ -80,4 +82,6 @@ class Ui_searchMethod(object):
         self.dateSearchOnOff.setText(_translate("searchMethod", "البحث باستخدام التاريخ"))
         self.dateFrom.setDisplayFormat(_translate("searchMethod", "yyyy/M/d"))
         self.cinSearch.setText(_translate("searchMethod", "البحث باستخدام ب.ت.و "))
+
+
 from qrc_source import source

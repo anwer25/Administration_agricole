@@ -11,13 +11,13 @@ class Key:
 
 
 class Crypt(QObject):
-    passwordAndUserName = pyqtSignal(str)
 
     def __init__(self, password: str):
-        self.password = password
+        self.encryptUserNameAndPassword(password)
 
-    def encryptUserNameAndPassword(self) -> None:
-        return Key.pwd_context.encrypt(self.password)
+    @staticmethod
+    def encryptUserNameAndPassword(password) -> None:
+        return Key.pwd_context.encrypt(password)
 
 
 class Dcrypt(QObject):

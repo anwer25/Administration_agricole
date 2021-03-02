@@ -39,7 +39,7 @@ class registerWindow(QMainWindow, Ui_MainWindow):
     def createAccount(self) -> None:
         if self.password.text() == self.password_2.text() and len(self.password.text()) > 4:
             CryptEngine = Crypt(self.password.text())
-            self.saver(CryptEngine.encryptUserNameAndPassword())
+            self.saver(CryptEngine)
         else:
             self.passwordProblem.exec_()
             self.password.clear()
@@ -47,7 +47,7 @@ class registerWindow(QMainWindow, Ui_MainWindow):
 
     def saver(self, password) -> None:
         saverEngine = dataBaseSyncer(f"INSERT INTO users values('{self.username.text()}','{password}', True, True"
-                                     f", True, True, True, True, True, True, True, True, True)")
+                                     f", True)")
         saverEngine.start()
         jsonWriter = writer(f"'{self.username.text()}'")
         self.ok.exec_()

@@ -62,7 +62,7 @@ class windowController:
         :return: None
         switching between windows
         """
-        self.data.terminate()       # to terminate thread
+        self.data.terminate()  # to terminate thread
         if self.usersShaker(data):
             self.login = loginMain()
             self.login.windowSwitcher.connect(self.showFromLogin)
@@ -76,22 +76,22 @@ class windowController:
         :return: None
         """
         self.loading = MainWindow()
-        self.loading.switch_window.connect(self.showMainWindow)         # switch between Windows (open Main Window)
-        self.login.close()                                              # close loading Window
+        self.loading.switch_window.connect(self.showMainWindow)  # switch between Windows (open Main Window)
+        self.login.close()  # close loading Window
 
     def showFromRegister(self) -> None:
         """
         get signal from login Window
         :return: None
         """
-        self.loading = MainWindow()                                     # open loading Main Window
-        self.loading.switch_window.connect(self.showMainWindow)         # switch between windows
-        self.register.close()                                           # close register Window
+        self.loading = MainWindow()  # open loading Main Window
+        self.loading.switch_window.connect(self.showMainWindow)  # switch between windows
+        self.register.close()  # close register Window
 
     def showMainWindow(self) -> None:
         """
 
         :return: None
         """
-        self.mainWindow = mainW()                                       # mainWindow class
-        self.loading.close()                                            # close loading Window
+        self.mainWindow = mainW()  # mainWindow class
+        self.loading.close()  # close loading Window

@@ -34,18 +34,12 @@ class mainW(QMainWindow, Ui_mainwindow):
 
     def UI(self, result: dict = None):
 
-        if not result['farmers']:
-            self.farmers.setEnabled(False)
-        if not result['ProsectionOffices']:
-            self.ProsecutionOffices.setEnabled(False)
         if not result['distribution']:
             self.distribution.setEnabled(False)
         if not result['history']:
             self.histroy.setEnabled(False)
         if not result['settings']:
             pass
-        if not result['DeanShip']:
-            self.DeanShips.setEnabled(False)
 
     def Buttons(self):
         self.farmers.clicked.connect(self.openFarmers)
