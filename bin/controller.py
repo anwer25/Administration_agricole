@@ -40,42 +40,34 @@ class windowController:
         self.loading = None
         self.mainWindow = None
         self.config = None
+        settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
+
+        self.___config = {
+            'user': settings.value('DATABASE_USER_NAME', '', str),
+            # password must changed to ''
+            'password': settings.value('DATABASE_PASSWORD', '', str),
+            'host': settings.value('DATABASE_HOST', '', str),
+            'raise_on_warnings': True
+        }
+
         self.checkConnection()
 
     def checkConnection(self):
-        settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
-        ___config = {
-            'user': settings.value('DATABASE_USER_NAME', 'root', str),
-            # password must changed to ''
-            'password': settings.value('DATABASE_PASSWORD', 'admin', str),
-            'host': settings.value('DATABASE_HOST', 'localhost', str),
-            'raise_on_warnings': True
-        }
         try:
-            connecter = mysql.connector.connect(**___config)
+            connecter = mysql.connector.connect(**self.___config)
         except mysql.connector.Error as err:
+            print(f'error from controller 555 {err}')  # for test
             self.displayConfWindow()
         else:
-            self.data = dataBaseSyncer('SELECT * FROM users')
-            self.data.result.connect(self.windowSwitcher)
-            self.data.start()
+            self.dataBase = dataBaseSyncer('SELECT * FROM users')
+            self.dataBase.result.connect(self.windowSwitcher)
+            self.dataBase.start()
 
     def displayConfWindow(self):
         self.config = mainConfig()
-        self.config.changeWindow.connect(lambda i: print(i))
+        self.config.changeWindow_.connect(self.windowSwitcher)
 
-    @staticmethod
-    def usersShaker(data: list) -> bool:
-        """
-        :rtype: bool
-        :return: true if there are users else return False
-        """
-        if len(data) >= 1:
-            return True
-        else:
-            return False
-
-    def windowSwitcher(self, data: list) -> None:
+    def windowSwitcher(self, data: list = None) -> None:
         """
 
         :param data: user list from dataBase syncer
@@ -83,13 +75,46 @@ class windowController:
         :return: None
         switching between windows
         """
-        self.data.terminate()  # to terminate thread
-        if self.usersShaker(data):
-            self.login = loginMain()
-            self.login.windowSwitcher.connect(self.showFromLogin)
+        try:
+            self.dataBase.terminate()
+        except AttributeError:
+            pass
+
+        def usersShaker(data: list) -> bool:
+            """
+            :rtype: bool
+            :return: true if there are users else return False
+            """
+            if len(data) >= 1:
+                return True
+            else:
+                return False
+
+        if data is None:
+            try:
+                connecter = mysql.connector.connect(**self.___config)
+            except mysql.connector.Error as err:
+                print(f'error from controller 15 {err}')  # for test
+                self.displayConfWindow()
+            else:
+                self.dataBase = dataBaseSyncer('SELECT * FROM users')
+                self.dataBase.result.connect(usersShaker)
+                self.dataBase.start()
         else:
-            self.register = registerWindow()
-            self.register.windowSwitcher.connect(self.showFromRegister)
+                if usersShaker(data):
+                    try:
+                        self.dataBase.terminate()
+                    except:
+                        pass
+                    self.login = loginMain()
+                    self.login.windowSwitcher.connect(self.showFromLogin)
+                else:
+                    try:
+                        self.dataBase.terminate()
+                    except:
+                        pass
+                    self.register = registerWindow()
+                    self.register.windowSwitcher.connect(self.showFromRegister)
 
     def showFromLogin(self) -> None:
         """
