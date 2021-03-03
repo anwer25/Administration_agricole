@@ -51,6 +51,7 @@ class dataBaseSyncer(QThread):
     Deanshipresult = pyqtSignal(str)
     refresher = pyqtSignal()
     messages = pyqtSignal()
+    result_ = pyqtSignal()
 
     def __init__(self, com: str):
         super(dataBaseSyncer, self).__init__()
@@ -98,7 +99,8 @@ class dataBaseSyncer(QThread):
 
         except mysql.connector.Error as err:
             error = mysqlError(err)
-            self.result.emit([error.__str__()])
+            if error.__str__() == 2003:
+                self.result_.emit()
         else:
             self.connection.close()
 

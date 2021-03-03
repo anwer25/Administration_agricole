@@ -2,7 +2,7 @@ from bin.reg import Ui_MainWindow
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
 from bin.psd import Crypt
-from bin.sync import dataBaseSyncer
+from bin.worker import dataBaseS
 from bin.perwriter import writer
 
 
@@ -46,9 +46,9 @@ class registerWindow(QMainWindow, Ui_MainWindow):
             self.password_2.clear()
 
     def saver(self, password) -> None:
-        saverEngine = dataBaseSyncer(f"INSERT INTO users values('{self.username.text()}','{password}', 1, 1"
-                                     f", 1)")
-        saverEngine.start()
+        saverEngine = dataBaseS(f"INSERT INTO users values('{self.username.text()}',1, 1"
+                                f", 1, '{password}')")
+        saverEngine.connector()
         jsonWriter = writer(f"'{self.username.text()}'")
         self.ok.exec_()
         self.windowSwitcher.emit()

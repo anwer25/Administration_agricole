@@ -1,8 +1,11 @@
+from PyQt5.QtCore import QSettings
+import mysql.connector
 from bin.sync import dataBaseSyncer
 from bin.login_ import loginMain
 from bin.reg_ import registerWindow
 from bin.main import mainW
 from bin.loading_ import MainWindow
+from bin.configWindow import mainConfig
 
 
 class windowController:
@@ -32,13 +35,34 @@ class windowController:
     """
 
     def __init__(self):
-        self.data = dataBaseSyncer('SELECT * FROM users')
-        self.data.result.connect(self.windowSwitcher)
-        self.data.start()
         self.login = None
         self.register = None
         self.loading = None
         self.mainWindow = None
+        self.config = None
+        self.checkConnection()
+
+    def checkConnection(self):
+        settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
+        ___config = {
+            'user': settings.value('DATABASE_USER_NAME', 'root', str),
+            # password must changed to ''
+            'password': settings.value('DATABASE_PASSWORD', 'admin', str),
+            'host': settings.value('DATABASE_HOST', 'localhost', str),
+            'raise_on_warnings': True
+        }
+        try:
+            connecter = mysql.connector.connect(**___config)
+        except mysql.connector.Error as err:
+            self.displayConfWindow()
+        else:
+            self.data = dataBaseSyncer('SELECT * FROM users')
+            self.data.result.connect(self.windowSwitcher)
+            self.data.start()
+
+    def displayConfWindow(self):
+        self.config = mainConfig()
+        self.config.changeWindow.connect(lambda i: print(i))
 
     @staticmethod
     def usersShaker(data: list) -> bool:
@@ -46,13 +70,10 @@ class windowController:
         :rtype: bool
         :return: true if there are users else return False
         """
-        _ = []
-        for row in data:
-            _.append(row)
-            if len(_) == 1:
-                return True
-            else:
-                return False
+        if len(data) >= 1:
+            return True
+        else:
+            return False
 
     def windowSwitcher(self, data: list) -> None:
         """

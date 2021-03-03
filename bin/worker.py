@@ -39,9 +39,8 @@ class dataBaseS(QObject):
                 return self.cursor.fetchall()
         except mysql.connector.Error as err:
             # TODO: FIX NO ERROR RETURNED FROM MYSQLERROR CLASS
-            print(err)
             error = mysqlError(err)
-            error.errorType.connect(lambda i: print(f'{i} from worker line 32'))
+            print(error.__str__())
 
 
 class TableWorker(QThread):
