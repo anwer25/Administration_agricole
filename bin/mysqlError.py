@@ -11,10 +11,10 @@ class mysqlError:
     def errors(self, error):
         if error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             # TODO: make message here
-            return "Something is wrong with your user name or password"
+            return "هناك خطأ ما في اسم المستخدم أو كلمة المرور"
         elif error.errno == errorcode.ER_BAD_DB_ERROR:
             # TODO: make message here
-            return "Database does not exist"
+            return "قاعدة البيانات غير موجودة"
         elif error.errno == errorcode.CR_CONN_HOST_ERROR:
             # TODO: make message here
             return error.errno
