@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>338</width>
-    <height>194</height>
+    <height>244</height>
    </rect>
   </property>
   <property name="font">
@@ -32,6 +32,9 @@
   <property name="locale">
    <locale language="Arabic" country="Tunisia"/>
   </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="5">
@@ -44,6 +47,20 @@
       </property>
       <property name="echoMode">
        <enum>QLineEdit::PasswordEchoOnEdit</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QPushButton" name="save">
+      <property name="text">
+       <string>حفظ</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="5">
+     <widget class="QPushButton" name="testConnection">
+      <property name="text">
+       <string>اختبار الاتصال</string>
       </property>
      </widget>
     </item>
@@ -61,28 +78,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QPushButton" name="save">
-      <property name="text">
-       <string>حفظ</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="5">
-     <widget class="QPushButton" name="testConnection">
-      <property name="text">
-       <string>اختبار الاتصال</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>المضيف:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="3">
+    <item row="4" column="3">
      <widget class="QPushButton" name="cancel">
       <property name="text">
        <string>إلغاء</string>
@@ -93,6 +89,23 @@
      <widget class="QLabel" name="label_2">
       <property name="text">
        <string>كلمه السر:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>المضيف:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="5">
+     <widget class="QLineEdit" name="dataBaseName"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>اسم قاعدة البيانات:</string>
       </property>
      </widget>
     </item>

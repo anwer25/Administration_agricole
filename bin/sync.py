@@ -73,7 +73,7 @@ class dataBaseSyncer(QThread):
             # password must changed to ''
             'password': self.settings.value('DATABASE_PASSWORD', 'admin', str),
             'host': self.settings.value('DATABASE_HOST', 'localhost', str),
-            'database': self.settings.value('DATABASE_NAME', 'administration-agricole', str),
+            'database': self.settings.value('DATABASE_NAME', 'administration_agricole', str),
             'raise_on_warnings': True
         }
         try:
@@ -101,6 +101,8 @@ class dataBaseSyncer(QThread):
             error = mysqlError(err)
             if error.__str__() == 2003:
                 self.result_.emit()
+            else:
+                print(err.__str__())
         else:
             self.connection.close()
 

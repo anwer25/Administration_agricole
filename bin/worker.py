@@ -25,7 +25,7 @@ class dataBaseS(QObject):
             # password must changed to ''
             'password': self.settings.value('DATABASE_PASSWORD', 'admin', str),
             'host': self.settings.value('DATABASE_HOST', 'localhost', str),
-            'database': self.settings.value('DATABASE_NAME', 'administration-agricole', str),
+            'database': self.settings.value('DATABASE_NAME', 'administration_agricole', str),
             'raise_on_warnings': True
         }
         try:
