@@ -65,7 +65,6 @@ class windowController:
 
     def displayConfWindow(self):
         self.config = mainConfig()
-        self.config.changeWindow_.connect(self.windowSwitcher)
 
     def windowSwitcher(self, data: list = None) -> None:
         """

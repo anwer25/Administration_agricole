@@ -42,7 +42,7 @@ class mainConfig(QMainWindow, Ui_config):
                 self.settings.setValue('DATABASE_HOST', self.dbHost.text())
                 self.settings.sync()
                 curser = connection.cursor()
-                curser.execute(f'CRATE DATABASE IF NOT EXISTS administration-agricole')
+                curser.execute(f'CREATE DATABASE IF NOT EXISTS administration_agricole')
                 Query = """
                 
                 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
