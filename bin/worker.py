@@ -1,19 +1,26 @@
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QSettings, QObject
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
+from PyQt5.QtCore import QThread, pyqtSignal, QSettings, QObject
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtGui import QIcon, QPixmap
 import mysql.connector
 from bin.mysqlError import mysqlError
 
 
 class dataBaseS(QObject):
-    data = pyqtSignal(list)
-    refresher = pyqtSignal()
+    """
 
+    """
     def __init__(self, com: str, parent=None):
         super(dataBaseS, self).__init__(parent)
         self.com = com
         self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.connection = None
         self.cursor = None
+        self.messages = QMessageBox()
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.messages.setWindowIcon(icon)
 
     def connector(self) -> list:
         """
@@ -21,11 +28,10 @@ class dataBaseS(QObject):
         :return:dataBase Query result
         """
         config = {
-            'user': self.settings.value('DATABASE_USER_NAME', 'root', str),
-            # password must changed to ''
-            'password': self.settings.value('DATABASE_PASSWORD', 'admin', str),
-            'host': self.settings.value('DATABASE_HOST', 'localhost', str),
-            'database': self.settings.value('DATABASE_NAME', 'administration_agricole', str),
+            'user': self.settings.value('DATABASE_USER_NAME', '', str),
+            'password': self.settings.value('DATABASE_PASSWORD', '', str),
+            'host': self.settings.value('DATABASE_HOST', '', str),
+            'database': self.settings.value('DATABASE_NAME', '', str),
             'raise_on_warnings': True
         }
         try:
@@ -38,9 +44,11 @@ class dataBaseS(QObject):
             else:
                 return self.cursor.fetchall()
         except mysql.connector.Error as err:
-            # TODO: FIX NO ERROR RETURNED FROM MYSQLERROR CLASS
             error = mysqlError(err)
-            print(error.__str__())
+            self.messages.setWindowTitle('هناك خطأ')
+            self.message.setIcon(QMessageBox.Warning)
+            self.messages.setText(error.__str__())
+            self.message.exec_()
 
 
 class TableWorker(QThread):
@@ -65,6 +73,6 @@ class TableWorker(QThread):
                 for colNumber, data in enumerate(rowData):
                     self.data_.emit(rowNumber, colNumber, str(data))
         except TypeError as e:
-            print(f'worker error line 60 :{e}')
+            print(f'worker error line 69 :{e}')
         finally:
             self.quit()

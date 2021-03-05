@@ -8,6 +8,26 @@ from qrc_source import source
 
 
 class mainConfig(QMainWindow, Ui_config):
+    """
+    mainConfig Class subclass of bin.conf.Ui_config
+    wine run programme on first time check if there are establish connection to database server if not this class
+    will be run and display configuration window to add server to save it on register
+    if there are problem on database name or password or name will be display message from mysqlError class
+    imported models and class {
+        PyQt5.QtWidgets.QMainWindow, QMessageBox
+        PyQt5.QtCore.QSettings
+        PyQt5.QtGui.QIcon, QPixmap
+        mysql.connector
+        bin.conf.Ui_config
+        bin.mysqlError.mysqlError
+        qrc_source.source
+    }
+    methods {
+
+        saveData
+    }
+
+    """
 
     def __init__(self, parent=None):
         super(mainConfig, self).__init__(parent)
@@ -34,21 +54,22 @@ class mainConfig(QMainWindow, Ui_config):
         self.save.clicked.connect(self.saveData)
 
     def saveData(self):
-        try:
+        try:                                            # check if connection is establish
             config = {
                 'user': self.dbUserName.text(),
                 'password': self.dbPassword.text(),
                 'host': self.dbHost.text(),
+                'database': self.dataBaseName.text(),
                 'raise_on_warnings': True
             }
             connection = mysql.connector.connect(**config)
-        except mysql.connector.Error as err:
+        except mysql.connector.Error as err:            # message displayed from here
             ___mysqlError = mysqlError(err)
             self.message.setWindowTitle('هناك خطأ')
             self.message.setText(___mysqlError.__str__())
             self.message.setIcon(QMessageBox.Warning)
             self.message.exec_()
-        else:
+        else:                                           # save settings to register if everything is ok
             if connection.is_connected():
                 self.settings.setValue('DATABASE_USER_NAME', self.dbUserName.text())
                 self.settings.setValue('DATABASE_PASSWORD', self.dbPassword.text())
