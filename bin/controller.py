@@ -1,4 +1,7 @@
 from PyQt5.QtCore import QSettings
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtGui import QIcon, QPixmap
+from qrc_source import source
 import mysql.connector
 from bin.sync import dataBaseSyncer
 from bin.login_ import loginMain
@@ -6,6 +9,7 @@ from bin.reg_ import registerWindow
 from bin.main import mainW
 from bin.loading_ import MainWindow
 from bin.configWindow import mainConfig
+from bin.mysqlError import mysqlError
 
 
 class windowController:
@@ -35,85 +39,115 @@ class windowController:
     """
 
     def __init__(self):
+        self.dataBase = dataBaseSyncer('SELECT * FROM users')
         self.login = None
         self.register = None
         self.loading = None
         self.mainWindow = None
         self.config = None
-        settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
+        self.messages = QMessageBox()
+        settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')  # declare  settings class
 
-        self.___config = {
+        self.___config = {  # DataBase config
             'user': settings.value('DATABASE_USER_NAME', '', str),
             # password must changed to ''
             'password': settings.value('DATABASE_PASSWORD', '', str),
             'host': settings.value('DATABASE_HOST', '', str),
+            'database': settings.value('DATABASE_NAME', '', str),
             'raise_on_warnings': True
         }
 
-        self.checkConnection()
+        self.checkConnection()  # method to check connection
 
-    def checkConnection(self):
+    def ___errorCatch(self, error: str) -> None:
+        """
+        display Error
+        :param error: error name str
+        :return: None
+        """
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.messages.setWindowIcon(icon)  # add Window icon to Qmessage
+        self.messages.setWindowTitle('هناك خطأ')  # add title to Qmessage
+        self.messages.setIcon(QMessageBox.Warning)
+        self.messages.setText(error)
+        self.messages.exec_()
+        self.displayConfWindow()
+
+    def checkConnection(self) -> None:
+        """
+        check connection if there are connection dataBaseSyncer will be run and send result to widnowSwitcher method
+        to check if there are users or not
+        :return: No return
+        """
+        # check connection
         try:
             connecter = mysql.connector.connect(**self.___config)
         except mysql.connector.Error as err:
-            print(f'error from controller 555 {err}')  # for test
-            self.displayConfWindow()
-        else:
-            self.dataBase = dataBaseSyncer('SELECT * FROM users')
-            self.dataBase.result.connect(self.windowSwitcher)
+            # if there are error will be displayed as message and run displayConfWindow
+            error = mysqlError(err)
+            self.___errorCatch(error.__str__())
+        else:                                                  # check if there are users on database
+            self.dataBase.result.connect(self.windowSwitcher)  # pass result to windowSwitcher method
             self.dataBase.start()
+            self.dataBase.errorMessages.connect(lambda i: self.___errorCatch(i))
 
-    def displayConfWindow(self):
+    def displayConfWindow(self) -> None:
+        """
+        display confWindow
+        :return: No return
+        """
         self.config = mainConfig()
 
     def windowSwitcher(self, data: list = None) -> None:
         """
 
         :param data: user list from dataBase syncer
-        :rtype: None
-        :return: None
+        :return: No return
         switching between windows
         """
         try:
-            self.dataBase.terminate()
+            self.dataBase.terminate()  # terminate Qthread
         except AttributeError:
             pass
 
-        def usersShaker(data: list) -> bool:
+        def usersShaker(_data: list) -> bool:
             """
             :rtype: bool
             :return: true if there are users else return False
             """
-            if len(data) >= 1:
+            if len(_data) >= 1:
                 return True
             else:
                 return False
 
-        if data is None:
+        if data is None:  # check if data is not None if None check connection again
             try:
                 connecter = mysql.connector.connect(**self.___config)
             except mysql.connector.Error as err:
-                print(f'error from controller 15 {err}')  # for test
-                self.displayConfWindow()
+                error = mysqlError(err)
+                self.___errorCatch(error.__str__())
             else:
-                self.dataBase = dataBaseSyncer('SELECT * FROM users')
                 self.dataBase.result.connect(usersShaker)
                 self.dataBase.start()
+                self.dataBase.errorMessages.connect(lambda i: self.___errorCatch(i))
         else:
-                if usersShaker(data):
-                    try:
-                        self.dataBase.terminate()
-                    except:
-                        pass
-                    self.login = loginMain()
-                    self.login.windowSwitcher.connect(self.showFromLogin)
-                else:
-                    try:
-                        self.dataBase.terminate()
-                    except:
-                        pass
-                    self.register = registerWindow()
-                    self.register.windowSwitcher.connect(self.showFromRegister)
+            if usersShaker(data):
+                try:
+                    self.dataBase.terminate()
+                except:
+                    pass
+                self.login = loginMain()
+                self.login.windowSwitcher.connect(self.showFromLogin)
+            else:
+                try:
+                    self.dataBase.terminate()
+                except:
+                    pass
+                self.register = registerWindow()
+                self.register.windowSwitcher.connect(self.showFromRegister)
 
     def showFromLogin(self) -> None:
         """

@@ -22,11 +22,10 @@ class writer(QObject):
         :return:dataBase Query result
         """
         config = {
-            'user': self.settings.value('DATABASE_USER_NAME', 'root', str),
-            # password must changed to ''
-            'password': self.settings.value('DATABASE_PASSWORD', 'admin', str),
-            'host': self.settings.value('DATABASE_HOST', 'localhost', str),
-            'database': self.settings.value('DATABASE_NAME', 'administration-agricole', str),
+            'user': self.settings.value('DATABASE_USER_NAME', '', str),
+            'password': self.settings.value('DATABASE_PASSWORD', '', str),
+            'host': self.settings.value('DATABASE_HOST', '', str),
+            'database': self.settings.value('DATABASE_NAME', '', str),
             'raise_on_warnings': True
         }
 

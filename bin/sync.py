@@ -1,7 +1,9 @@
 import mysql.connector
 from bin.mysqlError import mysqlError
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from PyQt5.QtCore import QSettings
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtGui import QIcon, QPixmap
 
 
 class dataBaseSyncer(QThread):
@@ -50,8 +52,7 @@ class dataBaseSyncer(QThread):
     result = pyqtSignal(list)
     Deanshipresult = pyqtSignal(str)
     refresher = pyqtSignal()
-    messages = pyqtSignal()
-    result_ = pyqtSignal()
+    errorMessages = pyqtSignal(str)
 
     def __init__(self, com: str):
         super(dataBaseSyncer, self).__init__()
@@ -95,14 +96,11 @@ class dataBaseSyncer(QThread):
                         cursor.execute(self.com)
                         self.result.emit(cursor.fetchall())
                 except TypeError as e:
-                    print(f'error line 42 from sync file {e}')
+                    print(f'error line 91 or 96 from sync file {e}')
 
         except mysql.connector.Error as err:
             error = mysqlError(err)
-            if error.__str__() == 2003:
-                self.result_.emit()
-            else:
-                print(err.__str__())
+            self.errorMessages.emit(error.__str__())
         else:
             self.connection.close()
 

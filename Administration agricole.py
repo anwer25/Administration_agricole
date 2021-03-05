@@ -7,7 +7,7 @@ def run():
     """
     main programme from here every things begin
     :return: None
-    controller: hold windowController class where check if there ar users or not and if password and username is
+    controller: hold windowController class where check connection and if there ar users or not and if password and username is
     correct
 
     imported files and class {  sys

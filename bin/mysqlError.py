@@ -11,10 +11,10 @@ class mysqlError:
     def errors(self, error):
         if error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             # TODO: make message here
-            return "هناك خطأ ما في اسم المستخدم أو كلمة المرور"
+            return f"هناك خطأ ما في اسم المستخدم أو كلمة المرور: {error.errno}"
         elif error.errno == errorcode.ER_BAD_DB_ERROR:
             # TODO: make message here
-            return "قاعدة البيانات غير موجودة"
+            return f"قاعدة البيانات غير موجودة:{error.errno}"
         elif error.errno == errorcode.CR_CONN_HOST_ERROR:
             # TODO: make message here
             return error.errno
@@ -27,7 +27,7 @@ class mysqlError:
         elif error.errno == errorcode.ER_BAD_FIELD_ERROR:
             return f'Error from line   bad field error: {error.errno}'
         elif error.errno == errorcode.ER_NO_SUCH_TABLE:
-            return f'Error from line : NO SUCH TABLE: {error.errno}'
+            return f'جداول معطوبة أو اسم جدول غير صحيح: {error.errno}'
         elif error.errno == errorcode.ER_WRONG_VALUE_COUNT_ON_ROW:
             return f'Error from line  values provided in the INSERT ' \
                    f'statement is f bigger or smaller than the number of columns the table has: {error.errno}'

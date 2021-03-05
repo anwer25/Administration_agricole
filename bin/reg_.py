@@ -42,18 +42,19 @@ class registerWindow(QMainWindow, Ui_MainWindow):
         self.exit.clicked.connect(self.close)
 
     def createAccount(self) -> None:
-        if self.password.text() == self.password_2.text() and len(self.password.text()) > 4:
-            CryptEngine = Crypt(self.password.text())
-            self.saver(CryptEngine.encryptUserNameAndPassword())
+        if self.password.text() == self.password_2.text() and len(self.password.text()) > 4:        # check if len
+            # passowrd is greater than 4 and password one and tow is the some
+            CryptEngine = Crypt(self.password.text())                   # password encrypting
+            self.saver(CryptEngine.encryptUserNameAndPassword())        # pass password to save method
         else:
-            self.passwordProblem.exec_()
-            self.password.clear()
+            self.passwordProblem.exec_()                                # display message if there are
+            self.password.clear()                                       # problem on password
             self.password_2.clear()
 
     def saver(self, password) -> None:
         saverEngine = dataBaseS(f"INSERT INTO users values('{self.username.text()}',1, 1"
-                                f", 1, '{password}')")
+                                f", 1, '{password}')")              # save password on data base using databaseS class
         saverEngine.connector()
-        jsonWriter = writer(f"'{self.username.text()}'")
+        jsonWriter = writer(f"'{self.username.text()}'")            # write user privilege on json file to use it later
         self.ok.exec_()
-        self.windowSwitcher.emit()
+        self.windowSwitcher.emit()                                  # send signal to display main Window
