@@ -1,9 +1,11 @@
 from bin.reg import Ui_MainWindow
 from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
 from bin.psd import Crypt
 from bin.worker import dataBaseS
 from bin.perwriter import writer
+from qrc_source import source
 
 
 class registerWindow(QMainWindow, Ui_MainWindow):
@@ -18,22 +20,18 @@ class registerWindow(QMainWindow, Ui_MainWindow):
         super(registerWindow, self).__init__()
         QMainWindow.__init__(self)
         self.setupUi(self)
-        self.passwordProblem = QMessageBox()
-        self.ok = QMessageBox()
+        self.message = QMessageBox()
         self.Ui()
         self.Buttons()
 
     def Ui(self) -> None:
         self.show()
-        self.passwordProblem.setWindowTitle('خطأ في كلمة المرور')
-        self.passwordProblem.setText('خطأ في إعادة كلمة المرور')
-        self.passwordProblem.setInformativeText('يجب أن يكون طول كلمة المرور أكبر من أربعة')
-        self.passwordProblem.setIcon(QMessageBox.Warning)
-        self.passwordProblem.setStandardButtons(QMessageBox.Ok)
-        self.ok.setWindowTitle('التسجيل')
-        self.ok.setText('اكتمل التسجيل بشكل صحيح')
-        self.ok.setIcon(QMessageBox.Information)
-        self.ok.setStandardButtons(QMessageBox.Ok)
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.message.setWindowIcon(icon)
+        self.message.setStandardButtons(QMessageBox.Ok)
         self.password.setEchoMode(QLineEdit.Password)
         self.password_2.setEchoMode(QLineEdit.Password)
 
@@ -47,7 +45,11 @@ class registerWindow(QMainWindow, Ui_MainWindow):
             CryptEngine = Crypt(self.password.text())                   # password encrypting
             self.saver(CryptEngine.encryptUserNameAndPassword())        # pass password to save method
         else:
-            self.passwordProblem.exec_()                                # display message if there are
+            self.message.setWindowTitle('خطأ في كلمة المرور')
+            self.message.setText('خطأ في إعادة كلمة المرور')
+            self.message.setInformativeText('يجب أن يكون طول كلمة المرور أكبر من أربعة')
+            self.message.setIcon(QMessageBox.Warning)
+            self.message.exec_()                                # display message if there are
             self.password.clear()                                       # problem on password
             self.password_2.clear()
 
@@ -56,5 +58,8 @@ class registerWindow(QMainWindow, Ui_MainWindow):
                                 f", 1, '{password}')")              # save password on data base using databaseS class
         saverEngine.connector()
         jsonWriter = writer(f"'{self.username.text()}'")            # write user privilege on json file to use it later
-        self.ok.exec_()
+        self.message.setWindowTitle('التسجيل')
+        self.message.setText('اكتمل التسجيل بشكل صحيح')
+        self.message.setIcon(QMessageBox.Information)
+        self.message.exec_()
         self.windowSwitcher.emit()                                  # send signal to display main Window

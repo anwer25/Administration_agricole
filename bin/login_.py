@@ -1,10 +1,11 @@
 from bin.login import Ui_MainWindow
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
-# from bin.sync import dataBaseSyncer
+from PyQt5.QtGui import QIcon, QPixmap
 from bin.worker import dataBaseS
 from bin.psd import Dcrypt
 from bin.perwriter import writer
+from qrc_source import source
 
 
 class loginMain(QMainWindow, Ui_MainWindow):
@@ -18,37 +19,38 @@ class loginMain(QMainWindow, Ui_MainWindow):
         QMainWindow.__init__(self)
         self.setupUi(self)
         self.Buttons()
+        self.Problem = QMessageBox()
         self.Ui()
 
     def Ui(self) -> None:
-        self.show()
-        self.noUserMessage = QMessageBox()
-        self.noUserMessage.setWindowTitle('مشكلة في تسجيل الدخول')
-        self.noUserMessage.setText('لا يوجد مستخدم بهذا الاسم')
-        self.noUserMessage.setIcon(QMessageBox.Warning)
-        self.noUserMessage.setStandardButtons(QMessageBox.Ok)
-        self.passwordProblem = QMessageBox()
-        self.passwordProblem.setWindowTitle('مشكلة في تسجيل الدخول')
-        self.passwordProblem.setText('كلمة مرور خاطئة')
-        self.passwordProblem.setIcon(QMessageBox.Warning)
-        self.passwordProblem.setStandardButtons(QMessageBox.Ok)
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.Problem.setWindowIcon(icon)
+        self.Problem.setWindowTitle('مشكلة في تسجيل الدخول')
+        self.Problem.setIcon(QMessageBox.Warning)
+        self.Problem.setStandardButtons(QMessageBox.Ok)
         self.password.setEchoMode(QLineEdit.Password)
+        self.show()
 
     def Buttons(self) -> None:
         self.login.clicked.connect(self.checkLogin)
         self.exit.clicked.connect(self.close)
 
     def checkLogin(self) -> None:
+        # noinspection PyGlobalUndefined
         global username
         username = f'\'{self.username.text()}\''
 
-        self.database = dataBaseS(f"SELECT password FROM users WHERE USER_={username}")
-        self.result(self.database.connector())
+        database = dataBaseS(f"SELECT password FROM users WHERE USER_={username}")
+        self.result(database.connector())
 
     def result(self, r: list) -> None:
 
         if len(r) == 0:
-            self.noUserMessage.exec_()
+            self.Problem.setText('لا يوجد مستخدم بهذا الاسم')
+            self.Problem.exec_()
         else:
             password = self.password.text()
             passwordVerify = Dcrypt(password, r)
@@ -61,4 +63,5 @@ class loginMain(QMainWindow, Ui_MainWindow):
             jsonWriter = writer(username)
             self.windowSwitcher.emit()
         else:
-            self.passwordProblem.exec_()
+            self.Problem.setText('كلمة مرور خاطئة')
+            self.Problem.exec_()

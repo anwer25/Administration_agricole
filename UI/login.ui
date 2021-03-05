@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>375</width>
-    <height>225</height>
+    <width>369</width>
+    <height>226</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>369</width>
+    <height>226</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>369</width>
+    <height>226</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -17,7 +29,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>D.P.A-تسجيل الدخول</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
@@ -55,7 +71,7 @@
    <widget class="QLineEdit" name="username">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>30</y>
       <width>171</width>
       <height>20</height>
@@ -68,7 +84,7 @@
    <widget class="QLineEdit" name="password">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>100</y>
       <width>171</width>
       <height>20</height>
@@ -91,7 +107,7 @@
    <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>170</y>
       <width>75</width>
       <height>31</height>
@@ -111,6 +127,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
  <connections/>
 </ui>

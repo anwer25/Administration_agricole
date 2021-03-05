@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>359</height>
+    <height>279</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,7 +56,7 @@
        <property name="geometry">
         <rect>
          <x>6</x>
-         <y>60</y>
+         <y>30</y>
          <width>611</width>
          <height>71</height>
         </rect>
@@ -71,7 +71,7 @@
         <string notr="true">color: rgb(153, 29, 255);</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Administration agricole&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;D.P.A&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -81,7 +81,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>220</y>
+         <y>140</y>
          <width>601</width>
          <height>23</height>
         </rect>
@@ -110,7 +110,7 @@ QProgressBar::chunk {
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>260</y>
+         <y>180</y>
          <width>621</width>
          <height>21</height>
         </rect>
@@ -125,7 +125,7 @@ QProgressBar::chunk {
         <string notr="true">color: rgb(120, 120, 120);</string>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;pre style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Courier New'; font-size:12pt;&quot;&gt;Chargement...&lt;/span&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;pre style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Courier New';&quot;&gt;...&lt;/span&gt;&lt;a name=&quot;tw-target-text-container&quot;/&gt;&lt;span style=&quot; font-family:'Courier New';&quot;&gt;ت&lt;/span&gt;&lt;span style=&quot; font-family:'Courier New';&quot;&gt;حميل الموارد&lt;/span&gt;&lt;/pre&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -135,7 +135,7 @@ QProgressBar::chunk {
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>320</y>
+         <y>240</y>
          <width>111</width>
          <height>21</height>
         </rect>
@@ -160,7 +160,7 @@ QProgressBar::chunk {
        <property name="geometry">
         <rect>
          <x>520</x>
-         <y>320</y>
+         <y>240</y>
          <width>91</width>
          <height>21</height>
         </rect>

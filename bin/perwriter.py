@@ -1,5 +1,5 @@
 from typing import Dict, Any, Union
-import mysql.connector
+from bin.worker import dataBaseS
 import json
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtCore import QSettings, QObject
@@ -7,60 +7,27 @@ import os
 
 
 class writer(QObject):
+    """
+    writer class to read user  privileges and write them to json file to use it later by main Window
+    """
     def __init__(self, name):
         super(writer, self).__init__()
-        self.data = None
         self.name = name
-        self.database = None
-        self.connection = None
-        self.settings = QSettings('ALPHASOFT', 'ADMINISTRATION_AGRICOLE')
         self.writeDataToJson()
 
-    def _connecter(self) -> None:
+    def writeDataToJson(self) -> None:
         """
-        :rtype: None
-        :return:dataBase Query result
+
+        :return:
         """
-        config = {
-            'user': self.settings.value('DATABASE_USER_NAME', '', str),
-            'password': self.settings.value('DATABASE_PASSWORD', '', str),
-            'host': self.settings.value('DATABASE_HOST', '', str),
-            'database': self.settings.value('DATABASE_NAME', '', str),
-            'raise_on_warnings': True
+        database = dataBaseS(f"SELECT * FROM users WHERE USER_={self.name}")
+        data = database.connector()
+        temp: Dict[Union[str, Any], Any] = {
+            'user': data[0][0],
+            'history': data[0][1],
+            'distribution': data[0][2],
+            'settings': data[0][3],
         }
-
-        try:
-            self.connection = mysql.connector.connect(**config)
-            self.cursor = self.connection.cursor()
-
-        except mysql.connector.Error as err:
-            print(f'Error from line 29 sync file class dataBaseSyncer: perwriter file {err}')
-
-    def writeDataToJson(self):
-        self._connecter()
-        try:
-
-            self.cursor.execute(f"SELECT * FROM users WHERE USER_={self.name}")
-            self.data = self.cursor.fetchall()
-        except AttributeError as e:
-            print('error line 44 class prewriter')
-        try:
-            temp: Dict[Union[str, Any], Any] = {
-                'user': self.data[0][0],
-                'history': self.data[0][1],
-                'distribution': self.data[0][2],
-                'settings': self.data[0][3],
-            }
-        except IndexError as e:
-            self._connecter()
-            self.cursor.execute(f"SELECT * FROM users WHERE USER_={self.name}")
-            self.data = self.cursor.fetchall()
-            temp = {
-                'user': self.data[0][0],
-                'history': self.data[0][1],
-                'distribution': self.data[0][2],
-                'settings': self.data[0][3],
-            }
         try:
             with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
                 json.dump(temp, jsonFile, indent=4)
@@ -72,7 +39,7 @@ class writer(QObject):
                 with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
                     json.dump(temp, jsonFile, indent=4)
         finally:
-            self.connection.close()
+            pass
 
 
 class readr(QThread):

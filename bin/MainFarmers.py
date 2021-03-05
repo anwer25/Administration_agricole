@@ -1,11 +1,12 @@
 from bin.farmers import Ui_farmers
 from bin.newFarmersMain import newFMain
 from bin.changeMain import changeMainWindow
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidget, QTableWidgetItem
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap
 from bin.sync import dataBaseSyncer
 from bin.worker import TableWorker
+from qrc_source import source
 
 
 class farmers(QWidget, Ui_farmers):
@@ -18,6 +19,8 @@ class farmers(QWidget, Ui_farmers):
         self.setupUi(self)
         self.tableRefresh()
         self.conformMessage = QMessageBox()
+        self.yesButtonArabicName = None
+        self.NoButtonArabicName = None
         self.Ui()
         self.Buttons()
 
@@ -25,7 +28,11 @@ class farmers(QWidget, Ui_farmers):
         self.show()
         self.data.setEditTriggers(QTableWidget.NoEditTriggers)
         self.data.setSelectionBehavior(QTableWidget.SelectRows)
-
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.conformMessage.setWindowIcon(icon)
         self.conformMessage.setWindowTitle('تأكيد الحذف')
         self.conformMessage.setText('هل تريد حذف')
         self.conformMessage.setIcon(QMessageBox.Warning)
@@ -49,23 +56,15 @@ class farmers(QWidget, Ui_farmers):
         self.data_.result.connect(self.tableDataDisplay)
         """
         self.data.setRowCount(0)
-        self.read = TableWorker('SELECT * FROM FARMERS')
-        self.read.start()
-        self.read.data_.connect(self.tableDataDisplay)
-        self.read.data__.connect(self.insertrow)
+        read = TableWorker('SELECT * FROM FARMERS')
+        read.start()
+        read.data_.connect(self.tableDataDisplay)
+        read.data__.connect(self.insertrow)
 
     def insertrow(self, row: int):
         self.data.insertRow(row)
 
     def tableDataDisplay(self, rowNumber: int, colNumber: int, data: str) -> None:
-        """
-        self.data.setRowCount(0)
-        for rowNumber, rowData in enumerate(data):
-            self.data.insertRow(rowNumber)
-            for colNumber, data in enumerate(rowData):
-                self.data.setItem(rowNumber, colNumber, QTableWidgetItem(str(data)))
-        """
-
         self.data.setItem(rowNumber, colNumber, QTableWidgetItem(str(data)))
 
     def getSelectedItem(self) -> str:

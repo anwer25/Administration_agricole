@@ -15,7 +15,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.WindowModal)
-        MainWindow.resize(375, 280)
+        MainWindow.resize(375, 263)
+        MainWindow.setMinimumSize(QtCore.QSize(375, 263))
+        MainWindow.setMaximumSize(QtCore.QSize(375, 263))
         font = QtGui.QFont()
         font.setFamily("Arabic Typesetting")
         font.setPointSize(18)
