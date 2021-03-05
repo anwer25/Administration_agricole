@@ -39,8 +39,12 @@ class writer(QObject):
 
     def writeDataToJson(self):
         self._connecter()
-        self.cursor.execute(f"SELECT * FROM users WHERE USER_={self.name}")
-        self.data = self.cursor.fetchall()
+        try:
+
+            self.cursor.execute(f"SELECT * FROM users WHERE USER_={self.name}")
+            self.data = self.cursor.fetchall()
+        except AttributeError as e:
+            print('error line 44 class prewriter')
         try:
             temp: Dict[Union[str, Any], Any] = {
                 'user': self.data[0][0],

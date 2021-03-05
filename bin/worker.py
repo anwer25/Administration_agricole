@@ -46,9 +46,9 @@ class dataBaseS(QObject):
         except mysql.connector.Error as err:
             error = mysqlError(err)
             self.messages.setWindowTitle('هناك خطأ')
-            self.message.setIcon(QMessageBox.Warning)
+            self.messages.setIcon(QMessageBox.Warning)
             self.messages.setText(error.__str__())
-            self.message.exec_()
+            self.messages.exec_()
 
 
 class TableWorker(QThread):

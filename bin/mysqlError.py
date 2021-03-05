@@ -37,6 +37,7 @@ class mysqlError:
             return f'Error from line : DUP ENTRY: {error.errno}'
         else:
             return f'Error from line : {error.errno}'
+        # TODO: add more errors messages like error 1130
 
     def __str__(self):
         return self.errors(self.error)

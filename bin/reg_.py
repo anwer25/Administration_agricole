@@ -1,5 +1,5 @@
 from bin.reg import Ui_MainWindow
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QLineEdit
 from bin.psd import Crypt
 from bin.worker import dataBaseS
@@ -7,8 +7,13 @@ from bin.perwriter import writer
 
 
 class registerWindow(QMainWindow, Ui_MainWindow):
-    windowSwitcher = pyqtSignal()
-
+    windowSwitcher = pyqtSignal()                               # SEND SIGNAL TO CONTROLLER CLASS
+    """
+        registerWindow is subclass to bin.reg.Ui_MainWindow 
+        displayed on first programme launch if no user on database 
+        imported models and class
+        
+    """
     def __init__(self):
         super(registerWindow, self).__init__()
         QMainWindow.__init__(self)
