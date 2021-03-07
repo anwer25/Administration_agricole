@@ -21,6 +21,7 @@ class farmers(QWidget, Ui_farmers):
         self.conformMessage = QMessageBox()
         self.yesButtonArabicName = None
         self.NoButtonArabicName = None
+        self.changeWindow = None
         self.Ui()
         self.Buttons()
 
@@ -42,6 +43,7 @@ class farmers(QWidget, Ui_farmers):
         self.yesButtonArabicName.setText('حذف')
         self.NoButtonArabicName.setText('إلغاء')
         self.conformMessage.setDefaultButton(QMessageBox.No)
+        self.print.setEnabled(False)
 
     def Buttons(self) -> None:
         self.new_.clicked.connect(self.addNewFarmer)
@@ -50,11 +52,6 @@ class farmers(QWidget, Ui_farmers):
         self.print.clicked.connect(self.printTicket)
 
     def tableRefresh(self):
-        """
-        self.data_ = dataBaseSyncer('SELECT * FROM FARMERS')
-        self.data_.start()
-        self.data_.result.connect(self.tableDataDisplay)
-        """
         self.data.setRowCount(0)
         read = TableWorker('SELECT * FROM FARMERS')
         read.start()
