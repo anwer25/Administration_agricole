@@ -4,8 +4,7 @@ from bin.changeMain import changeMainWindow
 from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidget, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap
-from bin.sync import dataBaseSyncer
-from bin.worker import TableWorker
+from bin.worker import TableWorker, dataBaseS
 from qrc_source import source
 
 
@@ -43,7 +42,6 @@ class farmers(QWidget, Ui_farmers):
         self.yesButtonArabicName.setText('حذف')
         self.NoButtonArabicName.setText('إلغاء')
         self.conformMessage.setDefaultButton(QMessageBox.No)
-        self.print.setEnabled(False)
 
     def Buttons(self) -> None:
         self.new_.clicked.connect(self.addNewFarmer)
@@ -51,14 +49,14 @@ class farmers(QWidget, Ui_farmers):
         self.remove.clicked.connect(self.deleteFarmer)
         self.print.clicked.connect(self.printTicket)
 
-    def tableRefresh(self):
+    def tableRefresh(self) -> None:
         self.data.setRowCount(0)
         read = TableWorker('SELECT * FROM FARMERS')
         read.start()
         read.data_.connect(self.tableDataDisplay)
         read.data__.connect(self.insertrow)
 
-    def insertrow(self, row: int):
+    def insertrow(self, row: int) -> None:
         self.data.insertRow(row)
 
     def tableDataDisplay(self, rowNumber: int, colNumber: int, data: str) -> None:
@@ -69,30 +67,51 @@ class farmers(QWidget, Ui_farmers):
             IDvalue: QTableWidgetItem = self.data.selectedItems()[0]
             return IDvalue.text()
         except IndexError as e:
-            # make message here
-            print(f'error at line 45 mainFarmers {e}')
+            self.conformMessage.setWindowTitle('هناك مشكلة')
+            self.conformMessage.setText('لم يتم تحديد عنصر')
+            self.conformMessage.setStandardButtons(QMessageBox.Ok)
+            okArabicMessage = self.conformMessage.button(QMessageBox.Ok)
+            okArabicMessage.setText('موافق')
+            self.conformMessage.exec_()
+            return 0
 
     def addNewFarmer(self) -> None:
+        self.setEnabled(False)
         self.newFarmerWindow = newFMain()
         self.newFarmerWindow.refresh.connect(self.tableRefresh)
+        self.newFarmerWindow.enableMain.connect(lambda: self.setEnabled(True))
 
     def changeFarmer(self) -> None:
+        self.setEnabled(False)
         id = self.getSelectedItem()
-        self.changeWindow = changeMainWindow(id)
-        self.changeWindow.refrech.connect(self.tableRefresh)
+        if id:
+            self.changeWindow = changeMainWindow(id)
+            self.changeWindow.refrech.connect(self.tableRefresh)
+        self.setEnabled(True)
 
     def deleteFarmer(self) -> None:
+        self.setEnabled(False)
         id = self.getSelectedItem()
-        self.conformMessage.exec_()
-        if self.conformMessage.clickedButton() == self.yesButtonArabicName:
-            self.dataEngine = dataBaseSyncer(f'DELETE FROM FARMERS WHERE ID= {id}')
-            self.dataEngine.start()
-            self.dataEngine.refresher.connect(self.tableRefresh)
-        else:
-            pass
+        if id:
+            self.conformMessage.exec_()
+            if self.conformMessage.clickedButton() == self.yesButtonArabicName:
+                self.dataEngine = dataBaseS(f'DELETE FROM FARMERS WHERE ID= {id}')
+                self.dataEngine.connector()
+                self.tableRefresh()
+        self.setEnabled(True)
 
     def printTicket(self) -> None:
-        id = self.getSelectedItem()
+        self.setEnabled(False)
+        if self.data.rowCount():
+            pass
+        else:
+            self.conformMessage.setWindowTitle('هناك مشكلة')
+            self.conformMessage.setText('لا توجد عناصر في جدول')
+            self.conformMessage.setStandardButtons(QMessageBox.Ok)
+            okArabicMessage = self.conformMessage.button(QMessageBox.Ok)
+            okArabicMessage.setText('موافق')
+            self.conformMessage.exec_()
+        self.setEnabled(False)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.display.emit()

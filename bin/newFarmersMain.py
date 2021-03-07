@@ -1,12 +1,14 @@
 from bin.newFarmers import Ui_newFarmers
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtGui import QCloseEvent, QIntValidator
 from bin.sync import dataBaseSyncer
+from bin.worker import dataBaseS
 
 
 class newFMain(QWidget, Ui_newFarmers):
     refresh = pyqtSignal()
+    enableMain = pyqtSignal()
 
     def __init__(self):
         super(newFMain, self).__init__()
@@ -17,6 +19,10 @@ class newFMain(QWidget, Ui_newFarmers):
     def Ui(self):
         self.readDeanShipsData()
         self.show()
+        validator = QIntValidator(00000000, 99999999, self)
+        self.idNumber.setValidator(validator)
+        self.headsNumber.setValidator(validator)
+        self.phoneNumber.setValidator(validator)
 
     def Buttons(self):
         self.save.clicked.connect(self.saveData)
@@ -31,12 +37,12 @@ class newFMain(QWidget, Ui_newFarmers):
         self.Deanship.addItem(data[2:-4])
 
     def saveData(self):
-        self.dataBaseEngine = dataBaseSyncer(
+        self.dataBaseEngine = dataBaseS(
             f"INSERT INTO FARMERS VALUES('{self.idNumber.text()}','{self.name.text()}',"
             f"'{self.lastName.text()}', '{self.Deanship.currentText()}', "
             f"'{self.phoneNumber.text()}', '{self.headsNumber.text()}')")
-        self.dataBaseEngine.start()
-        self.dataBaseEngine.refresher.connect(self.refresh.emit)
+        self.dataBaseEngine.connector()
+        self.refresh.emit()
         self.idNumber.clear()
         self.name.clear()
         self.lastName.clear()
@@ -45,3 +51,4 @@ class newFMain(QWidget, Ui_newFarmers):
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.refresh.emit()
+        self.enableMain.emit()
