@@ -50,5 +50,4 @@ class newFMain(QWidget, Ui_newFarmers):
         self.headsNumber.clear()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        self.refresh.emit()
         self.enableMain.emit()
