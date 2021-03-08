@@ -7,8 +7,12 @@
       <excludeFolder url="file://$MODULE_DIR$/venv3.9" />
       <excludePattern pattern="UI" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (python-project)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="E:\Administration agricole\requirements.txt" />
+    <option name="modifyBaseFiles" value="true" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_FOLDERS">

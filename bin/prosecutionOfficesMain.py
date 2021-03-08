@@ -180,3 +180,4 @@ class ProsecutionMain(QWidget, Ui_ProsecutionOffices):
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.display.emit()
+        self.read.terminate()

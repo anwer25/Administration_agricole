@@ -51,10 +51,10 @@ class farmers(QWidget, Ui_farmers):
 
     def tableRefresh(self) -> None:
         self.data.setRowCount(0)
-        read = TableWorker('SELECT * FROM FARMERS')
-        read.start()
-        read.data_.connect(self.tableDataDisplay)
-        read.data__.connect(self.insertrow)
+        self.read = TableWorker('SELECT * FROM FARMERS')
+        self.read.start()
+        self.read.data_.connect(self.tableDataDisplay)
+        self.read.data__.connect(self.insertrow)
 
     def insertrow(self, row: int) -> None:
         self.data.insertRow(row)
@@ -114,4 +114,5 @@ class farmers(QWidget, Ui_farmers):
         self.setEnabled(False)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
+        self.read.terminate()
         self.display.emit()

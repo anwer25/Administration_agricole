@@ -4,11 +4,16 @@ from PyQt5.QtGui import QIcon, QPixmap
 import mysql.connector
 from bin.mysqlError import mysqlError
 
+import logging
+
+logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG, format="%(message)s")
+
 
 class dataBaseS(QObject):
     """
 
     """
+
     def __init__(self, com: str, parent=None):
         super(dataBaseS, self).__init__(parent)
         self.com = com
@@ -73,6 +78,6 @@ class TableWorker(QThread):
                 for colNumber, data in enumerate(rowData):
                     self.data_.emit(rowNumber, colNumber, str(data))
         except TypeError as e:
-            print(f'worker error line 69 :{e}')
+            logging.debug(f'worker error line 69 :{e}')
         finally:
             self.quit()

@@ -14,12 +14,12 @@ class deanships(QWidget, Ui_Deanships):
     def __init__(self):
         super(deanships, self).__init__()
         self.setupUi(self)
-        self.UI()
-        self.Buttons()
-        self.displayData()
         self.addNewDeanshipW = None
         self.databaseEngine = None
         self.tableData = None
+        self.UI()
+        self.Buttons()
+        self.displayData()
 
     def UI(self) -> None:
         """
@@ -99,3 +99,4 @@ class deanships(QWidget, Ui_Deanships):
         :return: None
         """
         self.displayMainWindow.emit()
+        self.tableData.terminate()

@@ -5,6 +5,10 @@ from PyQt5.QtCore import QSettings
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtGui import QIcon, QPixmap
 
+import logging
+
+logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG, format="%(message)s")
+
 
 class dataBaseSyncer(QThread):
     """
@@ -96,11 +100,12 @@ class dataBaseSyncer(QThread):
                         cursor.execute(self.com)
                         self.result.emit(cursor.fetchall())
                 except TypeError as e:
-                    print(f'error line 91 or 96 from sync file {e}')
+                    logging.debug(f'error line 91 or 96 from sync file {e}\n')
 
         except mysql.connector.Error as err:
             error = mysqlError(err)
             self.errorMessages.emit(error.__str__())
+            logging.debug(f'{error.__str__()}\n')
         else:
             self.connection.close()
 

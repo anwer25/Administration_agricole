@@ -190,3 +190,4 @@ class distributionWind(QWidget, Ui_distribution):
         :return:
         """
         self.switcher.emit()
+        self.rea.terminate()

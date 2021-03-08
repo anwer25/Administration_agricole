@@ -107,9 +107,11 @@ class MainHistory(QWidget, Ui_history):
         :param a0:
         :return:
         """
-        self.displayMainWindow.emit()
+
         try:
             self.searchMethodWindow.close()
         except AttributeError:
             pass
-
+        finally:
+            self.dataBase.terminate()
+            self.displayMainWindow.emit()

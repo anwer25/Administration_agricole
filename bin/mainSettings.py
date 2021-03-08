@@ -64,10 +64,10 @@ class mainSettings(QWidget, Ui_settings):
     def tableRefresher(self):
         # TODO: fix thread big
         self.usersTable.setRowCount(0)
-        read = TableWorker(f'SELECT * FROM users')
-        read.start()
-        read.data_.connect(lambda row, col, data: self.tableDataDisplay(row, col, data))
-        read.data__.connect(lambda i: self.insertRow(i))
+        self.read = TableWorker(f'SELECT * FROM users')
+        self.read.start()
+        self.read.data_.connect(lambda row, col, data: self.tableDataDisplay(row, col, data))
+        self.read.data__.connect(lambda i: self.insertRow(i))
 
     def insertRow(self, row: int):
         self.usersTable.insertRow(row)
@@ -133,3 +133,4 @@ class mainSettings(QWidget, Ui_settings):
             pass
         finally:
             self.displayMainWindow.emit()
+            self.read.terminate()
