@@ -72,7 +72,7 @@ class windowController:
         self.messages.setWindowIcon(icon)  # add Window icon to Qmessage
         self.messages.setWindowTitle('هناك خطأ')  # add title to Qmessage
         self.messages.setIcon(QMessageBox.Warning)
-        self.messages.setText(error)
+        self.messages.setText(error.__str__())
         self.messages.exec_()
         self.displayConfWindow()
 

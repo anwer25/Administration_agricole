@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="background">
+    <file>../Image/pexels-skitterphoto-730921.jpg</file>
+  </qresource>
+  <qresource prefix="DEANSHIP">
+    <file>../Image/D.jpg</file>
+  </qresource>
+  <qresource prefix="farmerIcon">
+    <file>../Image/f.jpg</file>
+  </qresource>
+  <qresource prefix="MainIcon">
+    <file>../Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</file>
+  </qresource>
+</RCC>

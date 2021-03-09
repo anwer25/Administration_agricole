@@ -16,15 +16,11 @@
   <property name="font">
    <font>
     <family>Arabic Typesetting</family>
-    <pointsize>16</pointsize>
+    <pointsize>11</pointsize>
    </font>
   </property>
   <property name="windowTitle">
-   <string>D.P.A-إضافة فلاح جديد</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="../qrc_source/source.qrc">
-    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
+   <string>جديد</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
@@ -41,9 +37,6 @@
        <pointsize>16</pointsize>
       </font>
      </property>
-     <property name="maxLength">
-      <number>100</number>
-     </property>
     </widget>
    </item>
    <item row="0" column="4">
@@ -56,9 +49,6 @@
      </property>
      <property name="inputMethodHints">
       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly|Qt::ImhPreferNumbers</set>
-     </property>
-     <property name="maxLength">
-      <number>8</number>
      </property>
     </widget>
    </item>
@@ -73,9 +63,6 @@
      <property name="inputMethodHints">
       <set>Qt::ImhNone</set>
      </property>
-     <property name="maxLength">
-      <number>100</number>
-     </property>
     </widget>
    </item>
    <item row="5" column="4">
@@ -89,9 +76,6 @@
      <property name="inputMethodHints">
       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly|Qt::ImhPreferNumbers</set>
      </property>
-     <property name="maxLength">
-      <number>8</number>
-     </property>
     </widget>
    </item>
    <item row="3" column="4">
@@ -104,9 +88,6 @@
      </property>
      <property name="inputMethodHints">
       <set>Qt::ImhDigitsOnly|Qt::ImhFormattedNumbersOnly|Qt::ImhPreferNumbers</set>
-     </property>
-     <property name="maxLength">
-      <number>8</number>
      </property>
     </widget>
    </item>
@@ -229,8 +210,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../qrc_source/source.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

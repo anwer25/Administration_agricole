@@ -4,6 +4,7 @@ import json
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtCore import QSettings, QObject
 import os
+import pathlib
 
 
 class writer(QObject):
@@ -29,14 +30,15 @@ class writer(QObject):
             'settings': data[0][3],
         }
         try:
-            with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
+            with open(f'temp\\temp.dll', 'w') as jsonFile:
                 json.dump(temp, jsonFile, indent=4)
         except FileNotFoundError as e:
-            if os.path.exists('.\\bin\\data\\temp'):
+            if os.path.exists(f'temp'):
                 print(e)
             else:
-                os.mkdir('.\\bin\\data\\temp')
-                with open('.\\bin\\data\\temp\\temp.dll', 'w') as jsonFile:
+
+                os.mkdir(f'temp')
+                with open(f'temp\\temp.dll', 'w') as jsonFile:
                     json.dump(temp, jsonFile, indent=4)
         finally:
             pass
@@ -53,7 +55,7 @@ class readr(QThread):
 
     def reader(self):
         try:
-            with open('.\\bin\\data\\temp\\temp.dll', 'r') as jsonFile:
+            with open('temp\\temp.dll', 'r') as jsonFile:
                 data = json.load(jsonFile)
                 _ = data.copy()
                 self.result.emit(_)
