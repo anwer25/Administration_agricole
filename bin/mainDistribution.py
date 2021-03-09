@@ -15,6 +15,8 @@ class distributionWind(QWidget, Ui_distribution):
 
     def __init__(self):
         super(distributionWind, self).__init__()
+        self.readDataToDeanshipsComboBox()
+        self.tableData()
         self.rea = None
         self.subDistributionWindow = None
         self.___printEnine = None
@@ -32,8 +34,6 @@ class distributionWind(QWidget, Ui_distribution):
         self.searsh.setEnabled(True)
         self.searshButton.setEnabled(True)
         self.show()
-        self.readDataToDeanshipsComboBox()
-        self.tableData()
         self.printingList.itemChanged.connect(self.itemChanged)
 
     def Buttons(self) -> None:
@@ -82,9 +82,9 @@ class distributionWind(QWidget, Ui_distribution):
         :return:
         """
 
-        dataEngine = dataBaseSyncer(f'SELECT NAME_ FROM DEANSHIPS')
-        dataEngine.start()
-        dataEngine.Deanshipresult.connect(self.insertDataToDeanshipsComboBox)
+        self.dataEngine = dataBaseSyncer(f'SELECT NAME_ FROM DEANSHIPS')
+        self.dataEngine.start()
+        self.dataEngine.Deanshipresult.connect(self.insertDataToDeanshipsComboBox)
 
     def insertDataToDeanshipsComboBox(self, data: str) -> None:
         """
@@ -191,3 +191,4 @@ class distributionWind(QWidget, Ui_distribution):
         """
         self.switcher.emit()
         self.rea.terminate()
+        self.dataEngine.terminate()
