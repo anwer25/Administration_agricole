@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidget, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap
 from bin.worker import TableWorker, dataBaseS
-from bin.printPreview import Preview
+from bin.printEngine import printFarmersAndHistoryData
 import sys
 from qrc_source import source
 
@@ -112,8 +112,7 @@ class farmers(QWidget, Ui_farmers):
 
     def printTicket(self) -> None:
         if self.data.rowCount():
-            self.printEngine = Preview(self.data)
-            self.printEngine.exec_()
+            ___printData = printFarmersAndHistoryData('SELECT * FROM farmers')
         else:
             self.setEnabled(False)
             self.conformMessage.setWindowTitle('هناك مشكلة')

@@ -55,7 +55,6 @@ class dataBaseS(QObject):
             self.messages.setText(error.__str__())
             self.messages.exec_()
 
-
 class TableWorker(QThread):
     data_ = pyqtSignal(int, int, str)
     data__ = pyqtSignal(int)

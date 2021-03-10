@@ -159,7 +159,7 @@ class templateEngine(QObject):
                     self.TemplateNotFound.emit()
                 else:
                     doc.render(context)
-                    file = f'{os.getcwd()}\\bin\\data\\temp\\{data[0][8]}.docx'
+                    file = f'{os.getcwd()}temp\\{data[0][8]}.docx'
                     doc.save(file)
                     con.clear()
                     return file
@@ -172,3 +172,41 @@ class templateEngine(QObject):
             elif i == ___COUNT:
                 self.printingfile(___save(i))
             i += 1
+
+
+class printFarmersAndHistoryData:
+
+    def __init__(self, com: str):
+        self.com = com
+        self.data = dataBaseS(com)
+        data = self.data.connector()
+        self.printingfile(self.wordWriter(data))
+
+    @staticmethod
+    def printingfile(file: str):
+        """
+
+        :param file:
+        :return:
+        """
+        pythoncom.CoInitialize()
+        word = client.Dispatch("Word.Application")
+        pythoncom.CoInitialize()
+        word.Documents.Open(file)
+        word.ActiveDocument.PrintOut()
+        time.sleep(2)
+        word.ActiveDocument.Close()
+        word.Quit()
+
+    @staticmethod
+    def wordWriter(data) -> str:
+        context = {
+            'l': data
+        }
+        docx = 'template\\data.docx'
+        doc = DocxTemplate(docx)
+
+        doc.render(context)
+        ___name = f'{os.getcwd()}\\temp\\data.docx'
+        doc.save(___name)
+        return ___name
