@@ -1,7 +1,8 @@
 from bin.change import Ui_change
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtGui import QCloseEvent, QIntValidator
+from bin.worker import dataBaseS
 from bin.sync import dataBaseSyncer
 
 
@@ -14,7 +15,7 @@ class changeMainWindow(QWidget, Ui_change):
         super(changeMainWindow, self).__init__()
         self.CIN = CIN
         self.database = None
-        self.dataBaseEngine = None
+        self.dataBaseSaveEngine = None
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -26,9 +27,11 @@ class changeMainWindow(QWidget, Ui_change):
         """
         self.show()
         self.readDeanShipsData()
-        self.database = dataBaseSyncer(f'SELECT * FROM FARMERS WHERE ID={self.CIN}')
-        self.database.start()
-        self.database.result.connect(self.getData)
+        self.database = dataBaseS(f'SELECT * FROM FARMERS WHERE ID={self.CIN}')
+        self.getData(self.database.connector())
+        validator = QIntValidator(00000000, 99999999, self)
+        self.phoneNumber.setValidator(validator)
+        self.headsNumber.setValidator(validator)
 
     def getData(self, data: list):
         self.idNumber.setText(str(data[0][0]))
@@ -43,9 +46,9 @@ class changeMainWindow(QWidget, Ui_change):
         About : read Deanship data from data base 
         :return: None
         """
-        self.dataBaseEngine = dataBaseSyncer(f'SELECT NAME_ FROM DEANSHIPS')
-        self.dataBaseEngine.start()
-        self.dataBaseEngine.Deanshipresult.connect(self.addDataToComboBox)
+        self.___dataBaseEngine = dataBaseSyncer(f'SELECT NAME_ FROM DEANSHIPS')
+        self.___dataBaseEngine.start()
+        self.___dataBaseEngine.Deanshipresult.connect(self.addDataToComboBox)
 
     def addDataToComboBox(self, data):
         """
@@ -68,12 +71,13 @@ class changeMainWindow(QWidget, Ui_change):
         :rtype: None
         :return: None
         """
-        self.dataBaseEngine = dataBaseSyncer(f"UPDATE FARMERS SET PHONENUMBER = '{self.phoneNumber.text()}',"
-                                             f"DEANSHIP= '{self.Deanship.currentText()}',"
-                                             f"HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}")
-        self.dataBaseEngine.start()
-        self.dataBaseEngine.refresher.connect(self.refrech.emit)
+        self.dataBaseSaveEngine = dataBaseS(f"UPDATE FARMERS SET PHONENUMBER = '{self.phoneNumber.text()}',"
+                                            f"DEANSHIP= '{self.Deanship.currentText()}',"
+                                            f"HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}")
+        self.dataBaseSaveEngine.connector()
+        self.refrech.emit()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
+        self.___dataBaseEngine.terminate()
         self.enableMain.emit()
         self.changeWindowState.emit(False)

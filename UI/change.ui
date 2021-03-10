@@ -13,6 +13,12 @@
     <height>485</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>452</width>
+    <height>485</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
     <width>452</width>
@@ -86,7 +92,7 @@
       <set>Qt::ImhFormattedNumbersOnly</set>
      </property>
      <property name="maxLength">
-      <number>10000</number>
+      <number>8</number>
      </property>
     </widget>
    </item>
@@ -122,7 +128,7 @@
       <string/>
      </property>
      <property name="maxLength">
-      <number>12</number>
+      <number>8</number>
      </property>
     </widget>
    </item>

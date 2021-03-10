@@ -24,6 +24,7 @@ class farmers(QWidget, Ui_farmers):
         self.newFarmerWindowStateV = False
         self.changeWindowStateV = False
         self.printEngine = None
+        self.___printData = None
         self.setupUi(self)
         self.tableRefresh()
         self.conformMessage = QMessageBox()
@@ -112,7 +113,7 @@ class farmers(QWidget, Ui_farmers):
 
     def printTicket(self) -> None:
         if self.data.rowCount():
-            ___printData = printFarmersAndHistoryData('SELECT * FROM farmers')
+            self.___printData = printFarmersAndHistoryData('SELECT * FROM farmers')
         else:
             self.setEnabled(False)
             self.conformMessage.setWindowTitle('هناك مشكلة')
@@ -134,5 +135,10 @@ class farmers(QWidget, Ui_farmers):
             self.newFarmerWindow.close()
         if self.changeWindowStateV:
             self.changeWindow.close()
-        self.read.terminate()
-        self.display.emit()
+        try:
+            self.___printData.terminate()
+        except AttributeError as e:
+            pass
+        finally:
+            self.read.terminate()
+            self.display.emit()

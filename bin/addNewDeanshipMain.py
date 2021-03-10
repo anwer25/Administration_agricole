@@ -8,6 +8,7 @@ from PyQt5.QtGui import QCloseEvent
 
 class addNewDeanshipWindow(QWidget, Ui_addNewDeanShip):
     refresh = pyqtSignal()
+    enableWindow = pyqtSignal()
 
     def __init__(self):
         super(addNewDeanshipWindow, self).__init__()
@@ -47,4 +48,5 @@ class addNewDeanshipWindow(QWidget, Ui_addNewDeanShip):
         :rtype: None
         :return: None
         """
-        self.refresh.emit()
+        self.enableWindow.emit()
+

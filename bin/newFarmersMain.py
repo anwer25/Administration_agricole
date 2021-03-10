@@ -51,5 +51,6 @@ class newFMain(QWidget, Ui_newFarmers):
         self.headsNumber.clear()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
+        self.dataBaseEngine.terminate()
         self.enableMain.emit()
         self.newFarmerWindowState.emit(False)

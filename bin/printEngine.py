@@ -174,11 +174,15 @@ class templateEngine(QObject):
             i += 1
 
 
-class printFarmersAndHistoryData:
+class printFarmersAndHistoryData(QThread):
 
-    def __init__(self, com: str):
+    def __init__(self, com: str, parent=None):
+        super(printFarmersAndHistoryData, self).__init__(parent)
         self.com = com
         self.data = dataBaseS(com)
+        self.start()
+
+    def run(self) -> None:
         data = self.data.connector()
         self.printingfile(self.wordWriter(data))
 
