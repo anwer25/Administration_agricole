@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidget, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap
 from bin.worker import TableWorker, dataBaseS
+from bin.printPreview import Preview
+import sys
 from qrc_source import source
 
 
@@ -15,12 +17,16 @@ class farmers(QWidget, Ui_farmers):
         super(farmers, self).__init__()
         self.newFarmerWindow = None
         self.dataEngine = None
-        self.setupUi(self)
-        self.tableRefresh()
-        self.conformMessage = QMessageBox()
         self.yesButtonArabicName = None
         self.NoButtonArabicName = None
         self.changeWindow = None
+        self.read = None
+        self.newFarmerWindowStateV = False
+        self.changeWindowStateV = False
+        self.printEngine = None
+        self.setupUi(self)
+        self.tableRefresh()
+        self.conformMessage = QMessageBox()
         self.Ui()
         self.Buttons()
 
@@ -77,17 +83,21 @@ class farmers(QWidget, Ui_farmers):
 
     def addNewFarmer(self) -> None:
         self.setEnabled(False)
+        self.newFarmerWindowStateV = True
         self.newFarmerWindow = newFMain()
         self.newFarmerWindow.refresh.connect(self.tableRefresh)
         self.newFarmerWindow.enableMain.connect(lambda: self.setEnabled(True))
+        self.newFarmerWindow.newFarmerWindowState.connect(lambda i: self.___newFarmerWindowState(i))
 
     def changeFarmer(self) -> None:
-        self.setEnabled(False)
         id = self.getSelectedItem()
         if id:
+            self.setEnabled(False)
+            self.changeWindowStateV = True
             self.changeWindow = changeMainWindow(id)
             self.changeWindow.refrech.connect(self.tableRefresh)
-        self.setEnabled(True)
+            self.changeWindow.enableMain.connect(lambda: self.setEnabled(True))
+            self.changeWindow.changeWindowState.connect(lambda i: self.___changeWindowState(i))
 
     def deleteFarmer(self) -> None:
         self.setEnabled(False)
@@ -101,18 +111,29 @@ class farmers(QWidget, Ui_farmers):
         self.setEnabled(True)
 
     def printTicket(self) -> None:
-        self.setEnabled(False)
         if self.data.rowCount():
-            pass
+            self.printEngine = Preview(self.data)
+            self.printEngine.exec_()
         else:
+            self.setEnabled(False)
             self.conformMessage.setWindowTitle('هناك مشكلة')
             self.conformMessage.setText('لا توجد عناصر في جدول')
             self.conformMessage.setStandardButtons(QMessageBox.Ok)
             okArabicMessage = self.conformMessage.button(QMessageBox.Ok)
             okArabicMessage.setText('موافق')
             self.conformMessage.exec_()
-        self.setEnabled(False)
+            self.setEnabled(True)
+
+    def ___newFarmerWindowState(self, state: bool) -> None:
+        self.___newFarmerWindowStateV = state
+
+    def ___changeWindowState(self, state: bool) -> None:
+        self.___changeWindowStateV = state
 
     def closeEvent(self, a0: QCloseEvent) -> None:
+        if self.newFarmerWindowStateV:
+            self.newFarmerWindow.close()
+        if self.changeWindowStateV:
+            self.changeWindow.close()
         self.read.terminate()
         self.display.emit()

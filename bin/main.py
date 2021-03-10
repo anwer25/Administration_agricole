@@ -82,7 +82,7 @@ class mainW(QMainWindow, Ui_mainwindow):
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         try:
-            os.remove('data\\temp\\temp.dll')
+            os.remove('temp\\temp.dll')
 
         except FileNotFoundError as e:
             print('Error from line 66 main class mainWindow')

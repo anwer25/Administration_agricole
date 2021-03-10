@@ -4,8 +4,8 @@ from PyQt5.QtCore import QRectF, QPointF, Qt, QSizeF
 from PyQt5.QtGui import QIcon, QPixmap, QPainter, QTextDocument, QTextCursor, QTextBlockFormat, QTextFormat
 from qrc_source import source
 
-textMargins = 500
-borderMargins = 300
+textMargins = 100
+borderMargins = 200
 
 
 class Preview(QPrintPreviewDialog):
@@ -13,6 +13,7 @@ class Preview(QPrintPreviewDialog):
     def __init__(self, tableWidget: QTableWidget, parent=None):
         super(Preview, self).__init__(parent)
         self.tableWidget = tableWidget
+        self.dataEngine = None
         self.Ui()
         self.Buttons()
 
@@ -74,7 +75,6 @@ class Preview(QPrintPreviewDialog):
                 if it is not None:
                     cursor.insertText(it.text())
                 cursor.movePosition(QTextCursor.NextCell)
-
         document.print_(printer)
 
         doc = document

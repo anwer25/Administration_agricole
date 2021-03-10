@@ -51,7 +51,7 @@ name = ['Christensen', 'Brian', 'Montgomery', 'Monet', 'Mcneil', 'Yousif', 'Flow
         ' Cast', 'Krist',
         'ina C', 'Deann', 'a Huf', 'Umar ', 'James', ]
 a = []
-for _ in range(200000):
+for _ in range(100):
     for name in name:
         idNumber =randrange(1, 99999999)
         for lastName in name:

@@ -15,12 +15,12 @@ class distributionWind(QWidget, Ui_distribution):
 
     def __init__(self):
         super(distributionWind, self).__init__()
-        self.readDataToDeanshipsComboBox()
-        self.tableData()
+        self.setupUi(self)
         self.rea = None
         self.subDistributionWindow = None
         self.___printEnine = None
-        self.setupUi(self)
+        self.readDataToDeanshipsComboBox()
+        self.tableData()
         self.Ui()
         self.Buttons()
 
@@ -181,7 +181,6 @@ class distributionWind(QWidget, Ui_distribution):
         self.___printEngine.resetTable.connect(lambda: self.printingList.setRowCount(0))
         self.___printEngine.start()
         # self.___printEngine.message.connect(lambda i: print(i))
-        self.___printEngine.exec()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

@@ -7,6 +7,8 @@ from bin.sync import dataBaseSyncer
 
 class changeMainWindow(QWidget, Ui_change):
     refrech = pyqtSignal()
+    enableMain = pyqtSignal()
+    changeWindowState = pyqtSignal(bool)
 
     def __init__(self, CIN: str = None):
         super(changeMainWindow, self).__init__()
@@ -73,4 +75,5 @@ class changeMainWindow(QWidget, Ui_change):
         self.dataBaseEngine.refresher.connect(self.refrech.emit)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        pass
+        self.enableMain.emit()
+        self.changeWindowState.emit(False)

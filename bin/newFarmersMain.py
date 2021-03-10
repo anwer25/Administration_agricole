@@ -9,6 +9,7 @@ from bin.worker import dataBaseS
 class newFMain(QWidget, Ui_newFarmers):
     refresh = pyqtSignal()
     enableMain = pyqtSignal()
+    newFarmerWindowState = pyqtSignal(bool)
 
     def __init__(self):
         super(newFMain, self).__init__()
@@ -51,3 +52,4 @@ class newFMain(QWidget, Ui_newFarmers):
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.enableMain.emit()
+        self.newFarmerWindowState.emit(False)
