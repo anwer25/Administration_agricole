@@ -82,6 +82,9 @@
      <property name="inputMethodHints">
       <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
      </property>
+     <property name="maxLength">
+      <number>8</number>
+     </property>
     </widget>
    </item>
   </layout>

@@ -1,7 +1,7 @@
 from bin.change import Ui_change
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent, QIntValidator
+from PyQt5.QtGui import QCloseEvent, QIntValidator, QIcon, QPixmap
 from bin.worker import dataBaseS
 from bin.sync import dataBaseSyncer
 
@@ -16,6 +16,7 @@ class changeMainWindow(QWidget, Ui_change):
         self.CIN = CIN
         self.database = None
         self.dataBaseSaveEngine = None
+        self.message = QMessageBox()
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -25,6 +26,18 @@ class changeMainWindow(QWidget, Ui_change):
         :rtype: None
         :return: None
         """
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.message.setWindowIcon(icon)
+        self.message.setWindowTitle('خطأ عند الحفظ')
+        self.message.setText('يوجد صندوق فارغ')
+        self.message.setIcon(QMessageBox.Warning)
+        self.message.setStandardButtons(QMessageBox.Ok)
+        self.OkButtonArabicName = self.message.button(QMessageBox.Ok)
+        self.OkButtonArabicName.setText('موافق')
+        self.message.setDefaultButton(QMessageBox.Ok)
         self.show()
         self.readDeanShipsData()
         self.database = dataBaseS(f'SELECT * FROM FARMERS WHERE ID={self.CIN}')
@@ -71,11 +84,14 @@ class changeMainWindow(QWidget, Ui_change):
         :rtype: None
         :return: None
         """
-        self.dataBaseSaveEngine = dataBaseS(f"UPDATE FARMERS SET PHONENUMBER = '{self.phoneNumber.text()}',"
-                                            f"DEANSHIP= '{self.Deanship.currentText()}',"
-                                            f"HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}")
-        self.dataBaseSaveEngine.connector()
-        self.refrech.emit()
+        if self.phoneNumber.text() and self.headsNumber.text() != '':
+            self.dataBaseSaveEngine = dataBaseS(f"UPDATE FARMERS SET PHONENUMBER = '{self.phoneNumber.text()}',"
+                                                f"DEANSHIP= '{self.Deanship.currentText()}',"
+                                                f"HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}")
+            self.dataBaseSaveEngine.connector()
+            self.refrech.emit()
+        else:
+            self.message.exec_()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.___dataBaseEngine.terminate()

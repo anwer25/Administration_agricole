@@ -2,13 +2,28 @@
 <ui version="4.0">
  <class>Form</class>
  <widget class="QWidget" name="Form">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>389</width>
-    <height>416</height>
+    <width>370</width>
+    <height>359</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>370</width>
+    <height>359</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>370</width>
+    <height>359</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -17,7 +32,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>D.P.A-إضافة نيابة جديدة</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
@@ -28,8 +47,8 @@
   <widget class="QPushButton" name="save">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>380</y>
+     <x>280</x>
+     <y>320</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -41,8 +60,8 @@
   <widget class="QPushButton" name="cancel">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>380</y>
+     <x>190</x>
+     <y>320</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -54,8 +73,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>307</y>
+     <x>240</x>
+     <y>267</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -67,8 +86,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>226</y>
+     <x>240</x>
+     <y>186</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -80,8 +99,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>145</y>
+     <x>240</x>
+     <y>105</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -93,8 +112,8 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>64</y>
+     <x>240</x>
+     <y>24</y>
      <width>111</width>
      <height>16</height>
     </rect>
@@ -106,18 +125,21 @@
   <widget class="QLineEdit" name="addres">
    <property name="geometry">
     <rect>
-     <x>46</x>
-     <y>226</y>
+     <x>26</x>
+     <y>186</y>
      <width>181</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="maxLength">
+    <number>8</number>
    </property>
   </widget>
   <widget class="QLineEdit" name="phone">
    <property name="geometry">
     <rect>
-     <x>46</x>
-     <y>307</y>
+     <x>26</x>
+     <y>267</y>
      <width>181</width>
      <height>20</height>
     </rect>
@@ -125,28 +147,39 @@
    <property name="inputMethodHints">
     <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
    </property>
+   <property name="maxLength">
+    <number>8</number>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lastName">
    <property name="geometry">
     <rect>
-     <x>46</x>
-     <y>145</y>
+     <x>26</x>
+     <y>105</y>
      <width>181</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="maxLength">
+    <number>8</number>
    </property>
   </widget>
   <widget class="QLineEdit" name="name">
    <property name="geometry">
     <rect>
-     <x>46</x>
-     <y>64</y>
+     <x>26</x>
+     <y>24</y>
      <width>181</width>
      <height>20</height>
     </rect>
    </property>
+   <property name="maxLength">
+    <number>254</number>
+   </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
  <connections/>
 </ui>

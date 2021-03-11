@@ -17,7 +17,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>تغير النيابة</string>
+   <string>D.P.A-تغير النيابة</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../qrc_source/source.qrc">
+    <normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</normaloff>:/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
@@ -112,6 +116,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="maxLength">
+    <number>254</number>
+   </property>
   </widget>
   <widget class="QLineEdit" name="phoneNumber">
    <property name="geometry">
@@ -124,6 +131,9 @@
    </property>
    <property name="inputMethodHints">
     <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+   </property>
+   <property name="maxLength">
+    <number>8</number>
    </property>
   </widget>
   <widget class="QLineEdit" name="lastName">
@@ -153,6 +163,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qrc_source/source.qrc"/>
+ </resources>
  <connections/>
 </ui>
