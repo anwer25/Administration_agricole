@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QCloseEvent
 from qrc_source import source
 from bin.sync import dataBaseSyncer
 
@@ -116,3 +117,6 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
         prosecutionOfficesName = self.deanship.currentText()
         numberOfBags = self.number.value()
         self.dataSender.emit(prosecutionOfficesName, str(numberOfBags))
+
+    def closeEvent(self, a0: QCloseEvent) -> None:
+        self.dataEngine.terminate()

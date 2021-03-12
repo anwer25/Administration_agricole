@@ -9,7 +9,9 @@ from win32com import client
 import time
 import pythoncom
 import os
+import logging
 
+logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG, format="%(message)s")
 
 class printingData(QThread):
     """
@@ -51,9 +53,9 @@ class printingData(QThread):
             self.___ProsectutionOffices = self.tableWidget.item(row, 4).text()
             self.___NUMBEROFBAGS = self.tableWidget.item(row, 5).text()
             self.dataBaseEngine = dataBaseS(f'SELECT DATE_ FROM history where CIN={self.___CIN}')
-            data = self.dataBaseEngine.connector()
-            self.dataBaseEngine.connection.close()
-            UUID = self.dateS(data)
+            self.___data = self.dataBaseEngine.connector()
+            UUID = self.dateS(self.___data)
+            logging.debug(UUID)
             if UUID != '0':
                 self.printList.append(UUID)
             else:
@@ -67,8 +69,7 @@ class printingData(QThread):
             f"INSERT INTO history values ('{cin}','{name}','{lastName}',"
             f"'{deanship}','{ProsectutionOffices}','{NUMBEROFBAGS}',"
             f"'{date}', null, '{printID}')")
-        data = dataBaseEngine.connector()
-        dataBaseEngine.connection.close()
+        dataBaseEngine.connector()
 
     def dateS(self, datestr: list) -> str:
 
@@ -159,7 +160,7 @@ class templateEngine(QObject):
                     self.TemplateNotFound.emit()
                 else:
                     doc.render(context)
-                    file = f'{os.getcwd()}temp\\{data[0][8]}.docx'
+                    file = f'{os.getcwd()}\\temp\\{data[0][8]}.docx'
                     doc.save(file)
                     con.clear()
                     return file

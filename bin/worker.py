@@ -48,6 +48,7 @@ class dataBaseS(QObject):
                 self.connection.close()
             else:
                 return self.cursor.fetchall()
+            self.connection.close()
         except mysql.connector.Error as err:
             error = mysqlError(err)
             self.messages.setWindowTitle('هناك خطأ')

@@ -1,6 +1,6 @@
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton, QTableWidget
+from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton, QTableWidget, QMessageBox
 
 from bin.worker import TableWorker
 from bin.sync import dataBaseSyncer
@@ -18,7 +18,8 @@ class distributionWind(QWidget, Ui_distribution):
         self.setupUi(self)
         self.rea = None
         self.subDistributionWindow = None
-        self.___printEnine = None
+        self.___printEngine = None
+        self.message = QMessageBox()
         self.readDataToDeanshipsComboBox()
         self.tableData()
         self.Ui()
@@ -138,25 +139,6 @@ class distributionWind(QWidget, Ui_distribution):
         self.subDistributionWindow = subDistributionMenu()
         self.subDistributionWindow.dataSender.connect(lambda p, n: self.addValuesToRow(result, p, n))
 
-        """
-        if self.farmersListTable.currentRow() != -1:
-            CIN = self.farmersListTable.model().index(self.farmersListTable.currentRow())
-            CINDATA = self.farmersListTable.model().data(CIN)
-            if CINDATA in self.___addCIN:
-                self.events.emit(False)
-            else:
-                self.events.emit(True)
-                self.___addCIN.add(CINDATA)
-                print(self.___addCIN)
-
-
-
-            print(f'first{self.farmersListTable.model().data(CIN)}')
-            secondCIN = self.printingList.model().index(result.row(), 0)
-            resultSecondCIN = self.printingList.model().data(secondCIN)
-            print(f'secondCIN{resultSecondCIN}')
-            """
-
     def addValuesToRow(self, index: QTableWidgetItem, prosecutionOfficesName: str, number: str) -> None:
         """
 
@@ -169,18 +151,10 @@ class distributionWind(QWidget, Ui_distribution):
         self.printingList.setItem(index.row(), 5, QTableWidgetItem(number))
         self.subDistributionWindow.close()
 
-    """
-    def printingData(self):
-        rowCount = self.printingList.rowCount()
-        colCount = self.printingList.columnCount()
-        print(rowCount, colCount)
-    """
-
     def addDataToHistory(self, table: QTableWidget) -> None:
         self.___printEngine = printingData(table)
-        self.___printEngine.resetTable.connect(lambda: self.printingList.setRowCount(0))
         self.___printEngine.start()
-        # self.___printEngine.message.connect(lambda i: print(i))
+        self.___printEngine.resetTable.connect(lambda: self.printingList.setRowCount(0))
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
@@ -191,3 +165,7 @@ class distributionWind(QWidget, Ui_distribution):
         self.switcher.emit()
         self.rea.terminate()
         self.dataEngine.terminate()
+        try:
+            self.___printEngine.terminate()
+        except AttributeError:
+            pass
