@@ -1,5 +1,5 @@
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap
+from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap, QIntValidator
 from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QRadioButton, QTableWidget, QMessageBox
 
 from bin.worker import TableWorker
@@ -15,10 +15,11 @@ class distributionWind(QWidget, Ui_distribution):
 
     def __init__(self):
         super(distributionWind, self).__init__()
-        self.setupUi(self)
         self.rea = None
         self.subDistributionWindow = None
         self.___printEngine = None
+        self.dataEngine = None
+        self.setupUi(self)
         self.message = QMessageBox()
         self.readDataToDeanshipsComboBox()
         self.tableData()
@@ -34,6 +35,8 @@ class distributionWind(QWidget, Ui_distribution):
         self.label_2.setEnabled(True)
         self.searsh.setEnabled(True)
         self.searshButton.setEnabled(True)
+        Validator = QIntValidator(00000000, 99999999, self)
+        self.searsh.setValidator(Validator)
         self.show()
         self.printingList.itemChanged.connect(self.itemChanged)
 

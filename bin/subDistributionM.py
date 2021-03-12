@@ -72,6 +72,7 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
         super(subDistributionMenu, self).__init__(parent)
         self.cancelButton = None
         self.saveButton = None
+        self.dataEngine = None
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -119,4 +120,4 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
         self.dataSender.emit(prosecutionOfficesName, str(numberOfBags))
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        self.dataEngine.terminate()
+        pass
