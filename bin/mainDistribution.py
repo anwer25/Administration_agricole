@@ -37,8 +37,21 @@ class distributionWind(QWidget, Ui_distribution):
         self.searshButton.setEnabled(True)
         Validator = QIntValidator(00000000, 99999999, self)
         self.searsh.setValidator(Validator)
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.message.setWindowIcon(icon)
+        self.message.setWindowTitle('تأكيد الحذف')
+        self.message.setText('هل تريد حذف')
+        self.message.setIcon(QMessageBox.Warning)
+        self.message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        self.yesButtonArabicName = self.message.button(QMessageBox.Yes)
+        self.NoButtonArabicName = self.message.button(QMessageBox.No)
+        self.yesButtonArabicName.setText('حذف')
+        self.NoButtonArabicName.setText('إلغاء')
+        self.message.setDefaultButton(QMessageBox.No)
         self.show()
-        # self.printingList.itemChanged.connect(self.itemChanged)
 
     def Buttons(self) -> None:
         """
@@ -50,21 +63,14 @@ class distributionWind(QWidget, Ui_distribution):
         self.searshButton.clicked.connect(lambda: self.searchEngine(self.searsh.text()))
         self.deanships.activated.connect(lambda: self.searchEngine(self.deanships.currentText()))
         self.print.clicked.connect(lambda: self.addDataToHistory(self.printingList))
-        self.moveToPrint.clicked.connect(lambda: self.itemChanged(self.getSelectedItem()))
+        self.moveToPrint.clicked.connect(self.itemChanged)
+        self.removeFromPrint.clicked.connect(self.removeFromPrintList)
 
     def getSelectedItem(self) -> str:
         try:
             IDvalue: QTableWidgetItem = self.farmersListTable.selectedItems()[::]
             return IDvalue
         except IndexError as e:
-            """
-            self.message.setWindowTitle('هناك مشكلة')
-            self.message.setText('لم يتم تحديد عنصر')
-            self.message.setStandardButtons(QMessageBox.Ok)
-            okArabicMessage = self.conformMessage.button(QMessageBox.Ok)
-            okArabicMessage.setText('موافق')
-            self.conformMessage.exec_()
-            """
             return 0
 
     def tableData(self) -> None:
@@ -153,24 +159,75 @@ class distributionWind(QWidget, Ui_distribution):
         self.rea.data_.connect(self.tableDataDisplay)
         self.rea.data__.connect(self.insertRow)
 
-    def itemChanged(self, selectedRow: QTableWidgetItem):
+    def itemChanged(self):
+        ___selectedItem = self.getSelectedItem()
+        if not ___selectedItem:
+            self.setEnabled(False)
+            self.message.setWindowTitle('هناك مشكلة')
+            self.message.setText('لم يتم تحديد عنصر')
+            self.message.setStandardButtons(QMessageBox.Ok)
+            okArabicMessage = self.message.button(QMessageBox.Ok)
+            okArabicMessage.setText('موافق')
+            self.message.exec_()
+            self.setEnabled(True)
+        else:
+            self.subDistributionWindow = subDistributionMenu(___selectedItem)
+            self.subDistributionWindow.dataSender.connect(self.addTable)
 
-        self.subDistributionWindow = subDistributionMenu(selectedRow)
-        self.subDistributionWindow.dataSender.connect(self.addValuesToRow)
+    def addTable(self, result: list) -> None:
 
-    def addValuesToRow(self, result: list) -> None:
-
-        """
-        self.printingList.setItem(index.row(), 4, QTableWidgetItem(prosecutionOfficesName))
-        self.printingList.setItem(index.row(), 5, QTableWidgetItem(number))
-        """
-        print(result)
+        rowNumber = self.printingList.rowCount()
+        self.printingList.insertRow(rowNumber)
+        for colNumber, data in enumerate(result):
+            self.printingList.setItem(rowNumber, colNumber, QTableWidgetItem(str(data)))
+        self.farmersListTable.removeRow(self.farmersListTable.currentRow())
         self.subDistributionWindow.close()
 
     def addDataToHistory(self, table: QTableWidget) -> None:
         self.___printEngine = printingData(table)
         self.___printEngine.start()
         self.___printEngine.resetTable.connect(lambda: self.printingList.setRowCount(0))
+
+    def removeFromPrintList(self):
+        ___selected = self.printingList.selectedItems()[::]
+        if self.printingList.rowCount() != 0:
+            if not ___selected:
+                self.setEnabled(False)
+                self.message.setWindowTitle('هناك مشكلة')
+                self.message.setText('لم يتم تحديد عنصر')
+                self.message.setStandardButtons(QMessageBox.Ok)
+                okArabicMessage = self.message.button(QMessageBox.Ok)
+                okArabicMessage.setText('موافق')
+                self.message.exec_()
+                self.setEnabled(True)
+            else:
+                self.message.setWindowTitle('تأكيد الحذف')
+                self.message.setText('هل تريد حذف')
+                self.message.setIcon(QMessageBox.Warning)
+                self.message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                self.yesButtonArabicName = self.message.button(QMessageBox.Yes)
+                self.NoButtonArabicName = self.message.button(QMessageBox.No)
+                self.yesButtonArabicName.setText('حذف')
+                self.NoButtonArabicName.setText('إلغاء')
+                self.message.setDefaultButton(QMessageBox.No)
+                self.setEnabled(False)
+                self.message.exec_()
+                if self.message.clickedButton() == self.yesButtonArabicName:
+                    ___row = self.farmersListTable.rowCount()
+                    self.insertRow(___row)
+                    for ColNumber, data in enumerate(___selected):
+                        self.farmersListTable.setItem(___row, ColNumber, QTableWidgetItem(str(data.text())))
+                    self.printingList.removeRow(self.printingList.currentRow())
+                self.setEnabled(True)
+        else:
+            self.setEnabled(False)
+            self.message.setWindowTitle('هناك مشكلة')
+            self.message.setText('لا توجد عناصر في جدول')
+            self.message.setStandardButtons(QMessageBox.Ok)
+            okArabicMessage = self.message.button(QMessageBox.Ok)
+            okArabicMessage.setText('موافق')
+            self.message.exec_()
+            self.setEnabled(True)
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """
