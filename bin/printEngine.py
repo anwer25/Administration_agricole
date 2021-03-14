@@ -206,6 +206,7 @@ class printFarmersAndHistoryData(QThread):
         time.sleep(2)
         word.ActiveDocument.Close()
         word.Quit()
+        os.remove(file)
 
     @staticmethod
     def wordWriter(data) -> str:

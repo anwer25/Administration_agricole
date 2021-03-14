@@ -1,9 +1,9 @@
 from bin.history import Ui_history
 from PyQt5.QtWidgets import QWidget, QMessageBox, QTableWidgetItem
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent
-from bin.printPreview import Preview
-from bin.worker import TableWorker, dataBaseS
+from PyQt5.QtGui import QCloseEvent, QIcon, QPixmap
+from bin.printEngine import printFarmersAndHistoryData
+from bin.worker import TableWorker
 from bin.mainSearchMethod import mainSearchMethod
 
 
@@ -14,6 +14,9 @@ class MainHistory(QWidget, Ui_history):
         super(MainHistory, self).__init__(parent)
         self.dataBase = None
         self.searchMethodWindow = None
+        self.___printData = None
+        self.conformMessage = QMessageBox()
+        self.errorMessage = QMessageBox()
         self.setupUi(self)
         self.Ui()
         self.Buttons()
@@ -34,6 +37,21 @@ class MainHistory(QWidget, Ui_history):
         """
         self.show()
         self.readData()
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.errorMessage.setWindowIcon(icon)
+        self.conformMessage.setWindowIcon(icon)
+        self.conformMessage.setWindowTitle('تأكيد الحذف')
+        self.conformMessage.setText('هل تريد حذف')
+        self.conformMessage.setIcon(QMessageBox.Warning)
+        self.conformMessage.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        self.yesButtonArabicName = self.conformMessage.button(QMessageBox.Yes)
+        self.NoButtonArabicName = self.conformMessage.button(QMessageBox.No)
+        self.yesButtonArabicName.setText('حذف')
+        self.NoButtonArabicName.setText('إلغاء')
+        self.conformMessage.setDefaultButton(QMessageBox.No)
 
     def readData(self, Query: str = f"SELECT * FROM history") -> None:
         """
@@ -70,8 +88,17 @@ class MainHistory(QWidget, Ui_history):
 
         :return:
         """
-        dialog = Preview(self.data)
-        dialog.exec_()
+        if self.data.rowCount():
+            self.___printData = printFarmersAndHistoryData('SELECT * FROM history')
+        else:
+            self.setEnabled(False)
+            self.errorMessage.setWindowTitle('هناك مشكلة')
+            self.errorMessage.setText('لا توجد عناصر في جدول')
+            self.errorMessage.setStandardButtons(QMessageBox.Ok)
+            okArabicMessage = self.errorMessage.button(QMessageBox.Ok)
+            okArabicMessage.setText('موافق')
+            self.errorMessage.exec_()
+            self.setEnabled(True)
 
     def removeButton(self) -> None:
         """
@@ -79,7 +106,11 @@ class MainHistory(QWidget, Ui_history):
         :return:
         """
         # TODO: Make conform Message here
-        self.readData(f"DELETE FROM history")
+        self.setEnabled(False)
+        self.conformMessage.exec_()
+        if self.conformMessage.clickedButton() == self.yesButtonArabicName:
+            self.readData(f"DELETE FROM history")
+        self.setEnabled(True)
 
     def searchEngine(self) -> None:
         """
