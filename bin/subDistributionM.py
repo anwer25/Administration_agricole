@@ -68,8 +68,9 @@ class Ui_subDistribution(object):
 class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
     dataSender = QtCore.pyqtSignal(str, str)
 
-    def __init__(self, parent=None):
+    def __init__(self, SelectedRow: QtWidgets.QTableWidgetItem, parent=None):
         super(subDistributionMenu, self).__init__(parent)
+        self.selectedRow = SelectedRow
         self.cancelButton = None
         self.saveButton = None
         self.dataEngine = None
@@ -117,7 +118,8 @@ class subDistributionMenu(QtWidgets.QDialog, Ui_subDistribution):
     def save(self):
         prosecutionOfficesName = self.deanship.currentText()
         numberOfBags = self.number.value()
-        self.dataSender.emit(prosecutionOfficesName, str(numberOfBags))
+        print(self.selectedRow)
+        # self.dataSender.emit(prosecutionOfficesName, str(numberOfBags))
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         pass

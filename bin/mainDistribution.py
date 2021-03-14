@@ -38,7 +38,7 @@ class distributionWind(QWidget, Ui_distribution):
         Validator = QIntValidator(00000000, 99999999, self)
         self.searsh.setValidator(Validator)
         self.show()
-        self.printingList.itemChanged.connect(self.itemChanged)
+        # self.printingList.itemChanged.connect(self.itemChanged)
 
     def Buttons(self) -> None:
         """
@@ -50,6 +50,22 @@ class distributionWind(QWidget, Ui_distribution):
         self.searshButton.clicked.connect(lambda: self.searchEngine(self.searsh.text()))
         self.deanships.activated.connect(lambda: self.searchEngine(self.deanships.currentText()))
         self.print.clicked.connect(lambda: self.addDataToHistory(self.printingList))
+        self.moveToPrint.clicked.connect(lambda: self.itemChanged(self.getSelectedItem()))
+
+    def getSelectedItem(self) -> str:
+        try:
+            IDvalue: QTableWidgetItem = self.farmersListTable.selectedItems()[::]
+            return IDvalue
+        except IndexError as e:
+            """
+            self.message.setWindowTitle('هناك مشكلة')
+            self.message.setText('لم يتم تحديد عنصر')
+            self.message.setStandardButtons(QMessageBox.Ok)
+            okArabicMessage = self.conformMessage.button(QMessageBox.Ok)
+            okArabicMessage.setText('موافق')
+            self.conformMessage.exec_()
+            """
+            return 0
 
     def tableData(self) -> None:
         """
@@ -137,21 +153,18 @@ class distributionWind(QWidget, Ui_distribution):
         self.rea.data_.connect(self.tableDataDisplay)
         self.rea.data__.connect(self.insertRow)
 
-    def itemChanged(self, result):
+    def itemChanged(self, selectedRow: QTableWidgetItem):
 
-        self.subDistributionWindow = subDistributionMenu()
-        self.subDistributionWindow.dataSender.connect(lambda p, n: self.addValuesToRow(result, p, n))
+        self.subDistributionWindow = subDistributionMenu(selectedRow)
+        self.subDistributionWindow.dataSender.connect(self.addValuesToRow)
 
-    def addValuesToRow(self, index: QTableWidgetItem, prosecutionOfficesName: str, number: str) -> None:
-        """
+    def addValuesToRow(self, result: list) -> None:
 
-        :param index:
-        :param prosecutionOfficesName:
-        :param number:
-        :return:
         """
         self.printingList.setItem(index.row(), 4, QTableWidgetItem(prosecutionOfficesName))
         self.printingList.setItem(index.row(), 5, QTableWidgetItem(number))
+        """
+        print(result)
         self.subDistributionWindow.close()
 
     def addDataToHistory(self, table: QTableWidget) -> None:
