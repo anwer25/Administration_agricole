@@ -123,7 +123,6 @@ class templateEngine(QObject):
         time.sleep(2)
         word.ActiveDocument.Close()
         word.Quit()
-        os.remove(file)
 
     def templateWriter(self) -> None:
         """
@@ -159,14 +158,16 @@ class templateEngine(QObject):
                     else f'{os.getcwd()}\\template\\template1.docx'
                 try:
                     doc = DocxTemplate(docx)
+                    logging.debug(docx)
                 except exceptions.PackageNotFoundError as e:
-                    print(f' line 154 from printEngine{e}')
+                    logging.debug(f' line 154 from printEngine{e}')
                     self.TemplateNotFound.emit()
                 else:
                     doc.render(context)
                     file = f'{os.getcwd()}\\temp\\{data[0][8]}.docx'
                     doc.save(file)
                     con.clear()
+                    logging.debug(file)
                     return file
 
             if ___COUNT >= 6:
@@ -181,8 +182,9 @@ class templateEngine(QObject):
 
 class printFarmersAndHistoryData(QThread):
 
-    def __init__(self, com: str, parent=None):
+    def __init__(self, com: str, parent=None, f=0):
         super(printFarmersAndHistoryData, self).__init__(parent)
+        self.fileParent = f
         self.com = com
         self.data = dataBaseS(com)
         self.start()
@@ -208,12 +210,12 @@ class printFarmersAndHistoryData(QThread):
         word.Quit()
         os.remove(file)
 
-    @staticmethod
-    def wordWriter(data) -> str:
+    def wordWriter(self, data) -> str:
         context = {
             'l': data
         }
-        docx = f'{os.getcwd()}\\template\\data.docx'
+        docx = f'{os.getcwd()}\\template\\data.docx' if self.fileParent == 0 else \
+            f'{os.getcwd()}\\template\\arch.docx'
         doc = DocxTemplate(docx)
 
         doc.render(context)

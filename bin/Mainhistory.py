@@ -89,7 +89,7 @@ class MainHistory(QWidget, Ui_history):
         :return:
         """
         if self.data.rowCount():
-            self.___printData = printFarmersAndHistoryData('SELECT * FROM history')
+            self.___printData = printFarmersAndHistoryData('SELECT * FROM history', f=1)
         else:
             self.setEnabled(False)
             self.errorMessage.setWindowTitle('هناك مشكلة')

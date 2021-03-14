@@ -5,8 +5,8 @@ from PyQt5.QtGui import QIcon, QPixmap
 from bin.worker import dataBaseS
 from bin.psd import Dcrypt
 from bin.perwriter import writer
+import os
 import shutil
-import os.path
 from qrc_source import source
 
 
@@ -67,7 +67,8 @@ class loginMain(QMainWindow, Ui_MainWindow):
                 if os.path.isdir(os.path.join(path, content))
             ]
         if r:
-            shutil.copytree('.\\template', f'{os.path.expanduser("~")}\\template', ignore=ignore, dirs_exist_ok=True)
+            print(os.path.relpath('template'))
+            shutil.copytree(os.path.relpath('template'), f'{os.path.expanduser("~")}\\template', ignore=ignore, dirs_exist_ok=True)
             jsonWriter = writer(username)
             self.windowSwitcher.emit()
         else:
