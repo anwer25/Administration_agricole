@@ -13,6 +13,7 @@ import logging
 
 logging.basicConfig(filename='debug.log', filemode='w', level=logging.DEBUG, format="%(message)s")
 
+
 class printingData(QThread):
     """
         get tableWidget from mainDistribution file of type QTableWidget
@@ -150,9 +151,12 @@ class templateEngine(QObject):
                     'd': con
                 }
 
-                docx = 'template\\template6.docx' if n == 6 else 'template\\template5.docx' if n == 5 \
-                    else 'template\\template4.docx' if n == 4 else 'template\\template3.docx' if n == 3 \
-                    else 'template\\template2.docx' if n == 2 else 'template\\template1.docx'
+                docx = f'{os.getcwd()}\\template\\template6.docx' if n == 6\
+                    else f'{os.getcwd()}\\template\\template5.docx' if n == 5 \
+                    else f'{os.getcwd()}\\template\\template4.docx' if n == 4\
+                    else f'{os.getcwd()}\\template\\template3.docx' if n == 3 \
+                    else f'{os.getcwd()}\\template\\template2.docx' if n == 2\
+                    else f'{os.getcwd()}\\template\\template1.docx'
                 try:
                     doc = DocxTemplate(docx)
                 except exceptions.PackageNotFoundError as e:
@@ -208,7 +212,7 @@ class printFarmersAndHistoryData(QThread):
         context = {
             'l': data
         }
-        docx = 'template\\data.docx'
+        docx = f'{os.getcwd()}\\template\\data.docx'
         doc = DocxTemplate(docx)
 
         doc.render(context)
