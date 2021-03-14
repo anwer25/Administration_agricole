@@ -5,6 +5,8 @@ from PyQt5.QtGui import QIcon, QPixmap
 from bin.worker import dataBaseS
 from bin.psd import Dcrypt
 from bin.perwriter import writer
+import shutil
+import os.path
 from qrc_source import source
 
 
@@ -58,8 +60,14 @@ class loginMain(QMainWindow, Ui_MainWindow):
             self.windowSwitcherEngine(passwordVerify.passwordShaker())
 
     def windowSwitcherEngine(self, r) -> None:
-
+        def ignore(path, content_list):
+            return [
+                content
+                for content in content_list
+                if os.path.isdir(os.path.join(path, content))
+            ]
         if r:
+            shutil.copytree('template', f'{os.path.expanduser("~")}\\template', ignore=ignore, dirs_exist_ok=True)
             jsonWriter = writer(username)
             self.windowSwitcher.emit()
         else:
