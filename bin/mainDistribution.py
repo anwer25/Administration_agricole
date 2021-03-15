@@ -184,10 +184,19 @@ class distributionWind(QWidget, Ui_distribution):
         self.subDistributionWindow.close()
 
     def addDataToHistory(self, table: QTableWidget) -> None:
-        self.___printEngine = printingData(table)
-        self.___printEngine.start()
-        self.___printEngine.resetTable.connect(lambda: self.printingList.setRowCount(0))
-
+        if self.printingList.rowCount() != 0:
+            self.___printEngine = printingData(table)
+            self.___printEngine.start()
+            self.___printEngine.resetTable.connect(lambda: self.printingList.setRowCount(0))
+        else:
+            self.setEnabled(False)
+            self.message.setWindowTitle('هناك مشكلة')
+            self.message.setText('لا توجد عناصر في جدول')
+            self.message.setStandardButtons(QMessageBox.Ok)
+            okArabicMessage = self.message.button(QMessageBox.Ok)
+            okArabicMessage.setText('موافق')
+            self.message.exec_()
+            self.setEnabled(True)
     def removeFromPrintList(self):
         ___selected = self.printingList.selectedItems()[::]
         if self.printingList.rowCount() != 0:

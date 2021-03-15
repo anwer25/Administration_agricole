@@ -67,7 +67,6 @@ class loginMain(QMainWindow, Ui_MainWindow):
                 if os.path.isdir(os.path.join(path, content))
             ]
         if r:
-            print(os.path.relpath('template'))
             shutil.copytree(os.path.relpath('template'), f'{os.path.expanduser("~")}\\template', ignore=ignore, dirs_exist_ok=True)
             jsonWriter = writer(username)
             self.windowSwitcher.emit()
