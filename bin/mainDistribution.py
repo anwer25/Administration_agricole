@@ -151,10 +151,9 @@ class distributionWind(QWidget, Ui_distribution):
         """
         self.farmersListTable.setRowCount(0)
 
-        if key.isalpha():
-            self.rea = TableWorker(f"SELECT * FROM farmers WHERE DEANSHIP= '{key}'")
-        else:
-            self.rea = TableWorker(f'SELECT * FROM farmers WHERE ID= {key}')
+        self.rea = TableWorker(f"SELECT * FROM farmers WHERE DEANSHIP= '{key}'") if key.isalpha() else \
+            TableWorker(f'SELECT * FROM farmers WHERE ID= {key}') if key == '' else \
+                TableWorker(f'SELECT * FROM farmers WHERE ID= {key}')
         self.rea.start()
         self.rea.data_.connect(self.tableDataDisplay)
         self.rea.data__.connect(self.insertRow)
@@ -197,6 +196,7 @@ class distributionWind(QWidget, Ui_distribution):
             okArabicMessage.setText('موافق')
             self.message.exec_()
             self.setEnabled(True)
+
     def removeFromPrintList(self):
         ___selected = self.printingList.selectedItems()[::]
         if self.printingList.rowCount() != 0:
