@@ -120,17 +120,15 @@ class MainHistory(QWidget, Ui_history):
 
         def result(key: list):
             self.searchMethodWindow.close()
-            if len(key) == 1:
-                Query = f"SELECT * FROM history WHERE CIN='{key[0]}'"
-            elif len(key) == 2:
-                # TODO: fix Query must date_ be reversed : fixed
-                Query = f"SELECT * FROM history WHERE DATE_ BETWEEN '{key[0]}' AND '{key[1]}'"
+            Query = f"SELECT * FROM history WHERE CIN='{key[0]}'" if len(key) == 1 else \
+                f"SELECT * FROM history WHERE DATE_ BETWEEN '{key[0]}' AND '{key[1]}'" if len(key) == 2 else \
+                    f"SELECT * FROM history"
             self.readData(Query)
 
+        self.setEnabled(False)
         self.searchMethodWindow = mainSearchMethod()
         self.searchMethodWindow.result.connect(lambda key: result(key))
-        self.setDisabled(True)
-        self.searchMethodWindow.Disable.connect(lambda: self.setDisabled(False))
+        self.searchMethodWindow.Disable.connect(lambda: self.setEnabled(True))
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         """

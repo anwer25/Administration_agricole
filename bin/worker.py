@@ -45,16 +45,19 @@ class dataBaseS(QObject):
             self.cursor.execute(self.com)
             if 'INSERT' in self.com or 'UPDATE' in self.com or 'DELETE' in self.com:
                 self.connection.commit()
-                self.connection.close()
             else:
                 return self.cursor.fetchall()
-            self.connection.close()
         except mysql.connector.Error as err:
             error = mysqlError(err)
             self.messages.setWindowTitle('هناك خطأ')
             self.messages.setIcon(QMessageBox.Warning)
             self.messages.setText(error.__str__())
             self.messages.exec_()
+        finally:
+            try:
+                self.connection.close()
+            except:
+                pass
 
 class TableWorker(QThread):
     data_ = pyqtSignal(int, int, str)

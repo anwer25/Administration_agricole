@@ -12,13 +12,20 @@ class mainChangeUserData(QDialog, Ui_Dialog):
 
     def __init__(self, user, parent=None):
         super(mainChangeUserData, self).__init__(parent)
+        self.settings = 0
         self.setupUi(self)
         self.user = user
         self.Ui()
         self.Buttons()
 
     def Ui(self):
-        self.userName_2.setText(self.user)
+        self.userName_2.setText(self.user[0])
+        if self.user[1] == 'نعم':
+            self.distribution.setChecked(True)
+            self.history.setChecked(True)
+            self.distribution.setEnabled(False)
+            self.history.setEnabled(False)
+            self.settings = 1
         self.show()
 
     def Buttons(self):
@@ -40,8 +47,8 @@ class mainChangeUserData(QDialog, Ui_Dialog):
         history: int = 1 if self.history.isChecked() else 0
         encrypting: Crypt = Crypt(password)
         ___saver: dataBaseS = dataBaseS(
-            f"UPDATE users SET USER_= '{userName}' ,history= '{history}', distribution= '{distribution}', settings= 0,"
-            f"password= '{encrypting.encryptUserNameAndPassword()}' where USER_='{self.user}'")
+            f"UPDATE users SET USER_= '{userName}' ,history= '{history}', distribution= '{distribution}',"
+            f"settings= '{self.settings}', password= '{encrypting.encryptUserNameAndPassword()}' where USER_='{self.user}'")
         ___saver.connector()
         self.refresher.emit()
 

@@ -17,7 +17,7 @@ class mysqlError:
             return f"قاعدة البيانات غير موجودة:{error.errno}"
         elif error.errno == errorcode.CR_CONN_HOST_ERROR:
             # TODO: make message here
-            return error.errno
+            return f'{error.errno}'
         elif error.errno == errorcode.ER_TRUNCATED_WRONG_VALUE_FOR_FIELD:
             # TODO: make message here
             return f'you entered str value instead int value error line : {error.errno}'
@@ -34,7 +34,9 @@ class mysqlError:
         elif error.errno == errorcode.ER_PARSE_ERROR:
             return f'Error from line : PARSE ERROR: {error.errno}'
         elif error.errno == errorcode.ER_DUP_ENTRY:
-            return f'Error from line : DUP ENTRY: {error.errno}'
+            return f'الاسم موجود: {error.errno}'
+        elif error.errno == errorcode.ER_LOCK_WAIT_TIMEOUT:
+            return f'حاول مرة اخرى:{error.errno}'
         else:
             return f'Error from line : {error.errno}'
         # TODO: add more errors messages like error 1130

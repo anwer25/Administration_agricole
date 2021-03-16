@@ -68,6 +68,10 @@ class newFMain(QWidget, Ui_newFarmers):
             self.message.exec_()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
-        self.dataBaseEngine.terminate()
-        self.enableMain.emit()
-        self.newFarmerWindowState.emit(False)
+        try:
+            self.dataBaseEngine.terminate()
+        except AttributeError:
+            pass
+        finally:
+            self.enableMain.emit()
+            self.newFarmerWindowState.emit(False)

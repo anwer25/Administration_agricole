@@ -45,6 +45,7 @@ class addNewDeanshipWindow(QWidget, Ui_addNewDeanShip):
         :return: None
         """
         self.save.clicked.connect(self.saveData)
+        self.cancel.clicked.connect(self.close)
 
     def saveData(self) -> None:
         """

@@ -51,6 +51,7 @@ class mainSearchMethod(QDialog, Ui_searchMethod):
 
         :return:
         """
+
         def searchButtonResult(ButtonName: QPushButton) -> None:
             """
 
@@ -68,13 +69,11 @@ class mainSearchMethod(QDialog, Ui_searchMethod):
         if self.CIN.isEnabled():
             if self.CIN.text() == "":
                 # TODO MAKE MESSAGE HERE IF CIN HAS NO VALUE
-                pass
+                self.result.emit([])
             else:
                 self.result.emit([self.CIN.text()])
         else:
             self.result.emit([self.dateFrom.text(), self.dateTO.text()])
-
-
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.Disable.emit()

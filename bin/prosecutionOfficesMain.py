@@ -48,6 +48,10 @@ class newProsecution(QWidget, Ui_Form):
                                         f"'{self.lastName.text()}', '{self.addres.text()}', '{self.phone.text()}')")
             self.dataEngine.connector()
             self.refresh.emit()
+            self.lastName.clear()
+            self.addres.clear()
+            self.phone.clear()
+            self.name.clear()
         else:
             self.message.exec_()
 
