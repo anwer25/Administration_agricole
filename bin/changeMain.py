@@ -90,6 +90,7 @@ class changeMainWindow(QWidget, Ui_change):
                                                 f"HEADNUMBERS= {self.headsNumber.text()} WHERE ID={self.CIN}")
             self.dataBaseSaveEngine.connector()
             self.refrech.emit()
+            self.close()
         else:
             self.message.exec_()
 

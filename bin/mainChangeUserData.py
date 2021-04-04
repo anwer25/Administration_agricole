@@ -1,9 +1,10 @@
-from PyQt5.QtWidgets import QDialog, QLineEdit
+from PyQt5.QtWidgets import QDialog, QLineEdit, QMessageBox
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtGui import QCloseEvent, QPixmap, QIcon
 from bin.changeUserData import Ui_Dialog
 from bin.psd import Crypt
 from bin.worker import dataBaseS
+from qrc_source import source
 
 
 class mainChangeUserData(QDialog, Ui_Dialog):
@@ -15,6 +16,8 @@ class mainChangeUserData(QDialog, Ui_Dialog):
         self.settings = 0
         self.setupUi(self)
         self.user = user
+        self.errorMessage = QMessageBox()
+        self.message = QMessageBox()
         self.Ui()
         self.Buttons()
 
@@ -26,6 +29,21 @@ class mainChangeUserData(QDialog, Ui_Dialog):
             self.distribution.setEnabled(False)
             self.history.setEnabled(False)
             self.settings = 1
+        icon = QIcon()
+        icon.addPixmap(
+            QPixmap(":/MainIcon/Image/pngtree-beautiful-wheat-glyph-vector-icon-png-image_2003301.jpg"),
+            QIcon.Normal, QIcon.Off)
+        self.message.setWindowTitle('إشعار تم تحديث بيانات')
+        self.message.setWindowIcon(icon)
+        self.message.setText('تم تحديث البيانات بنجاح')
+        self.message.setDefaultButton(QMessageBox.Ok)
+        self.message.setIcon(QMessageBox.Information)
+        ##############################################
+        self.errorMessage.setWindowTitle('هناك مشكلة')
+        self.errorMessage.setWindowIcon(icon)
+        self.errorMessage.setText('هناك حقل إدخال فارغ')
+        self.errorMessage.setIcon(QMessageBox.Warning)
+        self.errorMessage.setDefaultButton(QMessageBox.Ok)
         self.show()
 
     def Buttons(self):
@@ -43,14 +61,20 @@ class mainChangeUserData(QDialog, Ui_Dialog):
         # TODO: check if there are another user with some name
         password: str = self.password_2.text()
         userName: str = self.userName_2.text()
-        distribution: int = 1 if self.distribution.isChecked() else 0
-        history: int = 1 if self.history.isChecked() else 0
-        encrypting: Crypt = Crypt(password)
-        ___saver: dataBaseS = dataBaseS(
-            f"UPDATE users SET USER_= '{userName}' ,history= '{history}', distribution= '{distribution}',"
-            f"settings= '{self.settings}', password= '{encrypting.encryptUserNameAndPassword()}' where USER_='{self.user}'")
-        ___saver.connector()
-        self.refresher.emit()
+        if password and userName != '':
+            distribution: int = 1 if self.distribution.isChecked() else 0
+            history: int = 1 if self.history.isChecked() else 0
+            encrypting: Crypt = Crypt(password)
+            query = f"UPDATE users SET USER_= '{userName}' ,history= '{history}', distribution= '{distribution}'," \
+                    f"settings='{self.settings}', password= '{encrypting.encryptUserNameAndPassword()}' " \
+                    f"WHERE USER_='{self.user[0]}'"
+            ___saver: dataBaseS = dataBaseS(query)
+            ___saver.connector()
+            self.message.exec_()
+            self.refresher.emit()
+            self.close()
+        else:
+            self.errorMessage.exec_()
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         self.display.emit()

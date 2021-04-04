@@ -57,8 +57,7 @@ class addNewDeanshipWindow(QWidget, Ui_addNewDeanShip):
                                             f"{self.population.text()})")
             self.databaseEngine.connector()
             self.refresh.emit()
-            self.deanshipName.clear()
-            self.population.clear()
+            self.close()
         else:
             self.message.exec_()
 

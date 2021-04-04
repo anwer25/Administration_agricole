@@ -17,7 +17,7 @@ class mysqlError:
             return f"قاعدة البيانات غير موجودة:{error.errno}"
         elif error.errno == errorcode.CR_CONN_HOST_ERROR:
             # TODO: make message here
-            return f'{error.errno}'
+            return f'لا يوجد اتصال أو لديك مشكلة في الاتصال{error.errno}'
         elif error.errno == errorcode.ER_TRUNCATED_WRONG_VALUE_FOR_FIELD:
             # TODO: make message here
             return f'you entered str value instead int value error line : {error.errno}'
@@ -34,7 +34,7 @@ class mysqlError:
         elif error.errno == errorcode.ER_PARSE_ERROR:
             return f'Error from line : PARSE ERROR: {error.errno}'
         elif error.errno == errorcode.ER_DUP_ENTRY:
-            return f'الاسم موجود: {error.errno}'
+            return f'الاسم موجوداو رقم بطاقة التعريف الوطنية: {error.errno}'
         elif error.errno == errorcode.ER_LOCK_WAIT_TIMEOUT:
             return f'حاول مرة اخرى:{error.errno}'
         else:

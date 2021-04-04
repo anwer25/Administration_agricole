@@ -47,6 +47,10 @@ class mainConfig(QMainWindow, Ui_config):
         self.message.setIcon(QMessageBox.Information)
         self.message.setStandardButtons(QMessageBox.Ok)
         self.message.setText('تم حفظ الإعدادات بنجاح.الرجاء إغلاق البرنامج وتشغيله مرة أخرى')
+        self.dataBaseName.setText('administration_agricole')
+        self.dbHost.setText('localhost')
+        self.dataBaseName.setEnabled(False)
+        self.dbHost.setEnabled(False)
         self.show()
 
     def Buttons(self):
@@ -64,7 +68,7 @@ class mainConfig(QMainWindow, Ui_config):
                 'user': self.dbUserName.text(),
                 'password': self.dbPassword.text(),
                 'host': self.dbHost.text(),
-                'database': self.tableName.text(),
+                'database': self.dataBaseName.text(),
                 'raise_on_warnings': True
             }
         except AttributeError:
@@ -78,7 +82,7 @@ class mainConfig(QMainWindow, Ui_config):
                 mysqlerror = mysqlError(err)
                 self.message.setWindowTitle('تحقق من نتيجة الاختبار')
                 self.message.setText(mysqlerror.__str__())
-                self.normalMessage.exec_()
+                self.message.exec_()
             else:
                 self.message.setWindowTitle('تحقق من نتيجة الاختبار')
                 self.message.setText('نجح الاتصال ، يمكنك حفظ الإعدادات')
@@ -90,7 +94,7 @@ class mainConfig(QMainWindow, Ui_config):
                 'user': self.dbUserName.text(),
                 'password': self.dbPassword.text(),
                 'host': self.dbHost.text(),
-                'database': self.tableName.text(),
+                'database': self.dataBaseName.text(),
                 'raise_on_warnings': True
             }
         except AttributeError:

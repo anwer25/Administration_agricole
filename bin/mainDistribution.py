@@ -150,10 +150,11 @@ class distributionWind(QWidget, Ui_distribution):
         :return: None
         """
         self.farmersListTable.setRowCount(0)
+        query = f"SELECT * FROM farmers WHERE DEANSHIP = '{key}'" if not key.isdigit() else \
+            f"SELECT * FROM farmers" if key == '' else f"SELECT * FROM farmers WHERE ID= '{key}'"
 
-        self.rea = TableWorker(f"SELECT * FROM farmers WHERE DEANSHIP= '{key}'") if key.isalpha() else \
-            TableWorker(f'SELECT * FROM farmers') if key == '' else \
-                TableWorker(f'SELECT * FROM farmers WHERE ID= {key}')
+        self.rea = TableWorker(query)
+
         self.rea.start()
         self.rea.data_.connect(self.tableDataDisplay)
         self.rea.data__.connect(self.insertRow)

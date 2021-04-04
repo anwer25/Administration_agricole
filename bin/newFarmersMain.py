@@ -59,11 +59,7 @@ class newFMain(QWidget, Ui_newFarmers):
                 f"'{self.phoneNumber.text()}', '{self.headsNumber.text()}')")
             self.dataBaseEngine.connector()
             self.refresh.emit()
-            self.idNumber.clear()
-            self.name.clear()
-            self.lastName.clear()
-            self.phoneNumber.clear()
-            self.headsNumber.clear()
+            self.close()
         else:
             self.message.exec_()
 
