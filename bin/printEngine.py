@@ -211,8 +211,11 @@ class printFarmersAndHistoryData(QThread):
         os.remove(file)
 
     def wordWriter(self, data) -> str:
+        todayDate = datetime.today()  # get today time
+        dateStr = todayDate.strftime("%d-%m-%Y")  # convert todayDate to str
         context = {
-            'l': data
+            'l': data,
+            'date': dateStr,
         }
         docx = f'{os.getcwd()}\\template\\data.docx' if self.fileParent == 0 else \
             f'{os.getcwd()}\\template\\arch.docx'

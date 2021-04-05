@@ -4,6 +4,7 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QCloseEvent, QIntValidator, QIcon, QPixmap
 from bin.sync import dataBaseSyncer
 from bin.worker import dataBaseS
+from qrc_source import source
 
 
 class newFMain(QWidget, Ui_newFarmers):
