@@ -2,3 +2,6 @@ loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
 loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
 loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
 registered 'pbkdf2_sha256' handler: <class 'passlib.handlers.pbkdf2.pbkdf2_sha256'>
+ad0393e0-267f-458e-8995-d670c373052f
+E:\python-project\Administration_agricole\template\template1.docx
+E:\python-project\Administration_agricole\temp\ad0393e0-267f-458e-8995-d670c373052f.docx

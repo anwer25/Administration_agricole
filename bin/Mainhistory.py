@@ -120,8 +120,33 @@ class MainHistory(QWidget, Ui_history):
 
         def result(key: list):
             self.searchMethodWindow.close()
+            _start: list = key[0].split('/')
+            ___monthesHaveThertyOneDays: list = ['01', '03', '05', '07', '08', '10', '12']
+            ___monthesHaveThertyDays: list = ['04', '06', '09', '11']
+            day = _start[0]
+            month = _start[1]
+            year = _start[2]
+            if day == '01':
+                if month == '01':
+                    year = int(year)-1
+                    month = '12'
+                    day = '31'
+                else:
+                    month = int(month)-1
+                    if len(str(month)) == 1:
+                        month = '0'+str(month)
+                    day = '31' if month in ___monthesHaveThertyOneDays else '30' \
+                        if month in ___monthesHaveThertyDays else '29'
+            else:
+                day = int(day) - 1
+                if len(str(day)) == 1:
+                    day = '0'+str(day)
+
+
+            date = [day, month, year]
+            ___result = '/'.join(map(str, date))
             Query = f"SELECT * FROM history WHERE CIN='{key[0]}'" if len(key) == 1 else \
-                f"SELECT * FROM history WHERE DATE_ BETWEEN '{key[0]}' AND '{key[1]}'" if len(key) == 2 else \
+                f"SELECT * FROM history WHERE DATE_ BETWEEN '{___result}' AND '{key[1]}'" if len(key) == 2 else \
                     f"SELECT * FROM history"
             self.readData(Query)
 

@@ -1,7 +1,8 @@
 from bin.searchMethod import Ui_searchMethod
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, QDate
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QPushButton, QRadioButton
 from PyQt5.QtGui import QCloseEvent
+from datetime import datetime
 
 
 class mainSearchMethod(QDialog, Ui_searchMethod):
@@ -26,6 +27,10 @@ class mainSearchMethod(QDialog, Ui_searchMethod):
         self.OkButtons = self.searchButton.button(QDialogButtonBox.Ok)
         self.OkButtons.setText('بحث')
         self.cancelButtons.setText('إلغاء')
+        todayDate = datetime.today()  # get today time
+        dateStr = todayDate.strftime("%Y-%m-%d").split('-')  # convert todayDate to str
+        self.dateTO.setMaximumDate(QDate(int(dateStr[0]), int(dateStr[1]), int(dateStr[2])))
+        self.dateTO.setDate(QDate(int(dateStr[0]), int(dateStr[1]), int(dateStr[2])))
 
         def radioButtonSate(obj: QRadioButton):
 
