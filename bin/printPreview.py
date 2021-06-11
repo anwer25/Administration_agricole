@@ -28,10 +28,12 @@ class Preview(QPrintPreviewDialog):
     def Buttons(self):
         self.paintRequested.connect(lambda i: self.printDocument(i))
 
-    def mmToPixels(self, printer, mm):
+    @staticmethod
+    def mmToPixels(printer, mm):
         return mm * 0.039370147 * printer.resolution()
 
-    def paintPage(self, pageNumber, pageCount, painter, doc, textRect, footerHeight):
+    @staticmethod
+    def paintPage(pageNumber, pageCount, painter, doc, textRect, footerHeight):
         painter.save()
         textPageRect = QRectF(QPointF(0, pageNumber * doc.pageSize().height()), doc.pageSize())
         painter.setClipRect(textRect)

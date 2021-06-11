@@ -80,7 +80,8 @@ class mainW(QMainWindow, Ui_mainwindow):
         self.hide()
         self.settingsWindow.displayMainWindow.connect(self.show)
 
-    def closeEvent(self, a0: QCloseEvent) -> None:
+    @staticmethod
+    def closeEvent(a0: QCloseEvent) -> None:
         try:
             os.remove('temp\\temp.dll')
 

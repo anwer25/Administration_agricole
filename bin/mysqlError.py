@@ -8,7 +8,8 @@ class mysqlError:
         super(mysqlError, self).__init__()
         self.error = error
 
-    def errors(self, error):
+    @staticmethod
+    def errors(error):
         if error.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             # TODO: make message here
             return f"هناك خطأ ما في اسم المستخدم أو كلمة المرور: {error.errno}"
