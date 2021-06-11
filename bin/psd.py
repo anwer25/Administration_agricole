@@ -33,5 +33,4 @@ class Dcrypt(QObject):
         """
         if Key.pwd_context.verify(self.password, str(self.dbPassword)[2:-3]):
             return True
-        else:
-            return False
+        return False

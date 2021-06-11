@@ -86,9 +86,8 @@ class printingData(QThread):
                 self.com(self.___CIN, self.___NAME, self.___LASTNAME, self.___DEANSHIP,
                          self.___ProsectutionOffices, self.___NUMBEROFBAGS, dateStr, str(printID))
                 return str(printID)
-            else:
-                self.messageList.append(self.___CIN)
-                return str(0)
+            self.messageList.append(self.___CIN)
+            return str(0)
 
         else:
             self.com(self.___CIN, self.___NAME, self.___LASTNAME, self.___DEANSHIP,
