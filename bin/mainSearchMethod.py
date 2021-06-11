@@ -68,7 +68,7 @@ class mainSearchMethod(QDialog, Ui_searchMethod):
             else:
                 self.search()
 
-        self.searchButton.clicked.connect(searchButtonResult)
+        self.searchButton.clicked.connect(lambda i: searchButtonResult(i))
 
     def search(self) -> None:
         if self.CIN.isEnabled():

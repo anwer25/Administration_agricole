@@ -88,7 +88,7 @@ class farmers(QWidget, Ui_farmers):
         self.newFarmerWindow = newFMain()
         self.newFarmerWindow.refresh.connect(self.tableRefresh)
         self.newFarmerWindow.enableMain.connect(lambda: self.setEnabled(True))
-        self.newFarmerWindow.newFarmerWindowState.connect(self.___newFarmerWindowState)
+        self.newFarmerWindow.newFarmerWindowState.connect(lambda i: self.___newFarmerWindowState(i))
 
     def changeFarmer(self) -> None:
         id = self.getSelectedItem()
@@ -98,7 +98,7 @@ class farmers(QWidget, Ui_farmers):
             self.changeWindow = changeMainWindow(id)
             self.changeWindow.refrech.connect(self.tableRefresh)
             self.changeWindow.enableMain.connect(lambda: self.setEnabled(True))
-            self.changeWindow.changeWindowState.connect(self.___changeWindowState)
+            self.changeWindow.changeWindowState.connect(lambda i: self.___changeWindowState(i))
 
     def deleteFarmer(self) -> None:
         self.setEnabled(False)
