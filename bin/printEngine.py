@@ -128,7 +128,7 @@ class templateEngine(QObject):
 
         :return:
         """
-        con = list()
+        con = []
         i = 1
         ___COUNT = int(len(self.printID))
         for UUID in self.printID:
