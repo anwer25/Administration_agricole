@@ -120,8 +120,7 @@ class windowController:
             """
             if len(_data) >= 1:
                 return True
-            else:
-                return False
+            return False
 
         if data is None:  # check if data is not None if None check connection again
             try:
