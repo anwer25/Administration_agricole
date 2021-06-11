@@ -91,8 +91,8 @@ class mainSettings(QWidget, Ui_settings):
         self.usersTable.setRowCount(0)
         self.read = TableWorker(f'SELECT * FROM users')
         self.read.start()
-        self.read.data_.connect(lambda row, col, data: self.tableDataDisplay(row, col, data))
-        self.read.data__.connect(lambda i: self.insertRow(i))
+        self.read.data_.connect(self.tableDataDisplay)
+        self.read.data__.connect(self.insertRow)
 
     def insertRow(self, row: int):
         self.usersTable.insertRow(row)
