@@ -78,7 +78,7 @@ class printingData(QThread):
         dateStr = todayDate.strftime("%d-%m-%Y")  # convert todayDate to str
         printID = uuid.uuid4()
 
-        if len(datestr):  # check if datestr is not empty
+        if datestr:  # check if datestr is not empty
             dif = datetime.strptime(dateStr, "%d-%m-%Y") - datetime.strptime(str(datestr[-1])[2:-3],
                                                                              "%d-%m-%Y")  # calculate deffrince bettwine time on data base and current time
             if dif.days >= 30:  # check if dif is not less than 30Days
