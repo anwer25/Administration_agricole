@@ -26,7 +26,7 @@ class Preview(QPrintPreviewDialog):
         self.setWindowIcon(icon)
 
     def Buttons(self):
-        self.paintRequested.connect(lambda i: self.printDocument(i))
+        self.paintRequested.connect(self.printDocument)
 
     @staticmethod
     def mmToPixels(printer, mm):

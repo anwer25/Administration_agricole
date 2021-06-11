@@ -152,7 +152,7 @@ class MainHistory(QWidget, Ui_history):
 
         self.setEnabled(False)
         self.searchMethodWindow = mainSearchMethod()
-        self.searchMethodWindow.result.connect(lambda key: result(key))
+        self.searchMethodWindow.result.connect(result)
         self.searchMethodWindow.Disable.connect(lambda: self.setEnabled(True))
 
     def closeEvent(self, a0: QCloseEvent) -> None:

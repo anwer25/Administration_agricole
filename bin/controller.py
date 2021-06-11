@@ -92,7 +92,7 @@ class windowController:
         else:                                                  # check if there are users on database
             self.dataBase.result.connect(self.windowSwitcher)  # pass result to windowSwitcher method
             self.dataBase.start()
-            self.dataBase.errorMessages.connect(lambda i: self.___errorCatch(i))
+            self.dataBase.errorMessages.connect(self.___errorCatch)
 
     def displayConfWindow(self) -> None:
         """
@@ -131,7 +131,7 @@ class windowController:
             else:
                 self.dataBase.result.connect(usersShaker)
                 self.dataBase.start()
-                self.dataBase.errorMessages.connect(lambda i: self.___errorCatch(i))
+                self.dataBase.errorMessages.connect(self.___errorCatch)
         else:
             if usersShaker(data):
                 try:
